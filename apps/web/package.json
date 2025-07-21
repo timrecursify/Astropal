@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.0",
-    "@react-three/drei": "^9.122.0",
+    "@react-three/drei": "^10.5.1",
     "@react-three/fiber": "^8.18.0",
     "@tanstack/react-query": "^5.0.0",
     "@types/three": "^0.178.1",
