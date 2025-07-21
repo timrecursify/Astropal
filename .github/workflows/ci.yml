@@ -94,7 +94,7 @@ jobs:
         run: npm run build --workspace=${{ matrix.workspace }}
 
       - name: Cache build artifacts
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             ${{ matrix.workspace }}/dist
