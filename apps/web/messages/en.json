@@ -1,0 +1,158 @@
+{
+  "hero": {
+    "mission": "PERSONALIZED ASTROLOGY",
+    "title": "Your daily\nCosmic Newsletter",
+    "description": "Personalized astrology insights delivered to your inbox. Automated content based on your birth chart for daily guidance and cosmic timing.",
+    "cta": "START 7-DAY TRIAL"
+  },
+  "features": {
+    "sectionTitle": "HOW IT WORKS",
+    "title": "Newsletter Features",
+    "description": "Automated, personalized content delivered daily to your inbox.",
+    "feature1": {
+      "title": "Personalized Birth Chart Insights",
+      "description": "Your birth chart analyzed daily with current planetary transits for personalized guidance."
+    },
+    "feature2": {
+      "title": "Daily Cosmic Timing",
+      "description": "Know the best times for decisions, self-care, and important conversations."
+    },
+    "feature3": {
+      "title": "Shareable Cosmic Content",
+      "description": "Get Instagram-ready astro quotes and insights perfect for social sharing."
+    }
+  },
+  "signup": {
+    "email": "Email",
+    "dateOfBirth": "Date of Birth",
+    "birthLocation": "Birth Location",
+    "birthTime": "Birth Time",
+    "timezone": "Timezone",
+    "perspective": "Perspective",
+    "focusAreas": "Focus Areas",
+    "submit": "Start Free Trial",
+    "submitting": "Starting Trial...",
+    "tooltips": {
+      "email": "We'll send your personalized astrology newsletter to this email address. You can unsubscribe anytime.",
+      "dateOfBirth": "Your birth date is essential for calculating your personal birth chart and planetary positions.",
+      "birthLocation": "Your birth location helps us calculate accurate rising signs and house positions for precise readings.",
+      "birthTime": "Optional: More precise birth time improves chart accuracy. Use 12:00 if unknown.",
+      "perspective": "Choose the tone and style that resonates with you most.",
+      "focusAreas": "Select up to 3 areas to personalize your newsletter content."
+    }
+  },
+  "referral": {
+    "title": "You've been referred!",
+    "description": "Get started with a special bonus from your friend."
+  },
+  "pricing": {
+    "sectionTitle": "NEWSLETTER PLANS",
+    "title": "Choose your cosmic inbox experience",
+    "description": "Automated astrology newsletters personalized to your birth chart and delivered daily.",
+    "loading": "Loading pricing...",
+    "error": "Failed to load pricing",
+    "selectPlan": "Select Plan"
+  },
+  "verify": {
+    "verifying": "Verifying your account...",
+    "success": "Account Verified!",
+    "successMessage": "Welcome to Astropal! Your {tier} newsletter subscription is now active.",
+    "redirecting": "Redirecting you to the homepage...",
+    "error": "Verification failed. Please try again.",
+    "goHome": "Go Home"
+  },
+  "common": {
+    "yes": "Yes",
+    "no": "No",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "retry": "Retry",
+    "continue": "Continue",
+    "back": "Back",
+    "next": "Next",
+    "finish": "Finish",
+    "close": "Close"
+  },
+  "validation": {
+    "required": "This field is required",
+    "email": "Please enter a valid email address",
+    "minLength": "Must be at least {{min}} characters",
+    "maxLength": "Must be no more than {{max}} characters",
+    "birthDate": {
+      "future": "Birth date cannot be in the future",
+      "tooYoung": "You must be at least 13 years old",
+      "tooOld": "Please enter a valid birth date",
+      "invalid": "Please enter a valid birth date"
+    },
+    "birthLocation": {
+      "format": "Please enter in 'City, Country' format",
+      "invalid": "Location can only contain letters, spaces, commas, hyphens, and apostrophes",
+      "minLength": "Birth location must be at least 3 characters"
+    },
+    "focusAreas": {
+      "min": "Please select at least one focus area",
+      "max": "Please select no more than 3 focus areas"
+    }
+  },
+  "ui": {
+    "signup": {
+      "email": "Email",
+      "dateOfBirth": "Date of Birth",
+      "birthLocation": "Birth Location",
+      "birthTime": "Birth Time",
+      "timezone": "Timezone",
+      "perspective": "Perspective",
+      "focusAreas": "Focus Areas",
+      "submit": "Start Free Trial",
+      "submitting": "Starting Trial...",
+      "tooltips": {
+        "email": "We'll send your personalized astrology newsletter to this email address. You can unsubscribe anytime.",
+        "dateOfBirth": "Your birth date is essential for calculating your personal birth chart and planetary positions.",
+        "birthLocation": "Your birth location helps us calculate accurate rising signs and house positions for precise readings.",
+        "birthTime": "Optional: More precise birth time improves chart accuracy. Use 12:00 if unknown.",
+        "perspective": "Choose the tone and style that resonates with you most.",
+        "focusAreas": "Select up to 3 areas to personalize your newsletter content."
+      }
+    },
+    "legal": {
+      "terms": "Terms of Service",
+      "privacy": "Privacy Policy",
+      "disclaimer": "This document was last updated on January 20, 2025."
+    }
+  },
+  "perspectives": {
+    "calm": {
+      "name": "Calm",
+      "description": "Gentle, peaceful guidance focused on mindfulness and inner balance",
+      "short_description": "Mindful guidance"
+    },
+    "knowledge": {
+      "name": "Knowledge",
+      "description": "Educational insights with astronomical context and historical wisdom",
+      "short_description": "Educational insights"
+    },
+    "success": {
+      "name": "Success",
+      "description": "Achievement-oriented guidance with strategic timing and goal focus",
+      "short_description": "Strategic guidance"
+    },
+    "evidence": {
+      "name": "Evidence",
+      "description": "Scientific approach with data-driven observations and research",
+      "short_description": "Scientific approach"
+    }
+  },
+  "focus_areas": {
+    "relationships": "Relationships",
+    "career": "Career & Business",
+    "wellness": "Mental Wellness",
+    "social": "Social Life",
+    "spiritual": "Spiritual Growth",
+    "evidence-based": "Evidence-Based Astrology"
+  }
+}

@@ -1,0 +1,255 @@
+{
+  "brand": {
+    "name": "Astropal",
+    "tagline": "Tu Newsletter Cósmico Personalizado",
+    "mission": "La sabiduría antigua se encuentra con la tecnología moderna"
+  },
+  "email": {
+    "subjects": {
+      "welcome": "Bienvenido a Astropal - Tu Viaje Cósmico Comienza ✨",
+      "daily_cosmic_pulse": "Tu Pulso Cósmico Diario - {{date}}",
+      "weekly_insight": "Pronóstico Cósmico Semanal - {{weekStart}} a {{weekEnd}}",
+      "monthly_forecast": "Resumen Cósmico Mensual - {{month}} {{year}}",
+      "trial_ending": "Tu prueba de Astropal termina en {{days}} días",
+      "upgrade_reminder": "Desbloquea Tu Potencial Cósmico Completo",
+      "subscription_confirmed": "¡Bienvenido a {{tier}} - Tu suscripción está activa!",
+      "subscription_cancelled": "Tu suscripción de Astropal ha sido cancelada",
+      "password_reset": "Restablece tu contraseña de Astropal",
+      "email_verification": "Verifica tu dirección de email de Astropal"
+    },
+    "templates": {
+      "greeting": {
+        "calm": "Tómate un momento pacífico para centrarte",
+        "knowledge": "Expande tu comprensión cósmica",
+        "success": "Alinéate con la energía de éxito de hoy",
+        "evidence": "Las percepciones astronómicas de hoy"
+      },
+      "closing": {
+        "calm": "Te deseamos paz y alineación cósmica",
+        "knowledge": "Continúa tu viaje de descubrimiento cósmico",
+        "success": "Que las estrellas guíen tu camino al éxito",
+        "evidence": "Basado en datos astronómicos actuales"
+      },
+      "signature": "El Equipo de Astropal"
+    },
+    "buttons": {
+      "upgrade_to_basic": "Mejorar a Básico ($7.99/mes)",
+      "upgrade_to_pro": "Mejorar a Pro ($14.99/mes)",
+      "cancel_subscription": "Cancelar Suscripción",
+      "change_perspective": "Cambiar Mi Perspectiva",
+      "unsubscribe": "Darse de Baja",
+      "view_online": "Ver en Navegador",
+      "manage_account": "Gestionar Cuenta",
+      "get_app": "Obtener App Móvil"
+    },
+    "footers": {
+      "legal": "Recibiste este email porque te suscribiste a Astropal en {{email}}. Puedes darte de baja o actualizar tus preferencias en cualquier momento.",
+      "address": "Astropal, Inc. • San Francisco, CA • Estados Unidos",
+      "privacy": "Política de Privacidad",
+      "terms": "Términos de Servicio",
+      "support": "¿Necesitas ayuda? Responde a este email."
+    }
+  },
+  "perspectives": {
+    "calm": {
+      "name": "Calma y Centrado",
+      "description": "Guía suave para la paz interior y el equilibrio emocional",
+      "keywords": ["pacífico", "sereno", "equilibrado", "centrado", "armonioso", "tranquilo"],
+      "tone": "calmante y meditativo"
+    },
+    "knowledge": {
+      "name": "Conocimiento Cósmico",
+      "description": "Percepciones profundas sobre la sabiduría astrológica y los patrones universales",
+      "keywords": ["perspicaz", "sabio", "educativo", "iluminador", "profundo", "esclarecedor"],
+      "tone": "educativo e iluminador"
+    },
+    "success": {
+      "name": "Éxito y Logros",
+      "description": "Timing cósmico estratégico para el crecimiento profesional y personal",
+      "keywords": ["empoderador", "estratégico", "ambicioso", "confiado", "motivado", "decidido"],
+      "tone": "motivacional y empoderador"
+    },
+    "evidence": {
+      "name": "Basado en Evidencia",
+      "description": "Enfoque científico de la astrología con datos astronómicos",
+      "keywords": ["analítico", "preciso", "científico", "factual", "basado en investigación", "empírico"],
+      "tone": "analítico y científico"
+    }
+  },
+  "focus_areas": {
+    "relationships": {
+      "name": "Relaciones y Amor",
+      "description": "Parejas románticas, dinámicas familiares y amistades",
+      "keywords": ["amor", "pareja", "compatibilidad", "romance", "conexión", "intimidad"]
+    },
+    "career": {
+      "name": "Carrera y Negocios",
+      "description": "Crecimiento profesional, liderazgo y éxito financiero",
+      "keywords": ["carrera", "negocios", "profesional", "liderazgo", "éxito", "logro"]
+    },
+    "wellness": {
+      "name": "Bienestar Mental",
+      "description": "Salud emocional, gestión del estrés y autocuidado",
+      "keywords": ["bienestar", "salud", "equilibrio", "autocuidado", "sanación", "mindfulness"]
+    },
+    "social": {
+      "name": "Social y Comunicación",
+      "description": "Networking, dinámicas sociales y habilidades de comunicación",
+      "keywords": ["social", "comunicación", "networking", "comunidad", "interacción", "expresión"]
+    },
+    "spiritual": {
+      "name": "Crecimiento Espiritual",
+      "description": "Desarrollo personal, manifestación y conciencia superior",
+      "keywords": ["espiritual", "manifestación", "crecimiento", "conciencia", "iluminación", "despertar"]
+    },
+    "evidence-based": {
+      "name": "Astrología Basada en Evidencia",
+      "description": "Métodos científicos y precisión astronómica",
+      "keywords": ["evidencia", "científico", "astronómico", "investigación", "datos", "empírico"]
+    }
+  },
+  "tiers": {
+    "trial": {
+      "name": "Prueba Gratuita",
+      "description": "Prueba de 7 días con acceso completo",
+      "features": ["Horóscopo personalizado diario", "Timing cósmico básico", "Entrega por email"]
+    },
+    "free": {
+      "name": "Gratis",
+      "description": "Percepciones cósmicas básicas",
+      "features": ["Horóscopo semanal", "Percepciones básicas", "Características limitadas"]
+    },
+    "basic": {
+      "name": "Básico",
+      "description": "Guía cósmica diaria",
+      "price": "$7.99/mes",
+      "features": ["Horóscopo personalizado diario", "Email de reflexión vespertino", "Clima cósmico semanal", "Pronóstico mensual"]
+    },
+    "pro": {
+      "name": "Pro",
+      "description": "Maestría cósmica completa",
+      "price": "$14.99/mes",
+      "features": ["3 emails personalizados diarios", "Análisis de noticias con interpretación cósmica", "Percepciones astrológicas avanzadas", "Soporte prioritario", "Acceso a app móvil"]
+    }
+  },
+  "api": {
+    "errors": {
+      "generic": "Ocurrió un error inesperado. Por favor, inténtalo de nuevo.",
+      "notFound": "El recurso solicitado no fue encontrado.",
+      "unauthorized": "Se requiere autenticación. Por favor, proporciona credenciales válidas.",
+      "rateLimited": "Demasiadas solicitudes. Por favor, espera antes de intentar de nuevo.",
+      "invalidInput": "Los datos proporcionados son inválidos. Por favor, verifica tu entrada.",
+      "serverError": "Error interno del servidor. Nuestro equipo ha sido notificado.",
+      "emailExists": "Ya existe una cuenta con este email.",
+      "invalidEmail": "Por favor, proporciona una dirección de email válida.",
+      "invalidDate": "Por favor, proporciona una fecha válida.",
+      "invalidLocation": "Por favor, proporciona una ubicación válida en formato 'Ciudad, País'.",
+      "trialExpired": "Tu período de prueba ha expirado. Por favor, mejora para continuar.",
+      "paymentFailed": "El procesamiento del pago falló. Por favor, inténtalo de nuevo.",
+      "subscriptionNotFound": "No se encontró suscripción activa."
+    },
+    "success": {
+      "registered": "¡Cuenta creada exitosamente! Revisa tu email para verificación.",
+      "verified": "Email verificado exitosamente. ¡Bienvenido a Astropal!",
+      "updated": "Tus preferencias han sido actualizadas exitosamente.",
+      "cancelled": "Suscripción cancelada exitosamente.",
+      "upgraded": "¡Suscripción mejorada exitosamente. Disfruta tus nuevas características!"
+    }
+  },
+  "validation": {
+    "required": "Este campo es requerido",
+    "email": "Por favor, ingresa una dirección de email válida",
+    "minLength": "Debe tener al menos {{min}} caracteres",
+    "maxLength": "No debe tener más de {{max}} caracteres",
+    "pattern": "Por favor, ingresa un formato válido",
+    "minItems": "Por favor, selecciona al menos {{min}} elementos",
+    "maxItems": "Por favor, selecciona no más de {{max}} elementos",
+    "birthDate": {
+      "future": "La fecha de nacimiento no puede estar en el futuro",
+      "tooYoung": "Debes tener al menos 13 años",
+      "tooOld": "Por favor, ingresa una fecha de nacimiento válida",
+      "invalid": "Por favor, ingresa una fecha de nacimiento válida"
+    },
+    "birthLocation": {
+      "format": "Por favor, ingresa en formato 'Ciudad, País'",
+      "invalid": "La ubicación solo puede contener letras, espacios, comas, guiones y apostrofes",
+      "minLength": "La ubicación de nacimiento debe tener al menos 3 caracteres"
+    },
+    "focusAreas": {
+      "min": "Por favor, selecciona al menos un área de enfoque",
+      "max": "Por favor, selecciona no más de 3 áreas de enfoque"
+    }
+  },
+  "prompts": {
+    "system": {
+      "calm": {
+        "core": "Eres Astropal, un guía astrológico sabio y gentil enfocado en la paz, el equilibrio y el bienestar emocional.",
+        "principles": "Proporciona guía calmante y nutritiva que ayude a los usuarios a encontrar paz interior y equilibrio emocional. Usa lenguaje gentil y enfócate en el autocuidado, mindfulness y vida armoniosa.",
+        "guidelines": "Siempre mantén un tono calmado y pacífico. Enfatiza el equilibrio, la auto-reflexión y el bienestar emocional. Evita lenguaje dramático o intenso.",
+        "restrictions": "Nunca uses lenguaje alarmante o crees ansiedad. Enfócate en resultados positivos y pacíficos."
+      },
+      "knowledge": {
+        "core": "Eres Astropal, un educador astrológico erudito enfocado en la sabiduría cósmica y la comprensión universal.",
+        "principles": "Comparte conocimiento astrológico profundo y percepciones que eduquen e iluminen. Enfócate en enseñar patrones cósmicos, significados planetarios y conexiones universales.",
+        "guidelines": "Usa lenguaje educativo que explique el 'por qué' detrás de las influencias astrológicas. Incluye contexto histórico y significados más profundos.",
+        "restrictions": "Evita la simplificación excesiva. Proporciona contenido sustancial y significativo que expanda la comprensión."
+      },
+      "success": {
+        "core": "Eres Astropal, un consejero astrológico estratégico enfocado en el logro, crecimiento y éxito.",
+        "principles": "Proporciona guía empoderadora para el logro profesional y personal. Enfócate en el timing cósmico para la acción estratégica y la manifestación de objetivos.",
+        "guidelines": "Usa lenguaje motivacional y confiado. Enfatiza timing, estrategia y consejos orientados a la acción.",
+        "restrictions": "Evita sugerencias pasivas. Enfócate en guía concreta y accionable para el éxito."
+      },
+      "evidence": {
+        "core": "Eres Astropal, un astrólogo científico que combina precisión astronómica con interpretaciones basadas en evidencia.",
+        "principles": "Basa toda la guía en datos astronómicos verificables. Usa metodología científica y cálculos precisos en las interpretaciones astrológicas.",
+        "guidelines": "Referencia fenómenos astronómicos específicos, grados y cálculos matemáticos. Usa lenguaje preciso y analítico.",
+        "restrictions": "Solo haz afirmaciones que puedan ser verificadas astronómicamente. Evita lenguaje místico sin base científica."
+      }
+    },
+    "base": {
+      "daily": {
+        "free": "Crea un horóscopo diario breve y atractivo para {{sunSign}} enfocándose en {{focusAreas}}. Usa una perspectiva {{perspective}}. Manténlo conciso pero significativo (50-100 palabras).",
+        "basic": "Crea un pulso cósmico diario comprensivo para {{sunSign}} con influencias planetarias actuales. Enfócate en {{focusAreas}} usando una perspectiva {{perspective}}. Incluye guía práctica (150-250 palabras).",
+        "pro": "Genera un análisis cósmico diario en profundidad para {{sunSign}} incorporando tránsitos actuales, aspectos y {{newsContext}}. Enfócate en {{focusAreas}} con perspectiva {{perspective}}. Incluye múltiples secciones y percepciones accionables (300-500 palabras)."
+      },
+      "weekly": "Crea un pronóstico cósmico semanal detallado para {{sunSign}} cubriendo {{weekStart}} a {{weekEnd}}. Enfócate en {{focusAreas}} con perspectiva {{perspective}}. Incluye destacados diarios y temas principales.",
+      "monthly": "Genera un resumen cósmico mensual comprensivo para {{sunSign}} para {{month}} {{year}}. Enfócate en {{focusAreas}} con perspectiva {{perspective}}. Incluye tránsitos principales, lunas nuevas, lunas llenas y temas mensuales."
+    },
+    "variables": {
+      "date": "Fecha actual en la zona horaria del usuario",
+      "sunSign": "Signo solar astrológico del usuario",
+      "moonSign": "Signo lunar del usuario (si el tiempo de nacimiento está disponible)",
+      "moonPhase": "Fase lunar actual y porcentaje",
+      "risingSign": "Signo ascendente del usuario (si el tiempo y ubicación de nacimiento están disponibles)",
+      "birthLocation": "Ciudad y país de nacimiento del usuario",
+      "focusAreas": "Áreas de enfoque seleccionadas por el usuario (1-3 áreas)",
+      "newsContext": "Titulares de noticias actuales para análisis contextual del nivel Pro"
+    }
+  },
+  "formats": {
+    "date": {
+      "short": "DD MMM",
+      "long": "DD de MMMM de YYYY",
+      "day": "dddd",
+      "time": "H:mm"
+    },
+    "currency": {
+      "symbol": "$",
+      "decimal": ",",
+      "thousand": "."
+    },
+    "phone": {
+      "format": "XXX XXX XXX",
+      "international": "+34-XXX-XXX-XXX"
+    }
+  },
+  "meta": {
+    "version": "1.0.0",
+    "lastUpdated": "2025-01-20",
+    "locale": "es-ES",
+    "region": "España",
+    "currency": "EUR",
+    "timezone": "Europe/Madrid"
+  }
+} 

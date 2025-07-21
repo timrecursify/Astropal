@@ -1,0 +1,68 @@
+{
+  "namespaces": {
+    "astro": {
+      "description": "Astronomical data cache (ephemeris, planetary positions)",
+      "keys": [
+        "astro:YYYY-MM-DD - Daily ephemeris data",
+        "moon_phase:YYYY-MM-DD - Moon phase information",
+        "planetary_aspects:YYYY-MM-DD - Daily planetary aspects"
+      ],
+      "ttl": "7 days",
+      "size_estimate": "~50KB per day"
+    },
+    "content": {
+      "description": "Generated newsletter content cache",
+      "keys": [
+        "content:userId:YYYYMMDD - Rendered newsletter content",
+        "template:templateId:locale - Compiled templates",
+        "email_queue:type:userId:timestamp - Email send queue"
+      ],
+      "ttl": "48 hours",
+      "size_estimate": "~10KB per user per day"
+    },
+    "i18n": {
+      "description": "Internationalization locale data",
+      "keys": [
+        "i18n:locale:brand - Complete locale token sets",
+        "perspective:locale:perspective - Perspective-specific tokens"
+      ],
+      "ttl": "No expiry (manually managed)",
+      "size_estimate": "~100KB per locale"
+    },
+    "metrics": {
+      "description": "Application metrics and monitoring data",
+      "keys": [
+        "daily_cost:YYYY-MM-DD - Daily cost tracking",
+        "token_usage:userId:YYYY-MM-DD - User token consumption",
+        "webhook_metric:timestamp:id - Webhook processing metrics",
+        "failed_webhook:timestamp:id - Failed webhook events"
+      ],
+      "ttl": "7-30 days depending on metric type",
+      "size_estimate": "~1KB per metric"
+    }
+  },
+  "environment_mapping": {
+    "development": {
+      "KV_ASTRO": "astro_dev_namespace_id",
+      "KV_CONTENT": "content_dev_namespace_id", 
+      "KV_I18N": "i18n_dev_namespace_id",
+      "KV_METRICS": "metrics_dev_namespace_id"
+    },
+    "production": {
+      "KV_ASTRO": "astro_prod_namespace_id",
+      "KV_CONTENT": "content_prod_namespace_id",
+      "KV_I18N": "i18n_prod_namespace_id", 
+      "KV_METRICS": "metrics_prod_namespace_id"
+    }
+  },
+  "creation_commands": [
+    "wrangler kv:namespace create KV_ASTRO --env development",
+    "wrangler kv:namespace create KV_ASTRO --env production", 
+    "wrangler kv:namespace create KV_CONTENT --env development",
+    "wrangler kv:namespace create KV_CONTENT --env production",
+    "wrangler kv:namespace create KV_I18N --env development", 
+    "wrangler kv:namespace create KV_I18N --env production",
+    "wrangler kv:namespace create KV_METRICS --env development",
+    "wrangler kv:namespace create KV_METRICS --env production"
+  ]
+} 

@@ -1,0 +1,158 @@
+{
+  "hero": {
+    "mission": "ASTROLOGÍA PERSONALIZADA",
+    "title": "Tu boletín\nCósmico diario",
+    "description": "Perspectivas astrológicas personalizadas entregadas en tu bandeja de entrada. Contenido automatizado basado en tu carta natal para guía diaria y tiempo cósmico.",
+    "cta": "INICIAR PRUEBA DE 7 DÍAS"
+  },
+  "features": {
+    "sectionTitle": "CÓMO FUNCIONA",
+    "title": "Características del Boletín",
+    "description": "Contenido automatizado y personalizado entregado diariamente en tu bandeja de entrada.",
+    "feature1": {
+      "title": "Perspectivas Personalizadas de Carta Natal",
+      "description": "Tu carta natal analizada diariamente con tránsitos planetarios actuales para guía personalizada."
+    },
+    "feature2": {
+      "title": "Tiempo Cósmico Diario",
+      "description": "Conoce los mejores momentos para decisiones, autocuidado y conversaciones importantes."
+    },
+    "feature3": {
+      "title": "Contenido Cósmico Compartible",
+      "description": "Obtén citas astrológicas y perspectivas listas para Instagram, perfectas para compartir en redes."
+    }
+  },
+  "signup": {
+    "email": "Correo Electrónico",
+    "dateOfBirth": "Fecha de Nacimiento",
+    "birthLocation": "Lugar de Nacimiento",
+    "birthTime": "Hora de Nacimiento",
+    "timezone": "Zona Horaria",
+    "perspective": "Perspectiva",
+    "focusAreas": "Áreas de Enfoque",
+    "submit": "Iniciar Prueba Gratuita",
+    "submitting": "Iniciando Prueba...",
+    "tooltips": {
+      "email": "Enviaremos tu boletín de astrología personalizado a esta dirección de correo. Puedes cancelar en cualquier momento.",
+      "dateOfBirth": "Tu fecha de nacimiento es esencial para calcular tu carta natal personal y posiciones planetarias.",
+      "birthLocation": "Tu lugar de nacimiento nos ayuda a calcular signos ascendentes precisos y posiciones de casas para lecturas exactas.",
+      "birthTime": "Opcional: Una hora de nacimiento más precisa mejora la precisión de la carta. Usa 12:00 si es desconocida.",
+      "perspective": "Elige el tono y estilo que más resuene contigo.",
+      "focusAreas": "Selecciona hasta 3 áreas para personalizar el contenido de tu boletín."
+    }
+  },
+  "referral": {
+    "title": "¡Te han referido!",
+    "description": "Comienza con un bono especial de tu amigo."
+  },
+  "pricing": {
+    "sectionTitle": "PLANES DE BOLETÍN",
+    "title": "Elige tu experiencia cósmica en la bandeja de entrada",
+    "description": "Boletines de astrología automatizados personalizados a tu carta natal y entregados diariamente.",
+    "loading": "Cargando precios...",
+    "error": "Error al cargar precios",
+    "selectPlan": "Seleccionar Plan"
+  },
+  "verify": {
+    "verifying": "Verificando tu cuenta...",
+    "success": "¡Cuenta Verificada!",
+    "successMessage": "¡Bienvenido a Astropal! Tu suscripción de boletín {tier} está ahora activa.",
+    "redirecting": "Redirigiendo a la página principal...",
+    "error": "Verificación fallida. Por favor intenta de nuevo.",
+    "goHome": "Ir al Inicio"
+  },
+  "common": {
+    "yes": "Sí",
+    "no": "No",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "retry": "Reintentar",
+    "continue": "Continuar",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "finish": "Finalizar",
+    "close": "Cerrar"
+  },
+  "validation": {
+    "required": "Este campo es obligatorio",
+    "email": "Por favor ingresa una dirección de correo válida",
+    "minLength": "Debe tener al menos {{min}} caracteres",
+    "maxLength": "Debe tener no más de {{max}} caracteres",
+    "birthDate": {
+      "future": "La fecha de nacimiento no puede estar en el futuro",
+      "tooYoung": "Debes tener al menos 13 años",
+      "tooOld": "Por favor ingresa una fecha de nacimiento válida",
+      "invalid": "Por favor ingresa una fecha de nacimiento válida"
+    },
+    "birthLocation": {
+      "format": "Por favor ingresa en formato 'Ciudad, País'",
+      "invalid": "La ubicación solo puede contener letras, espacios, comas, guiones y apostrofes",
+      "minLength": "El lugar de nacimiento debe tener al menos 3 caracteres"
+    },
+    "focusAreas": {
+      "min": "Por favor selecciona al menos un área de enfoque",
+      "max": "Por favor selecciona no más de 3 áreas de enfoque"
+    }
+  },
+  "ui": {
+    "signup": {
+      "email": "Correo Electrónico",
+      "dateOfBirth": "Fecha de Nacimiento",
+      "birthLocation": "Lugar de Nacimiento",
+      "birthTime": "Hora de Nacimiento",
+      "timezone": "Zona Horaria",
+      "perspective": "Perspectiva",
+      "focusAreas": "Áreas de Enfoque",
+      "submit": "Iniciar Prueba Gratuita",
+      "submitting": "Iniciando Prueba...",
+      "tooltips": {
+        "email": "Enviaremos tu boletín de astrología personalizado a esta dirección de correo. Puedes cancelar en cualquier momento.",
+        "dateOfBirth": "Tu fecha de nacimiento es esencial para calcular tu carta natal personal y posiciones planetarias.",
+        "birthLocation": "Tu lugar de nacimiento nos ayuda a calcular signos ascendentes precisos y posiciones de casas para lecturas exactas.",
+        "birthTime": "Opcional: Una hora de nacimiento más precisa mejora la precisión de la carta. Usa 12:00 si es desconocida.",
+        "perspective": "Elige el tono y estilo que más resuene contigo.",
+        "focusAreas": "Selecciona hasta 3 áreas para personalizar el contenido de tu boletín."
+      }
+    },
+    "legal": {
+      "terms": "Términos de Servicio",
+      "privacy": "Política de Privacidad",
+      "disclaimer": "Este documento fue actualizado por última vez el 20 de enero de 2025."
+    }
+  },
+  "perspectives": {
+    "calm": {
+      "name": "Calma",
+      "description": "Guía gentil y pacífica enfocada en la atención plena y el equilibrio interior",
+      "short_description": "Guía consciente"
+    },
+    "knowledge": {
+      "name": "Conocimiento",
+      "description": "Perspectivas educativas con contexto astronómico y sabiduría histórica",
+      "short_description": "Perspectivas educativas"
+    },
+    "success": {
+      "name": "Éxito",
+      "description": "Guía orientada al logro con tiempo estratégico y enfoque en objetivos",
+      "short_description": "Guía estratégica"
+    },
+    "evidence": {
+      "name": "Evidencia",
+      "description": "Enfoque científico con observaciones basadas en datos e investigación",
+      "short_description": "Enfoque científico"
+    }
+  },
+  "focus_areas": {
+    "relationships": "Relaciones",
+    "career": "Carrera y Negocios",
+    "wellness": "Bienestar Mental",
+    "social": "Vida Social",
+    "spiritual": "Crecimiento Espiritual",
+    "evidence-based": "Astrología Basada en Evidencia"
+  }
+}

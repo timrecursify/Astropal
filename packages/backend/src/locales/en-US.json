@@ -1,0 +1,255 @@
+{
+  "brand": {
+    "name": "Astropal",
+    "tagline": "Your Personalized Cosmic Newsletter",
+    "mission": "Ancient wisdom meets modern technology"
+  },
+  "email": {
+    "subjects": {
+      "welcome": "Welcome to Astropal - Your Cosmic Journey Begins ✨",
+      "daily_cosmic_pulse": "Your Daily Cosmic Pulse - {{date}}",
+      "weekly_insight": "Weekly Cosmic Forecast - {{weekStart}} to {{weekEnd}}",
+      "monthly_forecast": "Monthly Cosmic Overview - {{month}} {{year}}",
+      "trial_ending": "Your Astropal trial ends in {{days}} days",
+      "upgrade_reminder": "Unlock Your Full Cosmic Potential",
+      "subscription_confirmed": "Welcome to {{tier}} - Your subscription is active!",
+      "subscription_cancelled": "Your Astropal subscription has been cancelled",
+      "password_reset": "Reset your Astropal password",
+      "email_verification": "Verify your Astropal email address"
+    },
+    "templates": {
+      "greeting": {
+        "calm": "Take a peaceful moment to center yourself",
+        "knowledge": "Expand your cosmic understanding",
+        "success": "Align with today's success energy",
+        "evidence": "Today's astronomical insights"
+      },
+      "closing": {
+        "calm": "Wishing you peace and cosmic alignment",
+        "knowledge": "Continue your journey of cosmic discovery",
+        "success": "May the stars guide your path to success",
+        "evidence": "Based on current astronomical data"
+      },
+      "signature": "The Astropal Team"
+    },
+    "buttons": {
+      "upgrade_to_basic": "Upgrade to Basic ($7.99/month)",
+      "upgrade_to_pro": "Upgrade to Pro ($14.99/month)",
+      "cancel_subscription": "Cancel Subscription",
+      "change_perspective": "Change My Perspective",
+      "unsubscribe": "Unsubscribe",
+      "view_online": "View in Browser",
+      "manage_account": "Manage Account",
+      "get_app": "Get Mobile App"
+    },
+    "footers": {
+      "legal": "You received this email because you subscribed to Astropal at {{email}}. You can unsubscribe or update your preferences at any time.",
+      "address": "Astropal, Inc. • San Francisco, CA • United States",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "support": "Need help? Reply to this email."
+    }
+  },
+  "perspectives": {
+    "calm": {
+      "name": "Calm & Centered",
+      "description": "Gentle guidance for inner peace and emotional balance",
+      "keywords": ["peaceful", "serene", "balanced", "centered", "harmonious", "tranquil"],
+      "tone": "soothing and meditative"
+    },
+    "knowledge": {
+      "name": "Cosmic Knowledge",
+      "description": "Deep insights into astrological wisdom and universal patterns",
+      "keywords": ["insightful", "wise", "educational", "enlightening", "profound", "illuminating"],
+      "tone": "educational and enlightening"
+    },
+    "success": {
+      "name": "Success & Achievement",
+      "description": "Strategic cosmic timing for professional and personal growth",
+      "keywords": ["empowering", "strategic", "ambitious", "confident", "motivated", "driven"],
+      "tone": "motivational and empowering"
+    },
+    "evidence": {
+      "name": "Evidence-Based",
+      "description": "Scientific approach to astrology with astronomical data",
+      "keywords": ["analytical", "precise", "scientific", "factual", "research-based", "empirical"],
+      "tone": "analytical and scientific"
+    }
+  },
+  "focus_areas": {
+    "relationships": {
+      "name": "Relationships & Love",
+      "description": "Romantic partnerships, family dynamics, and friendships",
+      "keywords": ["love", "partnership", "compatibility", "romance", "connection", "intimacy"]
+    },
+    "career": {
+      "name": "Career & Business",
+      "description": "Professional growth, leadership, and financial success",
+      "keywords": ["career", "business", "professional", "leadership", "success", "achievement"]
+    },
+    "wellness": {
+      "name": "Mental Wellness",
+      "description": "Emotional health, stress management, and self-care",
+      "keywords": ["wellness", "health", "balance", "self-care", "healing", "mindfulness"]
+    },
+    "social": {
+      "name": "Social & Communication",
+      "description": "Networking, social dynamics, and communication skills",
+      "keywords": ["social", "communication", "networking", "community", "interaction", "expression"]
+    },
+    "spiritual": {
+      "name": "Spiritual Growth",
+      "description": "Personal development, manifestation, and higher consciousness",
+      "keywords": ["spiritual", "manifestation", "growth", "consciousness", "enlightenment", "awakening"]
+    },
+    "evidence-based": {
+      "name": "Evidence-Based Astrology",
+      "description": "Scientific methods and astronomical accuracy",
+      "keywords": ["evidence", "scientific", "astronomical", "research", "data", "empirical"]
+    }
+  },
+  "tiers": {
+    "trial": {
+      "name": "Free Trial",
+      "description": "7-day trial with full access",
+      "features": ["Daily personalized horoscope", "Basic cosmic timing", "Email delivery"]
+    },
+    "free": {
+      "name": "Free",
+      "description": "Basic cosmic insights",
+      "features": ["Weekly horoscope", "Basic insights", "Limited features"]
+    },
+    "basic": {
+      "name": "Basic",
+      "description": "Daily cosmic guidance",
+      "price": "$7.99/month",
+      "features": ["Daily personalized horoscope", "Evening reflection email", "Weekly cosmic weather", "Monthly forecast"]
+    },
+    "pro": {
+      "name": "Pro",
+      "description": "Complete cosmic mastery",
+      "price": "$14.99/month",
+      "features": ["3 personalized emails daily", "News analysis with cosmic interpretation", "Advanced astrological insights", "Priority support", "Mobile app access"]
+    }
+  },
+  "api": {
+    "errors": {
+      "generic": "An unexpected error occurred. Please try again.",
+      "notFound": "The requested resource was not found.",
+      "unauthorized": "Authentication required. Please provide valid credentials.",
+      "rateLimited": "Too many requests. Please wait before trying again.",
+      "invalidInput": "The provided data is invalid. Please check your input.",
+      "serverError": "Internal server error. Our team has been notified.",
+      "emailExists": "An account with this email already exists.",
+      "invalidEmail": "Please provide a valid email address.",
+      "invalidDate": "Please provide a valid date.",
+      "invalidLocation": "Please provide a valid location in 'City, Country' format.",
+      "trialExpired": "Your trial period has expired. Please upgrade to continue.",
+      "paymentFailed": "Payment processing failed. Please try again.",
+      "subscriptionNotFound": "No active subscription found."
+    },
+    "success": {
+      "registered": "Account created successfully! Check your email for verification.",
+      "verified": "Email verified successfully. Welcome to Astropal!",
+      "updated": "Your preferences have been updated successfully.",
+      "cancelled": "Subscription cancelled successfully.",
+      "upgraded": "Subscription upgraded successfully. Enjoy your new features!"
+    }
+  },
+  "validation": {
+    "required": "This field is required",
+    "email": "Please enter a valid email address",
+    "minLength": "Must be at least {{min}} characters",
+    "maxLength": "Must be no more than {{max}} characters",
+    "pattern": "Please enter a valid format",
+    "minItems": "Please select at least {{min}} items",
+    "maxItems": "Please select no more than {{max}} items",
+    "birthDate": {
+      "future": "Birth date cannot be in the future",
+      "tooYoung": "You must be at least 13 years old",
+      "tooOld": "Please enter a valid birth date",
+      "invalid": "Please enter a valid birth date"
+    },
+    "birthLocation": {
+      "format": "Please enter in 'City, Country' format",
+      "invalid": "Location can only contain letters, spaces, commas, hyphens, and apostrophes",
+      "minLength": "Birth location must be at least 3 characters"
+    },
+    "focusAreas": {
+      "min": "Please select at least one focus area",
+      "max": "Please select no more than 3 focus areas"
+    }
+  },
+  "prompts": {
+    "system": {
+      "calm": {
+        "core": "You are Astropal, a wise and gentle astrological guide focused on peace, balance, and emotional wellness.",
+        "principles": "Provide soothing, nurturing guidance that helps users find inner peace and emotional balance. Use gentle language and focus on self-care, mindfulness, and harmonious living.",
+        "guidelines": "Always maintain a calm, peaceful tone. Emphasize balance, self-reflection, and emotional well-being. Avoid dramatic or intense language.",
+        "restrictions": "Never use alarming language or create anxiety. Focus on positive, peaceful outcomes."
+      },
+      "knowledge": {
+        "core": "You are Astropal, a scholarly astrological educator focused on cosmic wisdom and universal understanding.",
+        "principles": "Share deep astrological knowledge and insights that educate and enlighten. Focus on teaching cosmic patterns, planetary meanings, and universal connections.",
+        "guidelines": "Use educational language that explains the 'why' behind astrological influences. Include historical context and deeper meanings.",
+        "restrictions": "Avoid oversimplification. Provide substantial, meaningful content that expands understanding."
+      },
+      "success": {
+        "core": "You are Astropal, a strategic astrological advisor focused on achievement, growth, and success.",
+        "principles": "Provide empowering guidance for professional and personal achievement. Focus on cosmic timing for strategic action and goal manifestation.",
+        "guidelines": "Use motivational, confident language. Emphasize timing, strategy, and action-oriented advice.",
+        "restrictions": "Avoid passive suggestions. Focus on concrete, actionable guidance for success."
+      },
+      "evidence": {
+        "core": "You are Astropal, a scientific astrologer who combines astronomical accuracy with evidence-based interpretations.",
+        "principles": "Base all guidance on verifiable astronomical data. Use scientific methodology and precise calculations in astrological interpretations.",
+        "guidelines": "Reference specific astronomical phenomena, degrees, and mathematical calculations. Use precise, analytical language.",
+        "restrictions": "Only make claims that can be astronomically verified. Avoid mystical language without scientific basis."
+      }
+    },
+    "base": {
+      "daily": {
+        "free": "Create a brief, engaging daily horoscope for {{sunSign}} focusing on {{focusAreas}}. Use a {{perspective}} perspective. Keep it concise but meaningful (50-100 words).",
+        "basic": "Create a comprehensive daily cosmic pulse for {{sunSign}} with current planetary influences. Focus on {{focusAreas}} using a {{perspective}} perspective. Include practical guidance (150-250 words).",
+        "pro": "Generate an in-depth daily cosmic analysis for {{sunSign}} incorporating current transits, aspects, and {{newsContext}}. Focus on {{focusAreas}} with {{perspective}} perspective. Include multiple sections and actionable insights (300-500 words)."
+      },
+      "weekly": "Create a detailed weekly cosmic forecast for {{sunSign}} covering {{weekStart}} to {{weekEnd}}. Focus on {{focusAreas}} with {{perspective}} perspective. Include daily highlights and major themes.",
+      "monthly": "Generate a comprehensive monthly cosmic overview for {{sunSign}} for {{month}} {{year}}. Focus on {{focusAreas}} with {{perspective}} perspective. Include major transits, new moons, full moons, and monthly themes."
+    },
+    "variables": {
+      "date": "Current date in user's timezone",
+      "sunSign": "User's astrological sun sign",
+      "moonSign": "User's moon sign (if birth time available)",
+      "moonPhase": "Current moon phase and percentage",
+      "risingSign": "User's rising sign (if birth time and location available)",
+      "birthLocation": "User's birth city and country",
+      "focusAreas": "User's selected focus areas (1-3 areas)",
+      "newsContext": "Current news headlines for Pro tier contextual analysis"
+    }
+  },
+  "formats": {
+    "date": {
+      "short": "MMM DD",
+      "long": "MMMM DD, YYYY",
+      "day": "dddd",
+      "time": "h:mm A"
+    },
+    "currency": {
+      "symbol": "$",
+      "decimal": ".",
+      "thousand": ","
+    },
+    "phone": {
+      "format": "(XXX) XXX-XXXX",
+      "international": "+1-XXX-XXX-XXXX"
+    }
+  },
+  "meta": {
+    "version": "1.0.0",
+    "lastUpdated": "2025-01-20",
+    "locale": "en-US",
+    "region": "United States",
+    "currency": "USD",
+    "timezone": "America/New_York"
+  }
+} 

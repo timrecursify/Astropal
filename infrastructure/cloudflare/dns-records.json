@@ -1,0 +1,82 @@
+{
+  "domain": "astropal.com",
+  "records": [
+    {
+      "type": "A",
+      "name": "@",
+      "content": "192.0.2.1",
+      "ttl": 1,
+      "proxied": true,
+      "comment": "Root domain pointing to Cloudflare Pages"
+    },
+    {
+      "type": "CNAME", 
+      "name": "www",
+      "content": "astropal.com",
+      "ttl": 1,
+      "proxied": true,
+      "comment": "WWW subdomain redirect"
+    },
+    {
+      "type": "CNAME",
+      "name": "api",
+      "content": "astropal-api.workers.dev", 
+      "ttl": 1,
+      "proxied": true,
+      "comment": "API subdomain for Workers"
+    },
+    {
+      "type": "CNAME",
+      "name": "preview",
+      "content": "astropal-preview.pages.dev",
+      "ttl": 1, 
+      "proxied": true,
+      "comment": "Preview environment for staging"
+    },
+    {
+      "type": "TXT",
+      "name": "@",
+      "content": "v=spf1 include:spf.resend.com ~all",
+      "ttl": 1,
+      "comment": "SPF record for Resend email delivery"
+    },
+    {
+      "type": "TXT",
+      "name": "_dmarc",
+      "content": "v=DMARC1; p=quarantine; rua=mailto:dmarc@astropal.com",
+      "ttl": 1,
+      "comment": "DMARC policy for email authentication"
+    },
+    {
+      "type": "CNAME",
+      "name": "resend._domainkey",
+      "content": "resend._domainkey.resend.com",
+      "ttl": 1,
+      "comment": "DKIM record for Resend (to be replaced with actual key)"
+    },
+    {
+      "type": "MX",
+      "name": "@", 
+      "content": "10 feedback-smtp.astropal.com",
+      "ttl": 1,
+      "comment": "MX record for email feedback processing"
+    }
+  ],
+  "page_rules": [
+    {
+      "url": "astropal.com/*",
+      "actions": {
+        "always_use_https": true,
+        "ssl": "strict"
+      }
+    },
+    {
+      "url": "api.astropal.com/*", 
+      "actions": {
+        "cache_level": "bypass",
+        "always_use_https": true
+      }
+    }
+  ],
+  "creation_script": "infrastructure/cloudflare/setup-dns.sh"
+} 

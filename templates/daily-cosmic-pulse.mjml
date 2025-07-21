@@ -1,0 +1,141 @@
+<mjml>
+  <mj-head>
+    <mj-title>{{subject}} - Astropal</mj-title>
+    <mj-preview>{{preheader}}</mj-preview>
+    <mj-attributes>
+      <mj-all font-family="Arial, sans-serif" />
+      <mj-text font-size="16px" color="#1F2937" line-height="1.5" />
+      <mj-section background-color="#FFFFFF" />
+    </mj-attributes>
+    <mj-style inline="inline">
+      .cosmic-gradient { 
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+      }
+      .perspective-calm { color: #10B981; }
+      .perspective-knowledge { color: #3B82F6; }
+      .perspective-success { color: #F59E0B; }
+      .perspective-evidence { color: #8B5CF6; }
+    </mj-style>
+  </mj-head>
+  
+  <mj-body background-color="#F3F4F6">
+    <!-- Header -->
+    <mj-section background-color="#0F172A" padding="20px 0">
+      <mj-column>
+        <mj-text align="center" color="#FFFFFF" font-size="28px" font-weight="bold">
+          ✨ Astropal
+        </mj-text>
+        <mj-text align="center" color="#94A3B8" font-size="14px">
+          Your Daily Cosmic Pulse
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Main Content -->
+    <mj-section background-color="#FFFFFF" padding="30px 20px">
+      <mj-column>
+        <!-- Subject Line -->
+        <mj-text font-size="24px" font-weight="bold" color="#1F2937" align="center">
+          {{subject}}
+        </mj-text>
+        
+        <!-- Date and Perspective -->
+        <mj-text font-size="14px" color="#6B7280" align="center" padding-bottom="20px">
+          {{date}} • {{perspective}} Perspective
+        </mj-text>
+
+        <!-- Newsletter Sections -->
+        {{#sections}}
+        <mj-divider border-color="#E5E7EB" border-width="1px" padding="20px 0 10px 0" />
+        
+        <mj-text font-size="20px" font-weight="600" color="#374151" padding-bottom="10px">
+          {{heading}}
+        </mj-text>
+        
+        <mj-text font-size="16px" color="#1F2937" line-height="1.6">
+          {{{html}}}
+        </mj-text>
+        
+        {{#cta}}
+        <mj-button background-color="#8B5CF6" color="#FFFFFF" font-size="16px" border-radius="8px" padding="15px 0" href="{{url}}">
+          {{label}}
+        </mj-button>
+        {{/cta}}
+        {{/sections}}
+      </mj-column>
+    </mj-section>
+
+    <!-- Share Section -->
+    <mj-section background-color="#F9FAFB" padding="20px">
+      <mj-column>
+        <mj-text align="center" color="#374151" font-size="18px" font-weight="600">
+          Share Your Cosmic Moment
+        </mj-text>
+        <mj-text align="center" color="#6B7280" font-size="14px" padding-bottom="15px">
+          {{shareableSnippet}}
+        </mj-text>
+        <mj-social font-size="15px" icon-size="30px" mode="horizontal" padding="10px 25px" align="center">
+          <mj-social-element name="twitter" href="{{shareUrls.twitter}}">
+            Share
+          </mj-social-element>
+          <mj-social-element name="facebook" href="{{shareUrls.facebook}}">
+            Share
+          </mj-social-element>
+          <mj-social-element name="linkedin" href="{{shareUrls.linkedin}}">
+            Share
+          </mj-social-element>
+        </mj-social>
+      </mj-column>
+    </mj-section>
+
+    <!-- Tier-specific upgrade section for Free users -->
+    {{#isFreeTier}}
+    <mj-section background-color="#EEF2FF" padding="25px 20px">
+      <mj-column>
+        <mj-text align="center" color="#3730A3" font-size="18px" font-weight="600">
+          ✨ Unlock Deeper Insights
+        </mj-text>
+        <mj-text align="center" color="#4C1D95" font-size="14px" padding-bottom="15px">
+          Get personalized weekly summaries and Pro-tier cosmic analysis
+        </mj-text>
+        <mj-button background-color="#7C3AED" color="#FFFFFF" font-size="16px" border-radius="8px" href="{{upgradeUrl}}">
+          Upgrade to Basic - $7.99/month
+        </mj-button>
+      </mj-column>
+    </mj-section>
+    {{/isFreeTier}}
+
+    <!-- Account Management -->
+    <mj-section background-color="#F3F4F6" padding="20px">
+      <mj-column>
+        <mj-text align="center" color="#374151" font-size="14px" padding-bottom="10px">
+          Manage Your Cosmic Journey
+        </mj-text>
+        <mj-text align="center" font-size="12px" color="#6B7280">
+          <a href="{{changePerspectiveUrl}}" style="color: #8B5CF6; text-decoration: none;">Change Perspective</a> |
+          <a href="{{updatePreferencesUrl}}" style="color: #8B5CF6; text-decoration: none;">Update Preferences</a> |
+          {{#upgradeUrl}}<a href="{{upgradeUrl}}" style="color: #10B981; text-decoration: none;">Upgrade Account</a> |{{/upgradeUrl}}
+          {{#cancelUrl}}<a href="{{cancelUrl}}" style="color: #EF4444; text-decoration: none;">Cancel Subscription</a> |{{/cancelUrl}}
+          <a href="{{unsubscribeUrl}}" style="color: #6B7280; text-decoration: none;">Unsubscribe</a>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Footer -->
+    <mj-section background-color="#1F2937" padding="20px">
+      <mj-column>
+        <mj-text align="center" color="#9CA3AF" font-size="12px">
+          <p>
+            Astropal - Personalized Cosmic Insights<br/>
+            San Francisco, CA 94105<br/>
+            <a href="https://astropal.com/privacy" style="color: #D1D5DB;">Privacy Policy</a> | 
+            <a href="https://astropal.com/terms" style="color: #D1D5DB;">Terms of Service</a>
+          </p>
+          <p style="margin-top: 15px;">
+            This email was sent to {{userEmail}}. You received this because you signed up for Astropal cosmic insights.
+          </p>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml> 

@@ -1,0 +1,43 @@
+{
+  "name": "@astropal/backend",
+  "version": "1.0.0",
+  "description": "Astropal Newsletter Backend - Cloudflare Workers",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "wrangler dev --env development",
+    "build": "echo 'Skipping TypeScript build for deployment'",
+    "deploy": "wrangler deploy",
+    "deploy:production": "wrangler deploy --env production",
+    "deploy:development": "wrangler deploy --env development",
+    "test": "vitest",
+    "test:coverage": "vitest --coverage",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint src --ext .ts --ignore-path ../../.gitignore",
+    "lint:fix": "eslint src --ext .ts --ignore-path ../../.gitignore --fix",
+    "db:generate": "drizzle-kit generate:sqlite",
+    "db:migrate": "wrangler d1 migrations apply astropal_main",
+    "db:migrate:production": "wrangler d1 migrations apply astropal_main --env production",
+    "db:studio": "drizzle-kit studio",
+    "clean": "rm -rf dist .wrangler"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.29.3",
+    "hono": "^3.12.8",
+    "zod": "^3.22.4",
+    "ajv": "^8.12.0",
+    "crypto-js": "^4.2.0",
+    "date-fns": "^2.30.0",
+    "jose": "^5.2.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240117.0",
+    "@types/crypto-js": "^4.2.2",
+    "drizzle-kit": "^0.20.9",
+    "typescript": "^5.3.3",
+    "vitest": "^1.2.0",
+    "wrangler": "^3.23.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+} 

@@ -1,0 +1,182 @@
+<mjml>
+  <mj-head>
+    <mj-title>Welcome to Astropal - Your Cosmic Journey Begins</mj-title>
+    <mj-preview>✨ Your personalized cosmic insights await. Welcome to the Astropal community!</mj-preview>
+    <mj-attributes>
+      <mj-all font-family="Arial, sans-serif" />
+      <mj-text font-size="16px" color="#1F2937" line-height="1.5" />
+      <mj-section background-color="#FFFFFF" />
+    </mj-attributes>
+    <mj-style inline="inline">
+      .cosmic-gradient { 
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+      }
+    </mj-style>
+  </mj-head>
+  
+  <mj-body background-color="#F3F4F6">
+    <!-- Header with Cosmic Theme -->
+    <mj-section background-color="#0F172A" padding="40px 20px">
+      <mj-column>
+        <mj-text align="center" color="#FFFFFF" font-size="32px" font-weight="bold">
+          ✨ Welcome to Astropal
+        </mj-text>
+        <mj-text align="center" color="#94A3B8" font-size="18px">
+          Your cosmic journey begins now
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Welcome Message -->
+    <mj-section background-color="#FFFFFF" padding="40px 20px">
+      <mj-column>
+        <mj-text font-size="24px" font-weight="600" color="#1F2937" align="center" padding-bottom="20px">
+          Hello {{userName}}! 🌟
+        </mj-text>
+        
+        <mj-text font-size="16px" color="#374151" line-height="1.6">
+          Thank you for joining Astropal! We're excited to guide you on your personalized cosmic journey. 
+          Your account has been created with a <strong>7-day free trial</strong> so you can explore all our features.
+        </mj-text>
+        
+        <mj-text font-size="16px" color="#374151" line-height="1.6" padding-top="20px">
+          Based on your birth details and chosen <strong>{{perspective}} perspective</strong>, 
+          we'll deliver daily cosmic insights tailored specifically for you, focusing on:
+        </mj-text>
+        
+        <!-- Focus Areas -->
+        <mj-table>
+          <tr>
+            <td style="padding: 15px; background: #F3F4F6; border-radius: 8px; margin: 10px 0;">
+              {{#focusAreas}}
+              <div style="color: #8B5CF6; font-weight: 600; margin: 5px 0;">✦ {{.}}</div>
+              {{/focusAreas}}
+            </td>
+          </tr>
+        </mj-table>
+      </mj-column>
+    </mj-section>
+
+    <!-- What to Expect -->
+    <mj-section background-color="#F9FAFB" padding="30px 20px">
+      <mj-column>
+        <mj-text font-size="20px" font-weight="600" color="#1F2937" align="center" padding-bottom="20px">
+          What to Expect
+        </mj-text>
+        
+        <mj-table>
+          <tr>
+            <td style="padding: 15px;">
+              <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                <span style="color: #8B5CF6; font-size: 20px; margin-right: 10px;">📧</span>
+                <span style="color: #374151; font-weight: 600;">Daily Cosmic Pulse</span>
+              </div>
+              <p style="color: #6B7280; margin: 0; margin-left: 30px;">
+                Personalized insights delivered to your inbox every morning
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 15px;">
+              <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                <span style="color: #8B5CF6; font-size: 20px; margin-right: 10px;">🌙</span>
+                <span style="color: #374151; font-weight: 600;">Lunar Cycles & Planetary Insights</span>
+              </div>
+              <p style="color: #6B7280; margin: 0; margin-left: 30px;">
+                Real astronomical data integrated with your personal chart
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 15px;">
+              <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                <span style="color: #8B5CF6; font-size: 20px; margin-right: 10px;">🎯</span>
+                <span style="color: #374151; font-weight: 600;">Focus-Based Guidance</span>
+              </div>
+              <p style="color: #6B7280; margin: 0; margin-left: 30px;">
+                Content tailored to your chosen areas of focus and perspective
+              </p>
+            </td>
+          </tr>
+        </mj-table>
+      </mj-column>
+    </mj-section>
+
+    <!-- Account Access -->
+    <mj-section background-color="#EEF2FF" padding="30px 20px">
+      <mj-column>
+        <mj-text font-size="20px" font-weight="600" color="#3730A3" align="center" padding-bottom="15px">
+          Your Account Dashboard
+        </mj-text>
+        
+        <mj-text font-size="14px" color="#4C1D95" align="center" padding-bottom="20px">
+          Access your account anytime using the secure link below (no password needed!)
+        </mj-text>
+        
+        <mj-button background-color="#7C3AED" color="#FFFFFF" font-size="16px" border-radius="8px" padding="15px 30px" href="{{accountUrl}}">
+          Access My Account
+        </mj-button>
+        
+        <mj-text font-size="12px" color="#6B7280" align="center" padding-top="15px">
+          Bookmark this link for easy access to your preferences
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Trial Information -->
+    <mj-section background-color="#FFFFFF" padding="30px 20px">
+      <mj-column>
+        <mj-text font-size="18px" font-weight="600" color="#1F2937" align="center" padding-bottom="15px">
+          Your 7-Day Free Trial
+        </mj-text>
+        
+        <mj-text font-size="14px" color="#374151" align="center">
+          <strong>Trial ends:</strong> {{trialEndDate}}<br/>
+          <strong>Current tier:</strong> Trial (All Features Unlocked)<br/>
+          <strong>Daily delivery time:</strong> {{deliveryTime}}
+        </mj-text>
+        
+        <mj-text font-size="14px" color="#6B7280" align="center" padding-top="15px">
+          No credit card required during trial. You'll receive a reminder before it ends.
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Next Steps -->
+    <mj-section background-color="#F3F4F6" padding="30px 20px">
+      <mj-column>
+        <mj-text font-size="18px" font-weight="600" color="#1F2937" align="center" padding-bottom="20px">
+          What's Next?
+        </mj-text>
+        
+        <mj-text font-size="14px" color="#374151" line-height="1.6">
+          <strong>1.</strong> Your first Daily Cosmic Pulse will arrive tomorrow morning<br/>
+          <strong>2.</strong> Check your email for insights tailored to your {{perspective}} perspective<br/>
+          <strong>3.</strong> Use your account link above to adjust preferences anytime<br/>
+          <strong>4.</strong> Explore different perspectives by clicking the links in your daily emails
+        </mj-text>
+        
+        <mj-text font-size="14px" color="#6B7280" align="center" padding-top="20px">
+          Have questions? Simply reply to any of our emails - we're here to help! ✨
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Footer -->
+    <mj-section background-color="#1F2937" padding="20px">
+      <mj-column>
+        <mj-text align="center" color="#9CA3AF" font-size="12px">
+          <p>
+            Astropal - Personalized Cosmic Insights<br/>
+            San Francisco, CA 94105<br/>
+            <a href="https://astropal.com/privacy" style="color: #D1D5DB;">Privacy Policy</a> | 
+            <a href="https://astropal.com/terms" style="color: #D1D5DB;">Terms of Service</a>
+          </p>
+          <p style="margin-top: 15px;">
+            This email was sent to {{userEmail}}. You received this because you just created an Astropal account.
+          </p>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml> 

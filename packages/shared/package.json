@@ -1,0 +1,46 @@
+{
+  "name": "@astropal/shared",
+  "version": "1.0.0",
+  "description": "Shared utilities and types for Astropal frontend and backend",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist",
+    "test": "vitest"
+  },
+  "keywords": ["astropal", "shared", "utilities"],
+  "author": "Astropal Team",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "vitest": "^1.0.0",
+    "@types/node": "^20.0.0"
+  },
+  "dependencies": {
+    "zod": "^3.22.0"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./types": {
+      "import": "./dist/types.js",
+      "require": "./dist/types.js", 
+      "types": "./dist/types.d.ts"
+    },
+    "./validation": {
+      "import": "./dist/validation.js",
+      "require": "./dist/validation.js",
+      "types": "./dist/validation.d.ts"
+    },
+    "./constants": {
+      "import": "./dist/constants.js",
+      "require": "./dist/constants.js",
+      "types": "./dist/constants.d.ts"
+    }
+  }
+} 

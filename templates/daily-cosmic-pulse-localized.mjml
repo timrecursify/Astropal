@@ -1,0 +1,125 @@
+<mjml>
+  <mj-head>
+    <mj-title>{{subject}}</mj-title>
+    <mj-preview>{{preheader}}</mj-preview>
+    <mj-attributes>
+      <mj-text color="#333333" font-family="Arial, sans-serif" font-size="16px" line-height="1.6" />
+      <mj-section background-color="#f4f4f4" padding="20px" />
+    </mj-attributes>
+    <mj-style>
+      .perspective-badge {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: bold;
+        text-transform: uppercase;
+      }
+      .perspective-calm { background-color: #E0E7FF; color: #4338CA; }
+      .perspective-knowledge { background-color: #DBEAFE; color: #1E40AF; }
+      .perspective-success { background-color: #FEF3C7; color: #92400E; }
+      .perspective-evidence { background-color: #D1FAE5; color: #065F46; }
+    </mj-style>
+  </mj-head>
+  
+  <mj-body background-color="#f4f4f4">
+    <!-- Header -->
+    <mj-section background-color="#1a1a2e" padding="30px 20px">
+      <mj-column>
+        <mj-text color="#ffffff" font-size="32px" font-weight="bold" align="center">
+          Astropal
+        </mj-text>
+        <mj-text color="#E0E7FF" font-size="14px" align="center">
+          {{header_tagline}}
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Main Content -->
+    <mj-section background-color="#ffffff" padding="40px 20px">
+      <mj-column>
+        <!-- Greeting -->
+        <mj-text font-size="20px" color="#1a1a2e" padding-bottom="20px">
+          {{greeting}}
+        </mj-text>
+
+        <!-- Perspective Badge -->
+        <mj-text align="center" padding-bottom="30px">
+          <span class="perspective-badge perspective-{{perspective_class}}">
+            {{perspective_name}}
+          </span>
+        </mj-text>
+
+        <!-- Main Content Sections -->
+        {{#sections}}
+        <mj-text padding-bottom="10px">
+          <h2 style="color: #1a1a2e; font-size: 20px; margin: 0 0 10px 0;">
+            {{heading}}
+          </h2>
+        </mj-text>
+        
+        <mj-text padding-bottom="25px">
+          {{html}}
+        </mj-text>
+        {{/sections}}
+
+        <!-- Call to Action (for free/basic tiers) -->
+        {{#show_upgrade}}
+        <mj-section padding="30px 0">
+          <mj-column>
+            <mj-divider border-color="#e0e0e0" />
+            <mj-text align="center" padding="20px 0 10px">
+              <strong>{{upgrade_prompt}}</strong>
+            </mj-text>
+            <mj-button background-color="#8B5CF6" href="{{upgrade_url}}" padding="10px 0">
+              {{upgrade_button_text}}
+            </mj-button>
+          </mj-column>
+        </mj-section>
+        {{/show_upgrade}}
+      </mj-column>
+    </mj-section>
+
+    <!-- Perspective Selector -->
+    <mj-section background-color="#f8f9fa" padding="20px">
+      <mj-column>
+        <mj-text align="center" font-size="12px" color="#666666">
+          {{perspective_selector_text}}
+        </mj-text>
+        <mj-text align="center" font-size="11px">
+          <a href="{{calm_url}}" style="color: #4338CA; text-decoration: none;">{{calm_text}}</a> | 
+          <a href="{{knowledge_url}}" style="color: #1E40AF; text-decoration: none;">{{knowledge_text}}</a> | 
+          <a href="{{success_url}}" style="color: #92400E; text-decoration: none;">{{success_text}}</a> | 
+          <a href="{{evidence_url}}" style="color: #065F46; text-decoration: none;">{{evidence_text}}</a>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Footer -->
+    <mj-section padding="30px 20px">
+      <mj-column>
+        <!-- Social Sharing -->
+        <mj-text align="center" font-size="14px" color="#666666" padding-bottom="20px">
+          {{share_text}}
+        </mj-text>
+        
+        <!-- Footer Links -->
+        <mj-text align="center" font-size="12px" color="#999999">
+          <a href="{{unsubscribe_url}}" style="color: #999999;">{{unsubscribe_text}}</a> | 
+          <a href="{{preferences_url}}" style="color: #999999;">{{preferences_text}}</a>
+        </mj-text>
+        
+        <!-- Company Info -->
+        <mj-text align="center" font-size="11px" color="#999999" padding-top="20px">
+          {{footer_disclaimer}}
+        </mj-text>
+        
+        <!-- Legal Links -->
+        <mj-text align="center" font-size="11px" color="#999999" padding-top="10px">
+          <a href="{{privacy_url}}" style="color: #999999;">{{privacy_text}}</a> | 
+          <a href="{{terms_url}}" style="color: #999999;">{{terms_text}}</a>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml> 
