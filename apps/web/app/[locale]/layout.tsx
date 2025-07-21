@@ -4,6 +4,7 @@ import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { ReactNode } from 'react';
 import Providers from '../../components/Providers';
+import ErrorBoundary from '../../components/ErrorBoundary';
 import '../globals.css';
 
 const inter = Inter({ 
@@ -12,27 +13,59 @@ const inter = Inter({
   variable: '--font-inter'
 });
 
+// Enhanced logging utility for layout
+const log = (level: string, message: string, data: any = {}) => {
+  const logEntry = {
+    timestamp: new Date().toISOString(),
+    level,
+    service: 'layout',
+    message,
+    ...data
+  };
+  
+  console[level === 'error' ? 'error' : 'log'](`[LAYOUT-${level.toUpperCase()}]`, JSON.stringify(logEntry));
+};
+
 // Get domain from environment variables
 const getDomain = () => {
-  return process.env.NEXT_PUBLIC_DOMAIN || 'astropal.io';
+  const domain = process.env.NEXT_PUBLIC_DOMAIN || 'astropal.io';
+  log('debug', 'Domain resolved', { domain, source: process.env.NEXT_PUBLIC_DOMAIN ? 'env' : 'default' });
+  return domain;
 };
 
 // Get API base URL from environment variables
 const getApiBaseUrl = () => {
   if (process.env.NEXT_PUBLIC_API_BASE_URL) {
+    log('debug', 'API URL from explicit env var', { apiUrl: process.env.NEXT_PUBLIC_API_BASE_URL });
     return process.env.NEXT_PUBLIC_API_BASE_URL;
   }
   
   if (process.env.NODE_ENV === 'production' || process.env.NEXT_PUBLIC_ENVIRONMENT === 'production') {
     const domain = getDomain();
-    return `https://api.${domain}`;
+    const apiUrl = `https://api.${domain}`;
+    log('debug', 'API URL generated for production', { apiUrl, domain });
+    return apiUrl;
   }
   
+  log('debug', 'API URL defaulting to localhost', { apiUrl: 'http://localhost:8787' });
   return 'http://localhost:8787';
 };
 
 const BASE_URL = `https://${getDomain()}`;
 const API_URL = getApiBaseUrl();
+
+// Log environment configuration at module load
+log('info', 'Layout module loaded', {
+  nodeEnv: process.env.NODE_ENV,
+  publicEnv: process.env.NEXT_PUBLIC_ENVIRONMENT,
+  cfPages: !!process.env.CF_PAGES,
+  cfPagesUrl: process.env.CF_PAGES_URL,
+  cfPagesBranch: process.env.CF_PAGES_BRANCH,
+  cfPagesCommitSha: process.env.CF_PAGES_COMMIT_SHA,
+  baseUrl: BASE_URL,
+  apiUrl: API_URL,
+  domain: getDomain()
+});
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -105,7 +138,17 @@ export const metadata: Metadata = {
 const locales = ['en', 'es'];
 
 export async function generateStaticParams() {
-  return locales.map((locale) => ({ locale }));
+  log('info', 'Generating static params', { locales });
+  
+  const params = locales.map((locale) => ({ locale }));
+  
+  log('info', 'Static params generated', { 
+    params,
+    count: params.length,
+    buildTime: new Date().toISOString()
+  });
+  
+  return params;
 }
 
 export default async function RootLayout({
@@ -115,11 +158,55 @@ export default async function RootLayout({
   children: ReactNode;
   params: { locale: string };
 }) {
+  const requestId = Math.random().toString(36).substring(7);
+  
+  log('info', 'Layout rendering', {
+    requestId,
+    locale,
+    supportedLocales: locales,
+    timestamp: new Date().toISOString()
+  });
+
+  // Validate locale with enhanced logging
   if (!locales.includes(locale)) {
+    log('error', 'Invalid locale - triggering 404', {
+      requestId,
+      requestedLocale: locale,
+      supportedLocales: locales,
+      localeType: typeof locale,
+      localeLength: locale?.length
+    });
+    
+    // Log additional debugging info
+    log('error', 'Locale validation failure details', {
+      requestId,
+      exactMatches: locales.map(l => ({ locale: l, matches: l === locale, comparison: `'${l}' === '${locale}'` })),
+      trimmedLocale: locale?.trim(),
+      normalizedLocale: locale?.toLowerCase(),
+    });
+    
     notFound();
   }
 
-  const messages = await getMessages();
+  let messages;
+  try {
+    log('debug', 'Loading messages for locale', { requestId, locale });
+    messages = await getMessages();
+    log('info', 'Messages loaded successfully', {
+      requestId,
+      locale,
+      messageKeys: Object.keys(messages || {}),
+      messageCount: Object.keys(messages || {}).length
+    });
+  } catch (error) {
+    log('error', 'Failed to load messages', {
+      requestId,
+      locale,
+      error: error instanceof Error ? error.message : String(error),
+      stack: error instanceof Error ? error.stack : undefined
+    });
+    throw error;
+  }
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -137,6 +224,14 @@ export default async function RootLayout({
     }
   };
 
+  log('info', 'Layout render complete', {
+    requestId,
+    locale,
+    hasMessages: !!messages,
+    structuredDataUrl: structuredData.url,
+    renderTime: new Date().toISOString()
+  });
+
   return (
     <html lang={locale} className={inter.variable}>
       <head>
@@ -150,9 +245,11 @@ export default async function RootLayout({
         />
       </head>
       <body className="min-h-screen bg-slate-950 text-white antialiased">
-        <Providers messages={messages} locale={locale}>
-          {children}
-        </Providers>
+        <ErrorBoundary componentName="RootLayout">
+          <Providers messages={messages} locale={locale}>
+            {children}
+          </Providers>
+        </ErrorBoundary>
       </body>
     </html>
   );
