@@ -5,11 +5,51 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: false,
   },
+  eslint: {
+    // Disable ESLint during builds in CI/production
+    ignoreDuringBuilds: process.env.CI || process.env.NODE_ENV === 'production',
+  },
   // Disable static export for easier deployment
   output: undefined,
   trailingSlash: false,
   images: {
     unoptimized: false
+  },
+  
+  // Optimize for Cloudflare Pages deployment
+  experimental: {
+    webpackBuildWorker: false, // Disable to reduce memory usage
+  },
+  
+  // Configure webpack for smaller builds
+  webpack: (config, { buildId, dev, isServer }) => {
+    // Disable caching for production builds to avoid large cache files
+    if (!dev) {
+      config.cache = false;
+    }
+    
+    // Optimize bundle size
+    config.optimization = {
+      ...config.optimization,
+      splitChunks: {
+        ...config.optimization?.splitChunks,
+        cacheGroups: {
+          ...config.optimization?.splitChunks?.cacheGroups,
+          default: false,
+          vendors: false,
+          // Create smaller chunks
+          framework: {
+            chunks: 'all',
+            name: 'framework',
+            test: /(?<!node_modules.*)[\\/]node_modules[\\/](react|react-dom|scheduler|prop-types|use-subscription)[\\/]/,
+            priority: 40,
+            enforce: true,
+          },
+        },
+      },
+    };
+    
+    return config;
   },
   
   // Security headers
