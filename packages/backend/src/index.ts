@@ -2,6 +2,7 @@ import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { logger } from '@/lib/logger';
 import { createDatabaseClient } from '@/db/client';
+import { emailLogs, rateLimits, users } from '@/db/schema';
 import { RateLimiter } from '@/services/rateLimiter';
 import { createEmailService } from '@/services/emailService';
 import { createUserService } from '@/services/userService';
@@ -110,8 +111,11 @@ const checkD1Connection = async (db: D1Database) => {
   }
 };
 
-const checkKVConnection = async (kv: KVNamespace) => {
+const checkKVConnection = async (kv: KVNamespace | undefined) => {
   try {
+    if (!kv) {
+      return { status: 'healthy' as const, note: 'KV namespace not configured (development mode)' };
+    }
     await kv.put('health-check', 'ok', { expirationTtl: 60 });
     await kv.delete('health-check');
     return { status: 'healthy' as const };
@@ -159,13 +163,21 @@ app.post('/register', async (c) => {
     const userService = c.get('userService');
     const body = await c.req.json();
     
+    // Extract IP address and user agent for rate limiting and logging
+    const ipAddress = c.req.header('CF-Connecting-IP') || 
+                     c.req.header('X-Forwarded-For') || 
+                     c.req.header('X-Real-IP') || 
+                     'unknown';
+    const userAgent = c.req.header('User-Agent') || 'unknown';
+    
     logger.info('Registration attempt', {
       email: body.email,
       perspective: body.perspective,
+      ipAddress,
       component: 'registration'
     });
     
-    const result = await userService.registerUser(body);
+    const result = await userService.registerUser(body, ipAddress, userAgent);
     
     if (result.success) {
       logger.info('User registered successfully', {
@@ -377,6 +389,215 @@ app.post('/stripe/webhook/payment', async (c) => {
     
     return c.json({ error: 'Webhook processing failed' }, 500);
   }
+});
+
+// Admin endpoints for testing (only in development)
+app.post('/admin/trigger-ephemeris', async (c) => {
+  // Allow admin endpoints if not in a true production deployment (workers.dev domain indicates testing)
+  const isTestingEnvironment = c.req.header('host')?.includes('workers.dev') || 
+                                process.env.NODE_ENV !== 'production';
+  
+  if (!isTestingEnvironment) {
+    return c.json({ error: 'Admin endpoints not available in production' }, 403);
+  }
+  
+  try {
+    const { SchedulerJobs } = await import('./workers/scheduler');
+    const jobs = new SchedulerJobs(c.env);
+    await jobs.handleEphemerisFetch(c.env);
+    
+    return c.json({ success: true, message: 'Ephemeris fetch triggered' });
+  } catch (error) {
+    logger.error('Admin ephemeris trigger failed', { error: (error as Error).message });
+    return c.json({ error: 'Failed to trigger ephemeris fetch' }, 500);
+  }
+});
+
+app.post('/admin/trigger-content', async (c) => {
+  const isTestingEnvironment = c.req.header('host')?.includes('workers.dev') || 
+                                process.env.NODE_ENV !== 'production';
+  
+  if (!isTestingEnvironment) {
+    return c.json({ error: 'Admin endpoints not available in production' }, 403);
+  }
+  
+  try {
+    const { SchedulerJobs } = await import('./workers/scheduler');
+    const jobs = new SchedulerJobs(c.env);
+    await jobs.handleContentGeneration(c.env);
+    
+    return c.json({ success: true, message: 'Content generation triggered' });
+  } catch (error) {
+    logger.error('Admin content trigger failed', { error: (error as Error).message });
+    return c.json({ error: 'Failed to trigger content generation' }, 500);
+  }
+});
+
+app.post('/admin/trigger-emails', async (c) => {
+  const isTestingEnvironment = c.req.header('host')?.includes('workers.dev') || 
+                                process.env.NODE_ENV !== 'production';
+  
+  if (!isTestingEnvironment) {
+    return c.json({ error: 'Admin endpoints not available in production' }, 403);
+  }
+  
+  try {
+    const { SchedulerJobs } = await import('./workers/scheduler');
+    const jobs = new SchedulerJobs(c.env);
+    await jobs.handleEmailQueueProcessing(c.env);
+    
+    return c.json({ success: true, message: 'Email processing triggered' });
+  } catch (error) {
+    logger.error('Admin email trigger failed', { error: (error as Error).message });
+    return c.json({ error: 'Failed to trigger email processing' }, 500);
+  }
+});
+
+app.get('/admin/email-status', async (c) => {
+  const isTestingEnvironment = c.req.header('host')?.includes('workers.dev') || 
+                                process.env.NODE_ENV !== 'production';
+  
+  if (!isTestingEnvironment) {
+    return c.json({ error: 'Admin endpoints not available in production' }, 403);
+  }
+  
+  try {
+    const db = c.get('db');
+    const recentEmails = await db.select()
+      .from(emailLogs)
+      .orderBy(emailLogs.sentAt)
+      .limit(20);
+    
+    return c.json({ 
+      success: true, 
+      recentEmails: recentEmails.map(email => ({
+        recipientEmail: email.userId ? '***@***.***' : 'unknown', // Privacy protection
+        status: email.status,
+        templateType: email.templateType,
+        sentAt: email.sentAt
+      }))
+    });
+  } catch (error) {
+    logger.error('Admin email status failed', { error: (error as Error).message });
+    return c.json({ error: 'Failed to get email status' }, 500);
+  }
+});
+
+app.post('/admin/clear-rate-limits', async (c) => {
+  const isTestingEnvironment = c.req.header('host')?.includes('workers.dev') || 
+                                process.env.NODE_ENV !== 'production';
+  
+  if (!isTestingEnvironment) {
+    return c.json({ error: 'Admin endpoints not available in production' }, 403);
+  }
+  
+  try {
+    const db = c.get('db');
+    
+    // Clear all rate limits for testing
+    await db.delete(rateLimits);
+    
+    logger.info('Rate limits cleared for testing', { component: 'admin' });
+    
+    return c.json({ success: true, message: 'Rate limits cleared' });
+  } catch (error) {
+    logger.error('Failed to clear rate limits', { error: (error as Error).message });
+    return c.json({ error: 'Failed to clear rate limits' }, 500);
+  }
+});
+
+app.post('/admin/send-welcome-emails', async (c) => {
+  const isTestingEnvironment = c.req.header('host')?.includes('workers.dev') || 
+                                process.env.NODE_ENV !== 'production';
+  
+  if (!isTestingEnvironment) {
+    return c.json({ error: 'Admin endpoints not available in production' }, 403);
+  }
+  
+  try {
+    const db = c.get('db');
+    const emailService = c.get('emailService');
+    
+    // Get all trial/active users
+    const usersList = await db.select()
+      .from(users)
+      .limit(10);
+    
+    let sentCount = 0;
+    let failedCount = 0;
+    
+    for (const user of usersList) {
+      try {
+        const userName = user.email.split('@')[0];
+        const result = await emailService.sendWelcomeEmail(
+          user.email,
+          userName,
+          user.authToken,
+          user.id
+        );
+        
+        if (result.success) {
+          sentCount++;
+          logger.info('Welcome email sent', { 
+            userId: user.id, 
+            email: user.email,
+            component: 'admin-welcome' 
+          });
+        } else {
+          failedCount++;
+          logger.warn('Welcome email failed', { 
+            userId: user.id, 
+            email: user.email,
+            error: result.error,
+            component: 'admin-welcome' 
+          });
+        }
+      } catch (error) {
+        failedCount++;
+        logger.error('Welcome email error', { 
+          userId: user.id,
+          error: (error as Error).message,
+          component: 'admin-welcome' 
+        });
+      }
+      
+      // Rate limiting between emails
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+    
+    return c.json({ 
+      success: true, 
+      message: `Welcome emails processed: ${sentCount} sent, ${failedCount} failed`,
+      sent: sentCount,
+      failed: failedCount
+    });
+    
+  } catch (error) {
+    logger.error('Failed to send welcome emails', { error: (error as Error).message });
+    return c.json({ error: 'Failed to send welcome emails' }, 500);
+  }
+});
+
+app.get('/admin/debug-env', async (c) => {
+  const isTestingEnvironment = c.req.header('host')?.includes('workers.dev') || 
+                                process.env.NODE_ENV !== 'production';
+  
+  if (!isTestingEnvironment) {
+    return c.json({ error: 'Admin endpoints not available in production' }, 403);
+  }
+  
+  const env = c.env;
+  
+  return c.json({
+    resendKeyExists: !!env.RESEND_API_KEY,
+    resendKeyPrefix: env.RESEND_API_KEY ? env.RESEND_API_KEY.substring(0, 8) + '...' : 'null',
+    resendKeyLength: env.RESEND_API_KEY?.length || 0,
+    grokKeyExists: !!env.GROK_API_KEY,
+    hmacKeyExists: !!env.HMAC_SECRET,
+    jwtKeyExists: !!env.JWT_SECRET,
+    environment: env.NODE_ENV,
+    allEnvKeys: Object.keys(env).filter(key => !key.includes('SECRET') && !key.includes('KEY')).sort()
+  });
 });
 
 // Default export for Cloudflare Workers
