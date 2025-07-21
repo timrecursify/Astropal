@@ -16,6 +16,10 @@ interface User {
   trialEnd?: string;
   subscriptionStatus?: 'active' | 'canceled' | 'past_due';
   currentPeriodEnd?: string;
+  preferences: {
+    locale: string;
+    focusAreas: string[];
+  };
 }
 
 interface PortalState {
@@ -51,11 +55,28 @@ function PortalPageContent() {
     validateTokenAndLoadUser(token);
   }, [token]);
 
+  // Get API base URL from environment variables
+  const getApiBaseUrl = () => {
+    if (process.env.NEXT_PUBLIC_API_BASE_URL) {
+      return process.env.NEXT_PUBLIC_API_BASE_URL;
+    }
+    
+    if (process.env.NODE_ENV === 'production' || process.env.NEXT_PUBLIC_ENVIRONMENT === 'production') {
+      const domain = process.env.NEXT_PUBLIC_DOMAIN || 'astropal.io';
+      return `https://api.${domain}`;
+    }
+    
+    return 'http://localhost:8787';
+  };
+
+  const API_BASE = getApiBaseUrl();
+  const EMAIL_SUPPORT = process.env.NEXT_PUBLIC_SUPPORT_EMAIL || 'support@astropal.io';
+
   const validateTokenAndLoadUser = async (token: string) => {
     try {
       logInfo('Validating user token', { token: token.slice(0, 8) });
       
-      const response = await fetch(`https://api.astropal.io/validate-token?token=${token}`);
+      const response = await fetch(`${API_BASE}/validate-token?token=${token}`);
       const data = await response.json();
 
       if (data.success) {
@@ -104,7 +125,7 @@ function PortalPageContent() {
         userId: state.user.id
       });
       
-      const response = await fetch(`https://api.astropal.io/preferences`, {
+      const response = await fetch(`${API_BASE}/preferences`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -155,7 +176,7 @@ function PortalPageContent() {
         userId: state.user.id
       });
       
-      const response = await fetch(`https://api.astropal.io/billing/${action}`, {
+      const response = await fetch(`${API_BASE}/billing/${action}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -423,12 +444,12 @@ function PortalPageContent() {
               >
                 Return Home
               </button>
-              <a
-                href="mailto:support@astropal.io"
-                className="px-6 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors"
-              >
-                Contact Support
-              </a>
+              <a 
+                                 href={`mailto:${EMAIL_SUPPORT}`}
+                className="text-purple-400 hover:text-purple-300 underline"
+                              >
+                 {EMAIL_SUPPORT}
+                </a>
             </div>
           </motion.div>
         </motion.div>

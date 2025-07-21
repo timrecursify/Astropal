@@ -54,6 +54,10 @@ const nextConfig = {
   
   // Security headers
   async headers() {
+    // Get domain and API URLs from environment variables
+    const domain = process.env.NEXT_PUBLIC_DOMAIN || 'astropal.io';
+    const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL || `https://api.${domain}`;
+    
     return [
       {
         source: '/(.*)',
@@ -67,7 +71,7 @@ const nextConfig = {
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com",
               "img-src 'self' data: blob: https:",
-              "connect-src 'self' https://api.astropal.io https://api.stripe.com",
+              `connect-src 'self' ${apiUrl} https://api.stripe.com`,
               "frame-src 'self' https://js.stripe.com",
               "media-src 'self'",
               "object-src 'none'",

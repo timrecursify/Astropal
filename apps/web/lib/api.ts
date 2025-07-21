@@ -5,11 +5,18 @@ import { computeHMAC } from './crypto';
 import { logger } from './logger';
 import { SignUpData, PreferencesData } from './validation';
 
-// Production-ready API configuration
+// Production-ready API configuration with environment variables
 const getApiBaseUrl = () => {
-  // Production URL - Use api.astropal.io as specified
+  // Use environment variable for API base URL
+  if (process.env.NEXT_PUBLIC_API_BASE_URL) {
+    return process.env.NEXT_PUBLIC_API_BASE_URL;
+  }
+  
+  // Fallback to domain-based logic if env var not set
   if (process.env.NODE_ENV === 'production' || process.env.NEXT_PUBLIC_ENVIRONMENT === 'production') {
-    return 'https://api.astropal.io';
+    // Use environment variable for domain, fallback to hardcoded for backward compatibility
+    const domain = process.env.NEXT_PUBLIC_DOMAIN || 'astropal.io';
+    return `https://api.${domain}`;
   }
   
   // Development URL
@@ -22,7 +29,7 @@ const getApiBaseUrl = () => {
 };
 
 const API_BASE = getApiBaseUrl();
-const HMAC_SECRET = process.env.NEXT_PUBLIC_HMAC || '';
+const HMAC_SECRET = process.env.NEXT_PUBLIC_HMAC_SECRET || '';
 
 // Log API configuration for debugging
 logger.log('info', 'API configuration initialized', {

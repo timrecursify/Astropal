@@ -18,6 +18,35 @@ NODE_VERSION=20.11.0
 NPM_VERSION=10.5.0
 ```
 
+## Required Environment Variables
+
+Add these environment variables in your Cloudflare Pages project settings:
+
+### Essential Configuration
+```
+NEXT_PUBLIC_DOMAIN=astropal.io
+NEXT_PUBLIC_API_BASE_URL=https://api.astropal.io
+NEXT_PUBLIC_HMAC_SECRET=your-hmac-secret-key-here
+```
+
+### Optional Configuration
+```
+NEXT_PUBLIC_SUPPORT_EMAIL=support@astropal.io
+NEXT_PUBLIC_ENVIRONMENT=production
+```
+
+## Environment Variable Details
+
+| Variable | Required | Description | Example |
+|----------|----------|-------------|---------|
+| `NEXT_PUBLIC_DOMAIN` | ✅ Yes | Your custom domain | `astropal.io` |
+| `NEXT_PUBLIC_API_BASE_URL` | ✅ Yes | Backend API endpoint | `https://api.astropal.io` |
+| `NEXT_PUBLIC_HMAC_SECRET` | ✅ Yes | API security secret | `your-secret-key` |
+| `NEXT_PUBLIC_SUPPORT_EMAIL` | ❌ No | Support contact email | `support@astropal.io` |
+| `NEXT_PUBLIC_ENVIRONMENT` | ❌ No | Environment flag | `production` |
+| `NODE_VERSION` | ❌ No | Node.js version | `20.11.0` |
+| `NPM_VERSION` | ❌ No | npm version | `10.5.0` |
+
 ### Build settings (Alternative - Simple)
 **Basic approach without shell script:**
 - **Build command**: `cd apps/web && npm run build`
@@ -31,6 +60,19 @@ NPM_VERSION=10.5.0
 ## Repository
 - **GitHub Repository**: `timrecursify/Astropal`
 - **Branch**: `main`
+
+## Security Improvements Applied
+
+✅ **Environment Variable Security:**
+- All API endpoints now use environment variables
+- Domain configuration externalized
+- HMAC secrets properly configured
+- Support email configurable
+
+✅ **Content Security Policy:**
+- Dynamic CSP headers based on environment variables
+- API domains automatically configured
+- Secure external service connections
 
 ## Optimizations Applied
 
@@ -51,4 +93,5 @@ NPM_VERSION=10.5.0
 2. Cache files are automatically cleaned to stay under 25MB limit
 3. The build script removes webpack cache files after successful build
 4. ESLint and TypeScript validation disabled in CI for faster builds
-5. Production deployments should come from the `main` branch 
+5. Production deployments should come from the `main` branch
+6. **Set all environment variables** in Cloudflare Pages project settings before deployment 
