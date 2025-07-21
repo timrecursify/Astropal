@@ -9,8 +9,8 @@ const nextConfig = {
     // Disable ESLint during builds in CI/production
     ignoreDuringBuilds: process.env.CI || process.env.NODE_ENV === 'production',
   },
-  // Disable static export for easier deployment
-  output: undefined,
+  // Remove static export - use Cloudflare Pages Functions instead
+  // output: 'export',
   trailingSlash: false,
   images: {
     unoptimized: false

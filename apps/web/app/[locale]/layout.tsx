@@ -17,25 +17,71 @@ const getDomain = () => {
   return process.env.NEXT_PUBLIC_DOMAIN || 'astropal.io';
 };
 
-const getApiDomain = () => {
-  const domain = getDomain();
-  return process.env.NEXT_PUBLIC_API_BASE_URL || `https://api.${domain}`;
+// Get API base URL from environment variables
+const getApiBaseUrl = () => {
+  if (process.env.NEXT_PUBLIC_API_BASE_URL) {
+    return process.env.NEXT_PUBLIC_API_BASE_URL;
+  }
+  
+  if (process.env.NODE_ENV === 'production' || process.env.NEXT_PUBLIC_ENVIRONMENT === 'production') {
+    const domain = getDomain();
+    return `https://api.${domain}`;
+  }
+  
+  return 'http://localhost:8787';
 };
 
 const BASE_URL = `https://${getDomain()}`;
-const API_URL = getApiDomain();
+const API_URL = getApiBaseUrl();
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  themeColor: '#000000',
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    template: '%s | Astropal',
-    default: 'Astropal - Your Personal Cosmic Guide'
+    default: 'Astropal - Your Personal Cosmic Guide',
+    template: '%s | Astropal'
   },
-  description: 'Discover personalized cosmic insights tailored to your unique astrological profile. Daily wisdom, weekly forecasts, and monthly guidance.',
-  keywords: ['astrology', 'horoscope', 'cosmic', 'personal', 'insights', 'guidance'],
+  description: 'Transform your daily routine with cosmic wisdom tailored to your unique astrological profile. Get personalized insights delivered to your inbox every morning.',
+  applicationName: 'Astropal',
+  keywords: ['astrology', 'horoscope', 'daily insights', 'cosmic guide', 'personal astrology', 'wellness', 'mindfulness'],
   authors: [{ name: 'Astropal Team' }],
   creator: 'Astropal',
   publisher: 'Astropal',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: BASE_URL,
+    siteName: 'Astropal',
+    title: 'Astropal - Your Personal Cosmic Guide',
+    description: 'Transform your daily routine with cosmic wisdom tailored to your unique astrological profile.',
+    images: [
+      {
+        url: `${BASE_URL}/og-image.png`,
+        width: 1200,
+        height: 630,
+        alt: 'Astropal - Your Personal Cosmic Guide'
+      }
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Astropal - Your Personal Cosmic Guide',
+    description: 'Transform your daily routine with cosmic wisdom tailored to your unique astrological profile.',
+    images: [`${BASE_URL}/twitter-image.png`],
+    creator: '@astropal',
+  },
   robots: {
     index: true,
     follow: true,
@@ -47,52 +93,20 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
-  openGraph: {
-    type: 'website',
-    locale: 'en_US',
-    url: BASE_URL,
-    siteName: 'Astropal',
-    title: 'Astropal - Your Personal Cosmic Guide',
-    description: 'Discover personalized cosmic insights tailored to your unique astrological profile.',
-    images: [
-      {
-        url: '/og-image.png',
-        width: 1200,
-        height: 630,
-        alt: 'Astropal - Your Personal Cosmic Guide',
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Astropal - Your Personal Cosmic Guide',
-    description: 'Discover personalized cosmic insights tailored to your unique astrological profile.',
-    images: ['/og-image.png'],
-  },
   alternates: {
     canonical: BASE_URL,
     languages: {
-      'en-US': `${BASE_URL}/en`,
-      'es-ES': `${BASE_URL}/es`
-    }
+      'en': `${BASE_URL}/en`,
+      'es': `${BASE_URL}/es`,
+    },
   },
-  verification: {
-    google: 'your-google-verification-code',
-  },
-};
-
-export const viewport: Viewport = {
-  width: 'device-width',
-  initialScale: 1,
-  maximumScale: 5,
-  userScalable: true,
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#0f172a' }
-  ],
 };
 
 const locales = ['en', 'es'];
+
+export async function generateStaticParams() {
+  return locales.map((locale) => ({ locale }));
+}
 
 export default async function RootLayout({
   children,

@@ -1,5 +1,12 @@
 import { useTranslations } from 'next-intl';
 
+export async function generateStaticParams() {
+  return [
+    { locale: 'en' },
+    { locale: 'es' }
+  ];
+}
+
 export default function TermsPage() {
   const t = useTranslations('ui.legal');
 

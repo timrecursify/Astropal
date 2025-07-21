@@ -1,5 +1,12 @@
 import VariantCPage from '../../../components/variants/VariantC';
 
+export async function generateStaticParams() {
+  return [
+    { locale: 'en' },
+    { locale: 'es' }
+  ];
+}
+
 export default function VariantC() {
   return <VariantCPage />;
 }

@@ -1,5 +1,12 @@
 import VariantBPage from '../../../components/variants/VariantB';
 
+export async function generateStaticParams() {
+  return [
+    { locale: 'en' },
+    { locale: 'es' }
+  ];
+}
+
 export default function VariantB() {
   return <VariantBPage />;
 }

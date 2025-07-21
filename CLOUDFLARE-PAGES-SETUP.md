@@ -9,7 +9,7 @@ Use these **exact settings** in Cloudflare Pages dashboard:
 
 ### Build configuration
 - **Build command**: `./cloudflare-build.sh`
-- **Build output directory**: `apps/web/.next`
+- **Build output directory**: `/apps/web/.next`
 - **Root directory**: `` (leave empty)
 
 ### Environment variables
@@ -50,7 +50,7 @@ NEXT_PUBLIC_ENVIRONMENT=production
 ### Build settings (Alternative - Simple)
 **Basic approach without shell script:**
 - **Build command**: `cd apps/web && npm run build`
-- **Build output directory**: `apps/web/.next`
+- **Build output directory**: `/apps/web/.next`
 
 ## Production Deployment
 - **Production branch**: `main`
@@ -60,6 +60,21 @@ NEXT_PUBLIC_ENVIRONMENT=production
 ## Repository
 - **GitHub Repository**: `timrecursify/Astropal`
 - **Branch**: `main`
+
+## Cloudflare Pages Functions Support
+
+⚠️ **Important**: This deployment uses **Cloudflare Pages Functions** for server-side rendering, NOT static export.
+
+### Why Pages Functions?
+- Next.js with `next-intl` requires server-side features for locale detection
+- Cloudflare Pages automatically creates Functions from Next.js SSR output
+- No additional configuration needed - it works out of the box!
+
+### What Happens Behind the Scenes
+1. Cloudflare Pages detects the `.next` output directory
+2. It automatically creates Edge Functions from Next.js server files
+3. Static assets are served from the CDN
+4. Dynamic pages are rendered on-demand via Functions
 
 ## Security Improvements Applied
 
@@ -76,7 +91,7 @@ NEXT_PUBLIC_ENVIRONMENT=production
 
 ## Optimizations Applied
 
-✅ **File Size Optimization:**
+✅ **Build Optimization:**
 - Webpack caching disabled for production builds
 - Large cache files automatically removed during build
 - Bundle splitting optimized for smaller chunks
@@ -89,9 +104,10 @@ NEXT_PUBLIC_ENVIRONMENT=production
 - Memory usage optimized for build environment
 
 ## Important Notes
-1. The build output directory MUST be `apps/web/.next` (not `dist`)
-2. Cache files are automatically cleaned to stay under 25MB limit
-3. The build script removes webpack cache files after successful build
-4. ESLint and TypeScript validation disabled in CI for faster builds
+1. **Build output directory MUST be `/apps/web/.next`** (not `out` or `dist`)
+2. **Framework preset should be `Next.js`** (not static export)
+3. Cache files are automatically cleaned to stay under 25MB limit
+4. The build script removes webpack cache files after successful build
 5. Production deployments should come from the `main` branch
-6. **Set all environment variables** in Cloudflare Pages project settings before deployment 
+6. **Set all environment variables** in Cloudflare Pages project settings before deployment
+7. **No additional configuration needed** for Pages Functions - Cloudflare handles it automatically 

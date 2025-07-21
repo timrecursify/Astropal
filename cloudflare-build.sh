@@ -10,24 +10,22 @@ cd apps/web
 echo "🔨 Building Next.js application..."
 npm run build
 
-# Clean up large cache files to avoid Cloudflare Pages 25MB limit
-echo "🧹 Cleaning up cache files for deployment..."
-if [ -d ".next/cache" ]; then
-  echo "Removing .next/cache directory..."
-  rm -rf .next/cache
-fi
-
-if [ -d ".next/static/chunks/webpack" ]; then
-  echo "Removing webpack cache files..."
-  rm -rf .next/static/chunks/webpack
-fi
-
-# Remove other cache files that exceed size limits
-find .next -name "*.pack" -size +20M -delete || true
-find .next -name "*webpack*" -size +20M -delete || true
-
-echo "📊 Checking final build size..."
-du -sh .next/ || true
-
-echo "✅ Build completed and optimized for Cloudflare Pages!"
-echo "📁 Build output is in apps/web/.next/" 
+# Check if static export succeeded and 'out' directory exists
+if [ -d "out" ]; then
+  echo "✅ Static export successful - 'out' directory created"
+  
+  # Clean up any large files to avoid Cloudflare Pages 25MB limit
+  echo "🧹 Cleaning up large files for deployment..."
+  find out -name "*.pack" -size +20M -delete || true
+  find out -name "*webpack*" -size +20M -delete || true
+  
+  echo "📊 Checking final build size..."
+  du -sh out/ || true
+  
+  echo "✅ Build completed and optimized for Cloudflare Pages!"
+  echo "📁 Build output is in apps/web/out/"
+else
+  echo "❌ ERROR: Static export failed - 'out' directory not found!"
+  echo "Check if Next.js is configured for static export (output: 'export')"
+  exit 1
+fi 
