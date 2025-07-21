@@ -1,5 +1,5 @@
 import createMiddleware from 'next-intl/middleware';
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 // Production-safe edge runtime detection
 const getEdgeRuntimeInfo = (): string => {
@@ -33,20 +33,21 @@ const intlMiddleware = createMiddleware({
   // Used when no locale matches
   defaultLocale: 'en',
   
-  // Locale prefix handling
-  localePrefix: 'as-needed'
+  // Locale prefix handling - always show locale in URL for clarity
+  localePrefix: 'always'
 });
 
 // Enhanced middleware with comprehensive logging
 export default function middleware(request: NextRequest) {
   const startTime = Date.now();
   const requestId = Math.random().toString(36).substring(7);
+  const pathname = request.nextUrl.pathname;
   
   // Log incoming request details
   log('info', 'Middleware processing request', {
     requestId,
     url: request.url,
-    pathname: request.nextUrl.pathname,
+    pathname,
     search: request.nextUrl.search,
     method: request.method,
     userAgent: request.headers.get('user-agent'),
@@ -78,28 +79,42 @@ export default function middleware(request: NextRequest) {
       '/manifest.json'
     ];
     
-    const isStaticAsset = staticPaths.some(path => request.nextUrl.pathname.startsWith(path)) ||
-                         request.nextUrl.pathname.includes('.');
+    const isStaticAsset = staticPaths.some(path => pathname.startsWith(path)) ||
+                         pathname.includes('.');
     
     if (isStaticAsset) {
       log('debug', 'Bypassing i18n for static asset', {
         requestId,
-        pathname: request.nextUrl.pathname,
+        pathname,
         isStaticAsset: true
       });
       return;
     }
 
-    // Log locale detection attempt
-    log('debug', 'Attempting locale detection', {
+    // CRITICAL: Handle root path specifically to avoid conflicts
+    if (pathname === '/') {
+      log('info', 'Root path detected - bypassing middleware to allow root page', {
+        requestId,
+        pathname,
+        action: 'bypass_middleware',
+        reason: 'root_page_should_handle_locale_detection'
+      });
+      
+      // Allow the root page to handle locale detection
+      // The root page will do client-side redirect to /en or /es
+      return;
+    }
+
+    // Log locale detection attempt for non-root paths
+    log('debug', 'Attempting locale detection for localized path', {
       requestId,
-      pathname: request.nextUrl.pathname,
+      pathname,
       acceptLanguage: request.headers.get('accept-language'),
       supportedLocales: ['en', 'es'],
       defaultLocale: 'en'
     });
 
-    // Process with next-intl middleware
+    // Process with next-intl middleware for locale-specific paths
     const response = intlMiddleware(request);
     
     const processingTime = Date.now() - startTime;
@@ -131,7 +146,7 @@ export default function middleware(request: NextRequest) {
       requestId,
       error: error instanceof Error ? error.message : String(error),
       stack: error instanceof Error ? error.stack : undefined,
-      pathname: request.nextUrl.pathname,
+      pathname,
       processingTime
     });
     
@@ -153,6 +168,6 @@ export default function middleware(request: NextRequest) {
 }
 
 export const config = {
-  // Match only internationalized pathnames
-  matcher: ['/((?!api|_next|_vercel|.*\\..*).*)']
+  // Match only internationalized pathnames, but exclude root path
+  matcher: ['/((?!api|_next|_vercel|favicon.ico|.*\\..*).*)']
 };
