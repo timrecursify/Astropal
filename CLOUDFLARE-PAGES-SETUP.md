@@ -9,7 +9,7 @@ Use these **exact settings** in Cloudflare Pages dashboard:
 
 ### Build configuration
 - **Build command**: `./cloudflare-build.sh`
-- **Build output directory**: `/apps/web/.next`
+- **Build output directory**: `.vercel/output/static`
 - **Root directory**: `` (leave empty)
 
 ### Environment variables
@@ -49,8 +49,8 @@ NEXT_PUBLIC_ENVIRONMENT=production
 
 ### Build settings (Alternative - Simple)
 **Basic approach without shell script:**
-- **Build command**: `cd apps/web && npm run build`
-- **Build output directory**: `/apps/web/.next`
+- **Build command**: `cd apps/web && npm run build:cf`
+- **Build output directory**: `.vercel/output/static`
 
 ## Production Deployment
 - **Production branch**: `main`
@@ -71,7 +71,7 @@ NEXT_PUBLIC_ENVIRONMENT=production
 - No additional configuration needed - it works out of the box!
 
 ### What Happens Behind the Scenes
-1. Cloudflare Pages detects the `.next` output directory
+1. Cloudflare Pages detects the `.vercel/output/static` directory
 2. It automatically creates Edge Functions from Next.js server files
 3. Static assets are served from the CDN
 4. Dynamic pages are rendered on-demand via Functions
@@ -104,10 +104,10 @@ NEXT_PUBLIC_ENVIRONMENT=production
 - Memory usage optimized for build environment
 
 ## Important Notes
-1. **Build output directory MUST be `/apps/web/.next`** (not `out` or `dist`)
+1. **Build output directory MUST be `.vercel/output/static`** (Next-on-Pages format)
 2. **Framework preset should be `Next.js`** (not static export)
 3. Cache files are automatically cleaned to stay under 25MB limit
 4. The build script removes webpack cache files after successful build
 5. Production deployments should come from the `main` branch
 6. **Set all environment variables** in Cloudflare Pages project settings before deployment
-7. **No additional configuration needed** for Pages Functions - Cloudflare handles it automatically 
+7. **Uses Next-on-Pages for Cloudflare Workers compatibility** - creates `.vercel/output/static` format 
