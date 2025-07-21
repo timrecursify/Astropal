@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" 
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 
+                           http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+  <!-- Homepage (randomly serves variants) -->
+  <url>
+    <loc>https://astropal.io/</loc>
+    <lastmod>2025-01-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://astropal.io/en" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://astropal.io/es" />
+  </url>
+
+  <!-- English homepage -->
+  <url>
+    <loc>https://astropal.io/en</loc>
+    <lastmod>2025-01-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://astropal.io/es" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://astropal.io/" />
+  </url>
+
+  <!-- Spanish homepage -->
+  <url>
+    <loc>https://astropal.io/es</loc>
+    <lastmod>2025-01-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://astropal.io/en" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://astropal.io/" />
+  </url>
+
+  <!-- Variant A - Calm Perspective -->
+  <url>
+    <loc>https://astropal.io/en/variant-a</loc>
+    <lastmod>2025-01-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://astropal.io/es/variant-a" />
+  </url>
+
+  <url>
+    <loc>https://astropal.io/es/variant-a</loc>
+    <lastmod>2025-01-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://astropal.io/en/variant-a" />
+  </url>
+
+  <!-- Variant B - Knowledge Perspective -->
+  <url>
+    <loc>https://astropal.io/en/variant-b</loc>
+    <lastmod>2025-01-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://astropal.io/es/variant-b" />
+  </url>
+
+  <url>
+    <loc>https://astropal.io/es/variant-b</loc>
+    <lastmod>2025-01-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://astropal.io/en/variant-b" />
+  </url>
+
+  <!-- Variant C - Success Perspective -->
+  <url>
+    <loc>https://astropal.io/en/variant-c</loc>
+    <lastmod>2025-01-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://astropal.io/es/variant-c" />
+  </url>
+
+  <url>
+    <loc>https://astropal.io/es/variant-c</loc>
+    <lastmod>2025-01-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://astropal.io/en/variant-c" />
+  </url>
+
+  <!-- Variant D - Evidence Perspective -->
+  <url>
+    <loc>https://astropal.io/en/variant-d</loc>
+    <lastmod>2025-01-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://astropal.io/es/variant-d" />
+  </url>
+
+  <url>
+    <loc>https://astropal.io/es/variant-d</loc>
+    <lastmod>2025-01-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://astropal.io/en/variant-d" />
+  </url>
+
+  <!-- Pricing pages -->
+  <url>
+    <loc>https://astropal.io/en/pricing</loc>
+    <lastmod>2025-01-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://astropal.io/es/pricing" />
+  </url>
+
+  <url>
+    <loc>https://astropal.io/es/pricing</loc>
+    <lastmod>2025-01-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://astropal.io/en/pricing" />
+  </url>
+
+  <!-- Customer portal -->
+  <url>
+    <loc>https://astropal.io/en/portal</loc>
+    <lastmod>2025-01-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://astropal.io/es/portal" />
+  </url>
+
+  <url>
+    <loc>https://astropal.io/es/portal</loc>
+    <lastmod>2025-01-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://astropal.io/en/portal" />
+  </url>
+
+  <!-- Legal pages -->
+  <url>
+    <loc>https://astropal.io/en/privacy</loc>
+    <lastmod>2025-01-20</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://astropal.io/es/privacy" />
+  </url>
+
+  <url>
+    <loc>https://astropal.io/es/privacy</loc>
+    <lastmod>2025-01-20</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://astropal.io/en/privacy" />
+  </url>
+
+  <url>
+    <loc>https://astropal.io/en/terms</loc>
+    <lastmod>2025-01-20</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://astropal.io/es/terms" />
+  </url>
+
+  <url>
+    <loc>https://astropal.io/es/terms</loc>
+    <lastmod>2025-01-20</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://astropal.io/en/terms" />
+  </url>
+
+</urlset> 

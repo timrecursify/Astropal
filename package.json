@@ -8,7 +8,8 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "npm run build --workspaces",
+    "build": "./cloudflare-build.sh",
+    "build:dev": "npm run build --workspaces",
     "build:frontend": "cd apps/web && npm run build",
     "build:web-only": "npm run build --workspace=apps/web",
     "dev": "./scripts/dev.sh",
