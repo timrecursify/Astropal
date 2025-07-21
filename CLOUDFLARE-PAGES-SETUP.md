@@ -18,9 +18,9 @@ NODE_VERSION=20.11.0
 NPM_VERSION=10.5.0
 ```
 
-### Build settings (Alternative if script fails)
-If the shell script doesn't work, use:
-- **Build command**: `cd apps/web && npm ci && npm run build`
+### Build settings (Alternative - Recommended)
+**Simple approach without shell script:**
+- **Build command**: `cd apps/web && npm run build`
 - **Build output directory**: `apps/web/.next`
 
 ## Production Deployment
@@ -34,6 +34,6 @@ If the shell script doesn't work, use:
 
 ## Important Notes
 1. The build output directory MUST be `apps/web/.next` (not `dist`)
-2. The build command MUST navigate to `apps/web` first
-3. Make sure to install dependencies in the correct workspace
-4. Production deployments should come from the `main` branch 
+2. Dependencies are installed at root level by Cloudflare Pages automatically
+3. The build command only needs to navigate to `apps/web` and run build
+4. Husky git hooks are disabled for CI/build environments 

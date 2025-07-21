@@ -11,12 +11,11 @@
     "build": "npm run build --workspaces",
     "build:frontend": "cd apps/web && npm run build",
     "build:web-only": "npm run build --workspace=apps/web",
-    "pages-build": "cd apps/web && npm ci && npm run build",
     "dev": "./scripts/dev.sh",
+    "dev-setup": "husky install",
     "test": "npm test --workspaces",
     "lint": "npm run lint --workspaces",
-    "deploy": "./scripts/deploy.sh",
-    "prepare": "husky install"
+    "deploy": "./scripts/deploy.sh"
   },
   "devDependencies": {
     "@types/node": "^20.11.0",

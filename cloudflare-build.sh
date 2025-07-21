@@ -6,11 +6,7 @@ echo "🚀 Starting Cloudflare Pages build for Astropal frontend..."
 # Navigate to frontend directory
 cd apps/web
 
-# Install dependencies
-echo "📦 Installing frontend dependencies..."
-npm ci
-
-# Build the frontend
+# Build the frontend (dependencies already installed at root)
 echo "🔨 Building Next.js application..."
 npm run build
 
