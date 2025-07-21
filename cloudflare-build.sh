@@ -25,35 +25,20 @@ if [ ! -d ".vercel/output/static" ]; then
 fi
 
 if [ ! -d ".vercel/output/static/_worker.js" ]; then
-  echo "❌ ERROR: Next-on-Pages worker not found!"
-  echo "Expected .vercel/output/static/_worker.js to be created by next-on-pages"
+  echo "❌ ERROR: Next-on-Pages _worker.js not found!"
+  echo "Expected .vercel/output/static/_worker.js directory with Edge Functions"
   exit 1
 fi
 
 echo "✅ Next-on-Pages output verified:"
 echo "📁 Static files: .vercel/output/static"
-echo "⚡ Worker: .vercel/output/static/_worker.js"
+echo "⚡ Functions: .vercel/output/static/_worker.js"
 
-# Clean up large cache files to avoid Cloudflare Pages 25MB limit
-echo "🧹 Cleaning up cache files for deployment..."
-if [ -d ".next/cache" ]; then
-  echo "Removing .next/cache directory..."
-  rm -rf .next/cache
-fi
+# CRITICAL: Copy the output to the root where Cloudflare Pages expects it
+echo "📦 Copying build output to root directory for Cloudflare Pages..."
+cd ../..
+rm -rf .vercel
+cp -r apps/web/.vercel .
 
-if [ -d ".next/static/chunks/webpack" ]; then
-  echo "Removing webpack cache files..."
-  rm -rf .next/static/chunks/webpack
-fi
-
-# Remove other cache files that exceed size limits
-find .vercel/output -name "*.pack" -size +20M -delete || true
-find .vercel/output -name "*webpack*" -size +20M -delete || true
-
-echo "📊 Checking final build size..."
-du -sh .vercel/output/ || true
-
-echo "✅ Build completed and optimized for Cloudflare Pages!"
-echo "📁 Build output is in apps/web/.vercel/output/"
-echo "🌐 Static files ready for deployment from .vercel/output/static"
-echo "⚡ Worker ready for deployment from .vercel/output/static/_worker.js" 
+echo "✅ Build output copied to root .vercel/output/static"
+echo "🎉 Build completed successfully!" 
