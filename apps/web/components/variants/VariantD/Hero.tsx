@@ -5,8 +5,8 @@ import { motion } from 'framer-motion';
 import { Target, Zap, Brain, Star, Mail, Database } from 'lucide-react';
 import { FieldTooltip } from '../../Tooltip';
 import ConfirmationBlock from '../../ConfirmationBlock';
-import { useLogger } from '@/lib/logger';
-import { useRegister } from '@/lib/api';
+import { useLogger } from '../../../lib/logger';
+import { useRegister } from '../../../lib/api';
 
 export default function VariantDHero() {
   const { logUserAction, logError } = useLogger('VariantDHero');

@@ -1,4 +1,4 @@
-import { getShareCard } from '@/lib/api';
+import { getShareCard } from '../../../../lib/api';
 
 export async function generateStaticParams() {
   // For static export, we'll generate a few example share cards

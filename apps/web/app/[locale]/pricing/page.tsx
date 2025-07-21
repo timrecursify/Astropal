@@ -1,7 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { usePricing } from '@/lib/api';
+import { usePricing } from '../../../lib/api';
 
 export default function PricingPage() {
   const t = useTranslations('pricing');

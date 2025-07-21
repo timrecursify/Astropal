@@ -1,4 +1,4 @@
-import VariantBPage from '@/components/variants/VariantB';
+import VariantBPage from '../../../components/variants/VariantB';
 
 export default function VariantB() {
   return <VariantBPage />;

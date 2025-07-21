@@ -5,8 +5,8 @@ import { motion } from 'framer-motion';
 import { TrendingUp, Briefcase, Zap, Star, Mail, Clock } from 'lucide-react';
 import { FieldTooltip } from '../../Tooltip';
 import ConfirmationBlock from '../../ConfirmationBlock';
-import { useLogger } from '@/lib/logger';
-import { useRegister } from '@/lib/api';
+import { useLogger } from '../../../lib/logger';
+import { useRegister } from '../../../lib/api';
 
 export default function VariantCHero() {
   const { logUserAction, logError } = useLogger('VariantCHero');

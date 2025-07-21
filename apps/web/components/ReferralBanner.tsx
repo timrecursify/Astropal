@@ -1,8 +1,9 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
-import { useReferral } from '@/lib/api';
+import { useReferral } from '../lib/api';
 
 export default function ReferralBanner() {
   const t = useTranslations('referral');

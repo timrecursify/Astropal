@@ -1,4 +1,4 @@
-import VariantDPage from '@/components/variants/VariantD';
+import VariantDPage from '../../../components/variants/VariantD';
 
 export default function VariantD() {
   return <VariantDPage />;

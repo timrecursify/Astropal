@@ -3,7 +3,8 @@
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle, Mail, Star } from 'lucide-react';
-import { logger } from '@/lib/logger';
+import { useTranslations } from 'next-intl';
+import { logger } from '../lib/logger';
 
 interface ConfirmationBlockProps {
   userEmail: string;

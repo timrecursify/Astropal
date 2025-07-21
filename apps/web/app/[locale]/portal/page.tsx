@@ -3,8 +3,8 @@
 import React, { useEffect, useState, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { StarField } from '@/components/cosmic';
-import { useLogger } from '@/lib/logger';
+import { StarField } from '../../../components/cosmic';
+import { useLogger } from '../../../lib/logger';
 import { User, Settings, CreditCard, Mail, CheckCircle, XCircle, Clock, Star } from 'lucide-react';
 
 interface User {
