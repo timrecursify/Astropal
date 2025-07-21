@@ -3,6 +3,8 @@
 import { useTranslations } from 'next-intl';
 import { usePricing } from '../../../lib/api';
 
+export const runtime = 'edge';
+
 export default function PricingPage() {
   const t = useTranslations('pricing');
   const { data: pricingData, isLoading, error } = usePricing();

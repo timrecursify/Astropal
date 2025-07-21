@@ -1,5 +1,7 @@
 import { getShareCard } from '../../../../lib/api';
 
+export const runtime = 'edge';
+
 export async function generateStaticParams() {
   // For static export, we'll generate a few example share cards
   // In production, these would be generated dynamically

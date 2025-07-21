@@ -21,10 +21,25 @@ const nextConfig = {
     webpackBuildWorker: false, // Disable to reduce memory usage
   },
   
+  // Enable build cache for faster rebuilds
+  swcMinify: true,
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
+  
   // Configure webpack for smaller builds
   webpack: (config, { buildId, dev, isServer }) => {
-    // Disable caching for production builds to avoid large cache files
-    if (!dev) {
+    // Enable persistent caching for development
+    if (dev) {
+      config.cache = {
+        type: 'filesystem',
+        allowCollectingMemory: true,
+        buildDependencies: {
+          config: [__filename],
+        },
+      };
+    } else {
+      // Disable caching for production builds to avoid large cache files
       config.cache = false;
     }
     

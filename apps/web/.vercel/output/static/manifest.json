@@ -1,0 +1,149 @@
+{
+  "name": "Astropal - Personalized Astrology Newsletter",
+  "short_name": "Astropal",
+  "description": "Get personalized daily astrology insights delivered to your inbox. Choose from 4 unique perspectives: Calm, Knowledge, Success, or Evidence-based astrology.",
+  "version": "1.0.0",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "orientation": "portrait-primary",
+  "theme_color": "#8B5CF6",
+  "background_color": "#000000",
+  "categories": ["lifestyle", "wellness", "entertainment", "productivity"],
+  "lang": "en",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "/favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon-32x32.png", 
+      "sizes": "32x32",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512", 
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot-mobile.png",
+      "sizes": "375x812",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Astropal mobile experience"
+    },
+    {
+      "src": "/screenshot-desktop.png", 
+      "sizes": "1200x800",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Astropal desktop experience"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Calm Perspective",
+      "short_name": "Calm",
+      "description": "Gentle, mindful astrology insights",
+      "url": "/variant-a",
+      "icons": [
+        {
+          "src": "/icon-calm.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Knowledge Perspective", 
+      "short_name": "Knowledge",
+      "description": "Educational astrology content",
+      "url": "/variant-b",
+      "icons": [
+        {
+          "src": "/icon-knowledge.png",
+          "sizes": "96x96", 
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Success Perspective",
+      "short_name": "Success", 
+      "description": "Achievement-focused astrology",
+      "url": "/variant-c",
+      "icons": [
+        {
+          "src": "/icon-success.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Evidence Perspective",
+      "short_name": "Evidence",
+      "description": "Scientific approach to astrology", 
+      "url": "/variant-d",
+      "icons": [
+        {
+          "src": "/icon-evidence.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "iarc_rating_id": "",
+  "edge_side_panel": {
+    "preferred_width": 320
+  },
+  "launch_handler": {
+    "client_mode": ["navigate-existing", "auto"]
+  },
+  "protocol_handlers": [
+    {
+      "protocol": "mailto",
+      "url": "/contact?email=%s"
+    }
+  ],
+  "share_target": {
+    "action": "/share",
+    "method": "GET",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  },
+  "features": [
+    "cross-origin-isolated"
+  ],
+  "handle_links": "preferred",
+  "file_handlers": [],
+  "id": "/?source=pwa",
+  "gcm_sender_id": "103953800507"
+} 

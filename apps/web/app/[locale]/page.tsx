@@ -5,6 +5,8 @@ import { VariantA, VariantB, VariantC, VariantD } from '../../components/variant
 import LanguageSwitcher from '../../components/LanguageSwitcher';
 import { useLogger } from '../../lib/logger';
 
+export const runtime = 'edge';
+
 const variants = [
   { id: 'A', component: VariantA, name: 'Cosmic Calm', perspective: 'calm' },
   { id: 'B', component: VariantB, name: 'Know Before You Text', perspective: 'knowledge' },

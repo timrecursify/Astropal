@@ -1,5 +1,7 @@
 import { redirect } from 'next/navigation';
 
+export const runtime = 'edge';
+
 export async function generateStaticParams() {
   // For static export, we'll generate a few example verification tokens
   // In production, these would be generated dynamically

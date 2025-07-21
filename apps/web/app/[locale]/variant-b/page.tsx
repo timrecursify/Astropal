@@ -1,5 +1,7 @@
 import VariantBPage from '../../../components/variants/VariantB';
 
+export const runtime = 'edge';
+
 export async function generateStaticParams() {
   return [
     { locale: 'en' },

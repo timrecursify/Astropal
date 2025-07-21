@@ -1,5 +1,7 @@
 import VariantCPage from '../../../components/variants/VariantC';
 
+export const runtime = 'edge';
+
 export async function generateStaticParams() {
   return [
     { locale: 'en' },
