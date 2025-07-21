@@ -1,10 +1,10 @@
 {
-  "domain": "astropal.com",
+  "domain": "astropal.io",
   "records": [
     {
-      "type": "A",
+      "type": "CNAME",
       "name": "@",
-      "content": "192.0.2.1",
+      "content": "astropal.pages.dev",
       "ttl": 1,
       "proxied": true,
       "comment": "Root domain pointing to Cloudflare Pages"
@@ -12,26 +12,18 @@
     {
       "type": "CNAME", 
       "name": "www",
-      "content": "astropal.com",
+      "content": "astropal.io",
       "ttl": 1,
       "proxied": true,
-      "comment": "WWW subdomain redirect"
+      "comment": "WWW subdomain redirect to root"
     },
     {
       "type": "CNAME",
       "name": "api",
-      "content": "astropal-api.workers.dev", 
+      "content": "astropal-api.tim-611.workers.dev", 
       "ttl": 1,
       "proxied": true,
       "comment": "API subdomain for Workers"
-    },
-    {
-      "type": "CNAME",
-      "name": "preview",
-      "content": "astropal-preview.pages.dev",
-      "ttl": 1, 
-      "proxied": true,
-      "comment": "Preview environment for staging"
     },
     {
       "type": "TXT",
@@ -43,7 +35,7 @@
     {
       "type": "TXT",
       "name": "_dmarc",
-      "content": "v=DMARC1; p=quarantine; rua=mailto:dmarc@astropal.com",
+      "content": "v=DMARC1; p=quarantine; rua=mailto:dmarc@astropal.io",
       "ttl": 1,
       "comment": "DMARC policy for email authentication"
     },
@@ -53,30 +45,22 @@
       "content": "resend._domainkey.resend.com",
       "ttl": 1,
       "comment": "DKIM record for Resend (to be replaced with actual key)"
-    },
-    {
-      "type": "MX",
-      "name": "@", 
-      "content": "10 feedback-smtp.astropal.com",
-      "ttl": 1,
-      "comment": "MX record for email feedback processing"
     }
   ],
   "page_rules": [
     {
-      "url": "astropal.com/*",
+      "url": "astropal.io/*",
       "actions": {
         "always_use_https": true,
         "ssl": "strict"
       }
     },
     {
-      "url": "api.astropal.com/*", 
+      "url": "api.astropal.io/*", 
       "actions": {
         "cache_level": "bypass",
         "always_use_https": true
       }
     }
-  ],
-  "creation_script": "infrastructure/cloudflare/setup-dns.sh"
+  ]
 } 
