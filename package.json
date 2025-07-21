@@ -2,22 +2,20 @@
   "name": "astropal",
   "private": true,
   "version": "1.0.0",
+  "description": "Astropal Newsletter Platform",
   "workspaces": [
     "apps/*",
     "packages/*"
   ],
   "scripts": {
-    "dev": "./scripts/dev.sh",
     "build": "npm run build --workspaces",
-    "build:frontend": "npm run build --workspace=apps/web",
-    "build:backend": "npm run build --workspace=packages/backend",
-    "lint": "eslint . --ext .ts,.tsx",
-    "lint:fix": "eslint . --ext .ts,.tsx --fix",
-    "type-check": "tsc --noEmit",
-    "test": "npm run test --workspaces",
-    "clean": "npm run clean --workspaces && rm -rf node_modules",
-    "deploy:production": "./scripts/deploy.sh production",
-    "deploy:development": "./scripts/deploy.sh development",
+    "build:frontend": "cd apps/web && npm run build",
+    "build:web-only": "npm run build --workspace=apps/web",
+    "pages-build": "cd apps/web && npm ci && npm run build",
+    "dev": "./scripts/dev.sh",
+    "test": "npm test --workspaces",
+    "lint": "npm run lint --workspaces",
+    "deploy": "./scripts/deploy.sh",
     "prepare": "husky install"
   },
   "devDependencies": {
