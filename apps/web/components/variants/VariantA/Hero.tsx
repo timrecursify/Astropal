@@ -5,8 +5,8 @@ import { motion } from 'framer-motion';
 import { Brain, Heart, Moon, Star, Mail, Clock } from 'lucide-react';
 import { FieldTooltip } from '../../Tooltip';
 import ConfirmationBlock from '../../ConfirmationBlock';
-import { useLogger } from '@/lib/logger';
-import { useRegister } from '@/lib/api';
+import { useLogger } from '../../../lib/logger';
+import { useRegister } from '../../../lib/api';
 
 export default function VariantAHero() {
   const { logUserAction, logError, logInfo } = useLogger('VariantAHero');
