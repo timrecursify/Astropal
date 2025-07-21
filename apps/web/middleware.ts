@@ -1,6 +1,17 @@
 import createMiddleware from 'next-intl/middleware';
 import { NextRequest } from 'next/server';
 
+// Production-safe edge runtime detection
+const getEdgeRuntimeInfo = (): string => {
+  try {
+    // Check for EdgeRuntime global (exists only in Cloudflare Workers/Pages)
+    return typeof globalThis.EdgeRuntime !== 'undefined' ? 'edge' : 'nodejs';
+  } catch {
+    // Fallback for any runtime detection issues
+    return 'unknown';
+  }
+};
+
 // Enhanced logging utility for middleware
 const log = (level: string, message: string, data: any = {}) => {
   const logEntry = {
@@ -133,7 +144,7 @@ export default function middleware(request: NextRequest) {
       cfPagesBranch: process.env.CF_PAGES_BRANCH,
       nextjsVersion: process.env.npm_package_dependencies_next,
       intlVersion: process.env.npm_package_dependencies_next_intl,
-      runtime: typeof EdgeRuntime !== 'undefined' ? 'edge' : 'nodejs'
+      runtime: getEdgeRuntimeInfo()
     });
     
     // Don't throw, let the request continue

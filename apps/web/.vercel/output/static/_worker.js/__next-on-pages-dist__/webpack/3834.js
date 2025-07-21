@@ -1,1 +1,1 @@
-var c={},a=(r,o,s)=>(c.__chunk_3834=(_,t,e)=>{"use strict";e.d(t,{Z:()=>l});let l=(0,e(617).Z)("clock",[["path",{d:"M12 6v6l4 2",key:"mmk7yg"}],["circle",{cx:"12",cy:"12",r:"10",key:"1mglay"}]])},c);export{a as __getNamedExports};
+var t={},a=(r,o,s)=>(t.__chunk_3834=(_,c,e)=>{"use strict";e.d(c,{Z:()=>l});let l=(0,e(617).Z)("clock",[["path",{d:"M12 6v6l4 2",key:"mmk7yg"}],["circle",{cx:"12",cy:"12",r:"10",key:"1mglay"}]])},t);export{a as __getNamedExports};
