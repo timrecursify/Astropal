@@ -1,6 +1,6 @@
 {
   "runtime": "edge",
-  "name": "[locale]/pricing",
+  "name": "index",
   "deploymentTarget": "v8-worker",
   "entrypoint": "index.js",
   "assets": [],
