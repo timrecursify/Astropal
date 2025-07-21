@@ -7,7 +7,7 @@ const nextConfig = {
   },
   eslint: {
     // Disable ESLint during builds in CI/production
-    ignoreDuringBuilds: process.env.CI || process.env.NODE_ENV === 'production',
+    ignoreDuringBuilds: Boolean(process.env.CI || process.env.NODE_ENV === 'production'),
   },
   // Remove static export - use Cloudflare Pages Functions instead
   // output: 'export',
