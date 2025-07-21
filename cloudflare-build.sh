@@ -6,6 +6,13 @@ echo "🚀 Starting Cloudflare Pages build for Astropal frontend..."
 # Navigate to frontend directory
 cd apps/web
 
+# Ensure wrangler.json is in the correct location for Cloudflare Pages
+echo "📋 Ensuring wrangler.json configuration..."
+if [ ! -f "wrangler.json" ]; then
+  echo "❌ ERROR: wrangler.json not found in apps/web directory!"
+  exit 1
+fi
+
 # Build the frontend (dependencies already installed at root)
 echo "🔨 Building Next.js application with Cloudflare Pages Functions..."
 npm run build:cf
@@ -17,15 +24,15 @@ if [ ! -d ".vercel/output/static" ]; then
   exit 1
 fi
 
-if [ ! -d ".vercel/output/functions" ]; then
-  echo "❌ ERROR: Next-on-Pages functions output not found!"
-  echo "Expected .vercel/output/functions directory to be created by next-on-pages"
+if [ ! -d ".vercel/output/static/_worker.js" ]; then
+  echo "❌ ERROR: Next-on-Pages worker not found!"
+  echo "Expected .vercel/output/static/_worker.js to be created by next-on-pages"
   exit 1
 fi
 
 echo "✅ Next-on-Pages output verified:"
 echo "📁 Static files: .vercel/output/static"
-echo "⚡ Functions: .vercel/output/functions"
+echo "⚡ Worker: .vercel/output/static/_worker.js"
 
 # Clean up large cache files to avoid Cloudflare Pages 25MB limit
 echo "🧹 Cleaning up cache files for deployment..."
@@ -49,4 +56,4 @@ du -sh .vercel/output/ || true
 echo "✅ Build completed and optimized for Cloudflare Pages!"
 echo "📁 Build output is in apps/web/.vercel/output/"
 echo "🌐 Static files ready for deployment from .vercel/output/static"
-echo "⚡ Pages Functions ready for deployment from .vercel/output/functions" 
+echo "⚡ Worker ready for deployment from .vercel/output/static/_worker.js" 
