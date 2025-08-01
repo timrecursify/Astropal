@@ -9,7 +9,7 @@ echo "🚀 Starting Astropal.io build process..."
 cd apps/web
 
 echo "📦 Installing dependencies..."
-npm ci
+npm install --no-audit --no-fund
 
 echo "🔨 Building application..."
 npm run build

@@ -1,4 +1,9 @@
 # Cloudflare Pages configuration for Astropal.io
+name = "astropal-io"
+compatibility_date = "2024-01-01"
+
+# Pages build configuration
+pages_build_output_dir = "dist"
 
 [build]
 command = "./cloudflare-build.sh"
@@ -6,12 +11,4 @@ cwd = ""
 watch_dir = "apps/web"
 
 [build.environment_variables]
-NODE_VERSION = "18"
-
-[env.production]
-name = "astropal-io"
-compatibility_date = "2024-01-01"
-
-[env.preview]  
-name = "astropal-io-preview"
-compatibility_date = "2024-01-01" 
+NODE_VERSION = "18" 
