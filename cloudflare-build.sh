@@ -14,13 +14,13 @@ echo "🔨 Building application..."
 npm run build
 
 echo "✅ Build process completed successfully!"
-echo "📁 Build output available in dist/ directory"
+echo "📁 Build output available in .vercel/output/static/ directory"
 
-# Ensure the dist directory exists for Cloudflare Pages
-if [ ! -d "dist" ]; then
-  echo "❌ Error: dist directory not found after build!"
+# Ensure the output directory exists for Cloudflare Pages
+if [ ! -d ".vercel/output/static" ]; then
+  echo "❌ Error: .vercel/output/static directory not found after build!"
   exit 1
 fi
 
 echo "📋 Build output contents:"
-ls -la dist/ 
+ls -la .vercel/output/static/ 
