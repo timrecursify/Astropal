@@ -1,165 +1,130 @@
 # Astropal.io Deployment Guide
 
-## A/B Testing Implementation ✅
+## Project Structure
 
-The site now implements sophisticated A/B testing with:
+This is a React + TypeScript application with A/B testing functionality built with Vite.
 
-- **33% equal distribution** across three variants:
-  - `variant0` (Authority + Scientific Credibility)
-  - `variant1` (Personal Transformation + Empowerment) 
-  - `variant2` (Convenience + Lifestyle Integration)
+### A/B Testing Implementation
 
-- **Cookie-based persistence** (30-day expiry)
-- **Analytics tracking** for both Clarity and Facebook Pixel
-- **Consistent form data structure** across all variants
+- **Dynamic Routing**: Root `/` displays `ABTestRouter` which assigns variants with 33% distribution
+- **Variant Assignment**: Uses cookies (`astropal_ab_variant`) with 30-day expiry
+- **Direct Access**: `/variant0`, `/variant1`, `/variant2` for testing
+- **Tracking**: Facebook Pixel and Microsoft Clarity integration
 
-## Routing Structure
-
-- `/` - Dynamically assigns and loads user's variant
-- `/variant0` - Direct access to Authority variant (for testing)
-- `/variant1` - Direct access to Transformation variant (for testing)
-- `/variant2` - Direct access to Convenience variant (for testing)
-- `/privacy` - Privacy policy
-- `/terms` - Terms of service
+### Variants
+- **Variant0**: Authority + Scientific Credibility theme
+- **Variant1**: Personal Transformation + Empowerment theme  
+- **Variant2**: Convenience + Lifestyle Integration theme
 
 ## Environment Configuration
 
-### Required Environment Variables in Cloudflare Pages:
-
+### Required Environment Variables (Cloudflare Pages Secrets)
 ```bash
-VITE_ZAPIER_WEBHOOK_URL=https://hooks.zapier.com/hooks/catch/YOUR_WEBHOOK_ID/
+VITE_ZAPIER_WEBHOOK_URL=https://hooks.zapier.com/hooks/catch/your-webhook-url
 ```
 
-### Setting Environment Variables:
+## Build Process
 
-1. In Cloudflare Pages dashboard
-2. Go to Settings > Environment variables
-3. Add `VITE_ZAPIER_WEBHOOK_URL` for both Production and Preview environments
-4. Set the value to your Zapier webhook URL
+### Local Development
+```bash
+npm install
+npm run dev
+```
 
-## Form Submission Data Structure
+### Production Build
+```bash
+npm install
+npm run build
+```
 
-All forms send consistent data to the webhook:
+## Form Submission Data Format
 
-```json
+All forms send consistent data to webhook:
+```javascript
 {
-  "fullName": "string",
-  "preferredName": "string", 
-  "email": "string",
-  "birthDate": "YYYY-MM-DD",
-  "birthLocation": "string",
-  "timeZone": "string",
-  "dayStartTime": "HH:MM",
-  "birthTime": "HH:MM" | "unknown",
-  "relationshipStatus": "string",
-  "practices": ["array", "of", "strings"],
-  "lifeFocus": ["array", "of", "strings"],
-  "variant": "authority" | "transformation" | "convenience",
-  "abTestVariant": "variant0" | "variant1" | "variant2",
-  "timestamp": "ISO string"
+  email: "user@example.com",
+  name: "User Name", 
+  birthDate: "1990-01-01",
+  birthTime: "12:00",
+  birthLocation: "City, Country",
+  timeZone: "America/New_York",
+  deliveryTime: "09:00",
+  variant: "authority|transformation|convenience",
+  abTestVariant: "variant0|variant1|variant2",
+  timestamp: "2025-01-01T12:00:00.000Z"
 }
 ```
 
-## Security Features ✅
+## Security Features
 
-- **CORS-compliant** fetch requests with proper headers
-- **Error handling** - forms continue to work even if webhook fails
-- **Input validation** - client-side validation with type safety
-- **Age verification** - 18+ requirement enforced
-- **Secure cookies** - SameSite=Lax, Secure flags
-- **Environment variable protection** - secrets stored in Cloudflare
+- ✅ Input validation on all forms
+- ✅ HTTPS enforcement 
+- ✅ Secure cookie settings (SameSite=Lax, Secure)
+- ✅ Environment variable protection for webhooks
+- ✅ Error handling for webhook failures
 
-## Analytics & Tracking ✅
+## Analytics Integration
 
 ### Microsoft Clarity
-- **Tracking ID**: `so6j2uvy4i`
-- **A/B variant tracking**: Sets custom variable `ab_variant`
+- Tracking ID: `so6j2uvy4i`
+- Variant tracking: `clarity('set', 'ab_variant', variant)`
 
 ### Facebook Pixel  
-- **Pixel ID**: `1547406942906619`
-- **Page view tracking**: Automatic on all pages
-- **Conversion tracking**: Fires on form confirmations
-- **A/B variant tracking**: Custom event `VariantAssigned`
+- Pixel ID: `1547406942906619`
+- Events: `PageView`, `VariantAssigned`, `CompleteRegistration`
 
-## Deployment Steps
+## Deployment to Cloudflare Pages
 
-### 1. GitHub Repository
+### GitHub Repository
+```
+https://github.com/timrecursify/Astropal
+```
+
+### Cloudflare Pages Configuration
+- **Build Command**: `./cloudflare-build.sh`
+- **Build Output Directory**: `dist`
+- **Root Directory**: `/` (project root)
+
+### Environment Variables Setup
+1. Go to Cloudflare Pages → Settings → Environment Variables
+2. Add `VITE_ZAPIER_WEBHOOK_URL` with your Zapier webhook URL
+3. Save and redeploy
+
+### Build Script (`cloudflare-build.sh`)
 ```bash
-git add .
-git commit -m "Complete A/B testing implementation with tracking"
-git push origin main
+#!/bin/bash
+echo "🚀 Starting Astropal.io build process..."
+echo "📦 Installing dependencies..."
+npm install --no-audit --no-fund
+echo "🔨 Building application..."
+npm run build
+echo "✅ Build process completed successfully!"
 ```
 
-### 2. Cloudflare Pages Setup
-1. Connect GitHub repository to Cloudflare Pages
-2. Set build settings:
-   - **Build command**: `npm run build`
-   - **Build output directory**: `dist`
-   - **Root directory**: `/`
+## Testing & Monitoring
 
-### 3. Environment Variables
-Set in Cloudflare Pages > Settings > Environment variables:
-- `VITE_ZAPIER_WEBHOOK_URL`: Your Zapier webhook URL
+### A/B Test Verification
+1. Clear cookies and visit `/` - should randomly assign variant
+2. Check `astropal_ab_variant` cookie value
+3. Test direct URLs: `/variant0`, `/variant1`, `/variant2`
 
-### 4. Domain Configuration
-- Point `astropal.io` to Cloudflare Pages
-- Ensure SSL/TLS is enabled
+### Analytics Verification
+1. Check Facebook Events Manager for pixel events
+2. Monitor Microsoft Clarity for session recordings
+3. Verify webhook receives form submissions
 
-## Testing the Implementation
+### Form Testing
+1. Fill out forms on each variant
+2. Verify webhook receives data in correct format
+3. Check confirmation modal displays
+4. Confirm Facebook conversion event fires
 
-### A/B Testing Verification:
-1. Visit root domain multiple times in incognito
-2. Check browser dev tools > Application > Cookies
-3. Verify `astropal_ab_variant` cookie is set
-4. Confirm 33% distribution over multiple tests
+## Legal Pages
+- **Privacy Policy**: `/privacy` - Updated with support@astropal.io contact
+- **Terms of Service**: `/terms` - Entertainment purposes disclaimer
 
-### Analytics Verification:
-1. Check Clarity dashboard for session recordings
-2. Verify Facebook Events Manager shows pixel fires
-3. Test conversion events by completing forms
-
-### Form Submission Testing:
-1. Complete forms on each variant
-2. Check Zapier webhook receives data
-3. Verify localStorage fallback works
-4. Test validation and error handling
-
-## Performance Optimizations ✅
-
-- **Lazy loading** of variants prevents unnecessary bundle loading
-- **Client-side routing** with React Router for smooth navigation
-- **Optimized images** and assets
-- **Production build** with tree shaking and minification
-
-## Mobile Optimization ✅
-
-All variants are fully responsive with:
-- **Mobile-first design**
-- **Touch-friendly interactions**
-- **Optimized form layouts** for mobile screens
-- **Proper viewport configuration**
-- **Loading states** for better UX
-
-## Security Headers (Recommended for Cloudflare)
-
-Add these headers in Cloudflare Pages settings:
-
-```
-X-Frame-Options: DENY
-X-Content-Type-Options: nosniff
-Referrer-Policy: strict-origin-when-cross-origin
-Permissions-Policy: geolocation=(), microphone=(), camera=()
-```
-
-## Monitoring & Maintenance
-
-- **Analytics**: Monitor conversion rates by variant
-- **Error tracking**: Check browser console for JavaScript errors  
-- **Performance**: Monitor Core Web Vitals in Clarity
-- **A/B test results**: Analyze conversion rates to determine winning variant
-
----
-
-**🚀 Ready for Production Deployment!**
-
-The implementation is complete with enterprise-grade security, analytics, and A/B testing capabilities. 
+## Mobile Optimization
+- ✅ Responsive design with Tailwind CSS
+- ✅ Touch-friendly form inputs
+- ✅ Optimized text sizes for mobile reading
+- ✅ Fixed footer on mobile devices 
