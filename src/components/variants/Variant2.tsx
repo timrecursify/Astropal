@@ -13,7 +13,7 @@ export default function Variant2() {
       </div>
       
       {/* Content container with proper z-index */}
-      <div className="relative z-10">
+      <div className="relative z-10 overflow-x-hidden">
         {/* Hero Section - Top of page with mobile optimization */}
         <section className="pt-12 md:pt-16 pb-12 md:pb-16 px-4 md:px-6">
           <div className="max-w-7xl mx-auto">

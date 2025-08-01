@@ -333,7 +333,7 @@ export default function Variant1Form() {
                       BIRTH TIME
                       <FieldTooltip content="Your exact time of birth for precise astrological chart calculations. Select 'Unknown' if uncertain" />
                     </label>
-                    <div className="flex space-x-2">
+                    <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
                       <input
                         type="time"
                         value={formData.birthTime === 'unknown' ? '' : formData.birthTime}
@@ -344,7 +344,7 @@ export default function Variant1Form() {
                       <button
                         type="button"
                         onClick={handleBirthTimeUnknown}
-                        className={`px-3 py-2 text-xs font-semibold rounded-md transition-all duration-300 ${
+                        className={`flex-shrink-0 px-3 py-2 text-xs font-semibold rounded-md transition-all duration-300 min-w-0 ${
                           formData.birthTime === 'unknown' 
                             ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-md' 
                             : 'bg-gray-700/50 text-gray-300 hover:bg-gray-600/50 hover:text-white'

@@ -75,7 +75,7 @@ export default function Variant2Hero() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.2 }}
       >
-        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+        <h1 className="text-4xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
           Your Morning
           <br />
           <span className="text-purple-400">Cosmic Coffee</span>
@@ -91,10 +91,10 @@ export default function Variant2Hero() {
         transition={{ delay: 0.4 }}
         className="space-y-2"
       >
-        <p className="text-base sm:text-lg md:text-xl text-gray-300 leading-relaxed max-w-2xl mx-auto px-4">
+        <p className="text-lg sm:text-lg md:text-xl text-gray-300 leading-relaxed max-w-2xl mx-auto px-4">
           5-minute personalized readings that fit perfectly into your daily routine, no apps required
         </p>
-        <p className="text-sm md:text-base text-gray-500 italic">
+        <p className="text-base sm:text-base md:text-base text-gray-500 italic">
           Ancient wisdom, modern convenience - delivered fresh to your inbox
         </p>
       </motion.div>
@@ -122,10 +122,10 @@ export default function Variant2Hero() {
                     <IconComponent className="w-4 h-4 md:w-5 md:h-5" />
                   </div>
                   <div className="text-left">
-                    <h3 className="text-white font-semibold text-xs md:text-sm mb-1">
+                    <h3 className="text-white font-semibold text-sm md:text-sm mb-1">
                       {benefit.text}
                     </h3>
-                    <p className="text-gray-400 text-xs leading-relaxed">
+                    <p className="text-gray-400 text-sm md:text-xs leading-relaxed">
                       {benefit.desc}
                     </p>
                   </div>

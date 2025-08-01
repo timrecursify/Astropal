@@ -10,7 +10,7 @@ import ABTestRouter from './components/ABTestRouter';
 
 const App: React.FC = () => {
   return (
-    <div>
+    <div className="overflow-x-hidden min-h-screen">
       <Routes>
         {/* A/B Testing root route */}
         <Route path="/" element={<ABTestRouter />} />

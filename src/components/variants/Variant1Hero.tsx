@@ -63,7 +63,7 @@ export default function Variant1Hero() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.2 }}
       >
-        <h1 className="text-5xl font-bold leading-tight">
+        <h1 className="text-4xl sm:text-4xl md:text-5xl font-bold leading-tight">
           Unlock Your
           <br />
           <span className="text-purple-400">Cosmic Potential</span>
@@ -79,10 +79,10 @@ export default function Variant1Hero() {
         transition={{ delay: 0.4 }}
         className="space-y-2"
       >
-        <p className="text-xl text-gray-300 leading-relaxed">
+        <p className="text-lg sm:text-lg md:text-xl text-gray-300 leading-relaxed">
           Transform your life with personalized spiritual guidance that reveals your hidden strengths and perfect timing
         </p>
-        <p className="text-gray-500 italic">
+        <p className="text-base sm:text-base md:text-base text-gray-500 italic">
           Your personal cosmic coach, whispering ancient secrets at dawn
         </p>
       </motion.div>
@@ -96,55 +96,55 @@ export default function Variant1Hero() {
       >
         <div className="flex items-center space-x-3">
           <Mail className="w-5 h-5 text-purple-400" />
-          <span className="text-gray-300">
+          <span className="text-sm sm:text-sm md:text-base text-gray-300">
             <strong className="text-white">Soul Blueprint Activation</strong> - Discover your unique cosmic gifts and life purpose
           </span>
         </div>
         <div className="flex items-center space-x-3">
           <Brain className="w-5 h-5 text-pink-400" />
-          <span className="text-gray-300">
+          <span className="text-sm sm:text-sm md:text-base text-gray-300">
             <strong className="text-white">Emotional Mastery Tools</strong> - Navigate feelings with celestial wisdom and clarity
           </span>
         </div>
         <div className="flex items-center space-x-3">
           <Clock className="w-5 h-5 text-blue-400" />
-          <span className="text-gray-300">
+          <span className="text-sm sm:text-sm md:text-base text-gray-300">
             <strong className="text-white">Divine Timing Revelations</strong> - Never miss your magical manifestation moments again
           </span>
         </div>
         <div className="flex items-center space-x-3">
           <Moon className="w-5 h-5 text-indigo-400" />
-          <span className="text-gray-300">
+          <span className="text-sm sm:text-sm md:text-base text-gray-300">
             <strong className="text-white">Intuitive Awakening</strong> - Strengthen your inner knowing through cosmic connection
           </span>
         </div>
         <div className="flex items-center space-x-3">
           <Heart className="w-5 h-5 text-rose-400" />
-          <span className="text-gray-300">
+          <span className="text-sm sm:text-sm md:text-base text-gray-300">
             <strong className="text-white">Relationship Alchemy</strong> - Transform connections using astrological compatibility insights
           </span>
         </div>
         <div className="flex items-center space-x-3">
           <Sparkles className="w-5 h-5 text-yellow-400" />
-          <span className="text-gray-300">
+          <span className="text-sm sm:text-sm md:text-base text-gray-300">
             <strong className="text-white">Abundance Alignment</strong> - Attract prosperity when the stars favor your success
           </span>
         </div>
         <div className="flex items-center space-x-3">
           <Shield className="w-5 h-5 text-green-400" />
-          <span className="text-gray-300">
+          <span className="text-sm sm:text-sm md:text-base text-gray-300">
             <strong className="text-white">Shadow Work Guidance</strong> - Heal limiting patterns with gentle cosmic support
           </span>
         </div>
         <div className="flex items-center space-x-3">
           <Zap className="w-5 h-5 text-orange-400" />
-          <span className="text-gray-300">
+          <span className="text-sm sm:text-sm md:text-base text-gray-300">
             <strong className="text-white">Power Hour Activation</strong> - Maximize productivity during your personal peak times
           </span>
         </div>
         <div className="flex items-center space-x-3">
           <TrendingUp className="w-5 h-5 text-cyan-400" />
-          <span className="text-gray-300">
+          <span className="text-sm sm:text-sm md:text-base text-gray-300">
             <strong className="text-white">Spiritual Evolution Path</strong> - Track your awakening journey with cosmic milestones
           </span>
         </div>
