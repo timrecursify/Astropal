@@ -2,7 +2,7 @@
 
 ## Project Structure
 
-This is a React + TypeScript application with A/B testing functionality built with Vite.
+This is a React + TypeScript application with A/B testing functionality built with Vite and Cloudflare Pages Functions.
 
 ### A/B Testing Implementation
 
@@ -18,12 +18,17 @@ This is a React + TypeScript application with A/B testing functionality built wi
 
 ## Environment Configuration
 
-### Required Environment Variables (Cloudflare Pages)
-```bash
-VITE_PUBLIC_ZAPIER_WEBHOOK_URL=https://hooks.zapier.com/hooks/catch/your-webhook-url
-```
+### Required Environment Variables (Cloudflare Pages Secrets)
+The webhook URL is configured as a **secret** in Cloudflare Pages:
+- Name: `VITE_PUBLIC_ZAPIER_WEBHOOK_URL`
+- Value: Your Zapier webhook URL
+- Type: **Secret** (encrypted)
 
-**Important**: Environment variables must start with `VITE_` to be exposed to the client in Vite.
+### How It Works
+1. **Client-side forms** submit to `/api/submit-form` (Cloudflare Pages function)
+2. **Cloudflare function** has access to the secret webhook URL at runtime
+3. **Function securely forwards** form data to Zapier webhook
+4. **No sensitive URLs** are exposed in the client-side JavaScript
 
 ## Build Process
 
@@ -41,7 +46,7 @@ npm run build
 
 ## Form Submission Data Format
 
-All forms send consistent data to webhook with visitor tracking:
+Forms submit to the Cloudflare function which forwards enhanced data to the webhook:
 ```javascript
 {
   email: "user@example.com",
@@ -72,7 +77,9 @@ All forms send consistent data to webhook with visitor tracking:
 - ✅ Input validation on all forms
 - ✅ HTTPS enforcement 
 - ✅ Secure cookie settings (SameSite=Lax, Secure)
-- ✅ Environment variable protection for webhooks
+- ✅ **Webhook URL kept as encrypted secret on server**
+- ✅ **Client never has access to sensitive webhook URL**
+- ✅ CORS protection on API functions
 - ✅ Error handling for webhook failures
 
 ## Analytics Integration
@@ -96,22 +103,20 @@ https://github.com/timrecursify/Astropal
 - **Build Command**: `./cloudflare-build.sh`
 - **Build Output Directory**: `.vercel/output/static`
 - **Root Directory**: `/` (project root)
+- **Functions**: Enabled (for `/api/submit-form` endpoint)
 
 ### Environment Variables Setup
 1. Go to Cloudflare Pages → Settings → Environment Variables
-2. Add `VITE_PUBLIC_ZAPIER_WEBHOOK_URL` with your Zapier webhook URL
+2. Add a **Secret** (not a regular variable):
+   - Name: `VITE_PUBLIC_ZAPIER_WEBHOOK_URL`
+   - Value: Your Zapier webhook URL
+   - Type: **Secret** (encrypted)
 3. Save and redeploy
 
-### Build Script (`cloudflare-build.sh`)
-```bash
-#!/bin/bash
-echo "🚀 Starting Astropal.io build process..."
-echo "📦 Installing dependencies..."
-npm install --no-audit --no-fund
-echo "🔨 Building application..."
-npm run build
-echo "✅ Build process completed successfully!"
-```
+### Project Files
+- `wrangler.toml` - Cloudflare Pages configuration
+- `functions/api/submit-form.ts` - Server-side form handler with access to secrets
+- `cloudflare-build.sh` - Build script
 
 ## Testing & Monitoring
 
@@ -127,9 +132,14 @@ echo "✅ Build process completed successfully!"
 
 ### Form Testing
 1. Fill out forms on each variant
-2. Verify webhook receives data in correct format
-3. Check confirmation modal displays
-4. Confirm Facebook conversion event fires
+2. Check browser developer tools for successful `/api/submit-form` calls
+3. Verify webhook receives data in correct format
+4. Check confirmation modal displays
+5. Confirm Facebook conversion event fires
+
+### Function Logs
+- Check Cloudflare Pages dashboard for function logs
+- Monitor for any errors in form submission
 
 ## Legal Pages
 - **Privacy Policy**: `/privacy` - Updated with support@astropal.io contact
