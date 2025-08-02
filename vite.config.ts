@@ -13,6 +13,6 @@ export default defineConfig(({ mode }) => ({
   },
   define: {
     'import.meta.env.VITE_PUBLIC_ZAPIER_WEBHOOK_URL': 
-      mode === 'development' ? undefined : 'process.env.PUBLIC_ZAPIER_WEBHOOK_URL',
+      mode === 'production' ? 'JSON.stringify(process.env.PUBLIC_ZAPIER_WEBHOOK_URL)' : 'undefined',
   },
 }));

@@ -220,7 +220,7 @@ export default function Variant1Form() {
   };
 
   return (
-    <div className="h-full flex flex-col">
+    <div className="flex flex-col min-h-0">
       {showConfirmation ? (
         <div className="flex items-center justify-center p-6">
           <ConfirmationBlock
@@ -239,251 +239,253 @@ export default function Variant1Form() {
             </p>
           </div>
           
-          <form onSubmit={handleSubmit} className="space-y-6 flex-1 overflow-y-auto">
-            {/* Personal Information Section */}
-            <div className="bg-gradient-to-br from-gray-900/40 to-purple-900/15 backdrop-blur-sm border border-gray-700/50 rounded-xl p-4 shadow-lg">
-              <h3 className="text-sm font-bold text-white mb-4 tracking-wide border-b border-gray-700/50 pb-2">
-                Personal Information
-              </h3>
+          <div className="flex-1 overflow-y-auto">
+            <form onSubmit={handleSubmit} className="space-y-6 pb-6">
+              {/* Personal Information Section */}
+              <div className="bg-gradient-to-br from-gray-900/40 to-purple-900/15 backdrop-blur-sm border border-gray-700/50 rounded-xl p-4 shadow-lg">
+                <h3 className="text-sm font-bold text-white mb-4 tracking-wide border-b border-gray-700/50 pb-2">
+                  Personal Information
+                </h3>
               
-              <div className="grid grid-cols-1 gap-4">
-                <div className="group">
-                  <label className="flex items-center justify-between text-xs font-semibold text-gray-300 mb-2 tracking-wide">
-                    FULL NAME (OPTIONAL)
-                    <FieldTooltip content="Your complete legal name is only required when Numerology is selected for accurate calculations" />
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.fullName}
-                    onChange={(e) => updateField('fullName', e.target.value)}
-                    className="w-full bg-gray-800/50 border border-gray-700/50 rounded-md px-3 py-2 text-white text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 focus:outline-none transition-all duration-300"
-                    required={formData.practices.includes('Numerology')}
-                    placeholder="Enter your full legal name"
-                  />
-                </div>
-                
-                <div className="group">
-                  <label className="flex items-center justify-between text-xs font-semibold text-gray-300 mb-2 tracking-wide">
-                    PREFERRED NAME *
-                    <FieldTooltip content="How you'd like to be addressed in your daily cosmic insights" />
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.preferredName}
-                    onChange={(e) => updateField('preferredName', e.target.value)}
-                    className="w-full bg-gray-800/50 border border-gray-700/50 rounded-md px-3 py-2 text-white text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 focus:outline-none transition-all duration-300"
-                    required
-                    placeholder="How should we address you?"
-                  />
-                </div>
-                
-                <div className="group">
-                  <label className="flex items-center justify-between text-xs font-semibold text-gray-300 mb-2 tracking-wide">
-                    EMAIL ADDRESS *
-                    <FieldTooltip content="Where we'll send your personalized daily cosmic guidance" />
-                  </label>
-                  <input
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) => updateField('email', e.target.value)}
-                    className="w-full bg-gray-800/50 border border-gray-700/50 rounded-md px-3 py-2 text-white text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 focus:outline-none transition-all duration-300"
-                    required
-                    placeholder="your@email.com"
-                  />
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 gap-4">
                   <div className="group">
                     <label className="flex items-center justify-between text-xs font-semibold text-gray-300 mb-2 tracking-wide">
-                      BIRTH DATE *
-                      <FieldTooltip content="Your date of birth for accurate astrological and numerological calculations" />
+                      FULL NAME (OPTIONAL)
+                      <FieldTooltip content="Your complete legal name is only required when Numerology is selected for accurate calculations" />
                     </label>
                     <input
-                      type="date"
-                      value={formData.birthDate}
-                      onChange={(e) => updateField('birthDate', e.target.value)}
-                      max={`${new Date().getFullYear() - 18}-12-31`}
-                      className="w-full bg-gray-800/50 border border-gray-700/50 rounded-md px-3 py-2 text-white text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 focus:outline-none transition-all duration-300 [color-scheme:dark]"
+                      type="text"
+                      value={formData.fullName}
+                      onChange={(e) => updateField('fullName', e.target.value)}
+                      className="w-full bg-gray-800/50 border border-gray-700/50 rounded-md px-3 py-2 text-white text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 focus:outline-none transition-all duration-300"
+                      required={formData.practices.includes('Numerology')}
+                      placeholder="Enter your full legal name"
+                    />
+                  </div>
+                  
+                  <div className="group">
+                    <label className="flex items-center justify-between text-xs font-semibold text-gray-300 mb-2 tracking-wide">
+                      PREFERRED NAME *
+                      <FieldTooltip content="How you'd like to be addressed in your daily cosmic insights" />
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.preferredName}
+                      onChange={(e) => updateField('preferredName', e.target.value)}
+                      className="w-full bg-gray-800/50 border border-gray-700/50 rounded-md px-3 py-2 text-white text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 focus:outline-none transition-all duration-300"
+                      required
+                      placeholder="How should we address you?"
+                    />
+                  </div>
+                  
+                  <div className="group">
+                    <label className="flex items-center justify-between text-xs font-semibold text-gray-300 mb-2 tracking-wide">
+                      EMAIL ADDRESS *
+                      <FieldTooltip content="Where we'll send your personalized daily cosmic guidance" />
+                    </label>
+                    <input
+                      type="email"
+                      value={formData.email}
+                      onChange={(e) => updateField('email', e.target.value)}
+                      className="w-full bg-gray-800/50 border border-gray-700/50 rounded-md px-3 py-2 text-white text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 focus:outline-none transition-all duration-300"
+                      required
+                      placeholder="your@email.com"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="group">
+                      <label className="flex items-center justify-between text-xs font-semibold text-gray-300 mb-2 tracking-wide">
+                        BIRTH DATE *
+                        <FieldTooltip content="Your date of birth for accurate astrological and numerological calculations" />
+                      </label>
+                      <input
+                        type="date"
+                        value={formData.birthDate}
+                        onChange={(e) => updateField('birthDate', e.target.value)}
+                        max={`${new Date().getFullYear() - 18}-12-31`}
+                        className="w-full bg-gray-800/50 border border-gray-700/50 rounded-md px-3 py-2 text-white text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 focus:outline-none transition-all duration-300 [color-scheme:dark]"
+                        required
+                      />
+                    </div>
+
+                    <div className="group">
+                      <label className="flex items-center justify-between text-xs font-semibold text-gray-300 mb-2 tracking-wide">
+                        BIRTH TIME
+                        <FieldTooltip content="Your exact time of birth for precise astrological chart calculations. Select 'Unknown' if uncertain" />
+                      </label>
+                      <div className="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2">
+                        <input
+                          type="time"
+                          value={formData.birthTime === 'unknown' ? '' : formData.birthTime}
+                          onChange={(e) => updateField('birthTime', e.target.value)}
+                          className="w-full bg-gray-800/50 border border-gray-700/50 rounded-md px-3 py-2 text-white text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 focus:outline-none transition-all duration-300 [color-scheme:dark]"
+                          disabled={formData.birthTime === 'unknown'}
+                        />
+                        <button
+                          type="button"
+                          onClick={handleBirthTimeUnknown}
+                          className={`w-full sm:w-auto sm:flex-shrink-0 px-4 py-2 text-xs font-semibold rounded-md transition-all duration-300 ${
+                            formData.birthTime === 'unknown' 
+                              ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-md' 
+                              : 'bg-gray-700/50 text-gray-300 hover:bg-gray-600/50 hover:text-white'
+                          }`}
+                        >
+                          UNKNOWN
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="group">
+                    <label className="flex items-center justify-between text-xs font-semibold text-gray-300 mb-2 tracking-wide">
+                      BIRTH LOCATION *
+                      <FieldTooltip content="City, state, and country where you were born for location-based astrological calculations" />
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.birthLocation}
+                      onChange={(e) => updateField('birthLocation', e.target.value)}
+                      className="w-full bg-gray-800/50 border border-gray-700/50 rounded-md px-3 py-2 text-white text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 focus:outline-none transition-all duration-300"
+                      placeholder="City, State, Country"
                       required
                     />
                   </div>
 
                   <div className="group">
                     <label className="flex items-center justify-between text-xs font-semibold text-gray-300 mb-2 tracking-wide">
-                      BIRTH TIME
-                      <FieldTooltip content="Your exact time of birth for precise astrological chart calculations. Select 'Unknown' if uncertain" />
+                      TIME ZONE
+                      <FieldTooltip content="Your current time zone for delivering content at the perfect moment" />
                     </label>
-                    <div className="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2">
-                      <input
-                        type="time"
-                        value={formData.birthTime === 'unknown' ? '' : formData.birthTime}
-                        onChange={(e) => updateField('birthTime', e.target.value)}
-                        className="w-full bg-gray-800/50 border border-gray-700/50 rounded-md px-3 py-2 text-white text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 focus:outline-none transition-all duration-300 [color-scheme:dark]"
-                        disabled={formData.birthTime === 'unknown'}
-                      />
-                      <button
-                        type="button"
-                        onClick={handleBirthTimeUnknown}
-                        className={`w-full sm:w-auto sm:flex-shrink-0 px-4 py-2 text-xs font-semibold rounded-md transition-all duration-300 ${
-                          formData.birthTime === 'unknown' 
-                            ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-md' 
-                            : 'bg-gray-700/50 text-gray-300 hover:bg-gray-600/50 hover:text-white'
-                        }`}
-                      >
-                        UNKNOWN
-                      </button>
-                    </div>
+                    <select
+                      value={formData.timeZone}
+                      onChange={(e) => updateField('timeZone', e.target.value)}
+                      className="w-full bg-gray-800/50 border border-gray-700/50 rounded-md px-3 py-2 text-white text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 focus:outline-none transition-all duration-300 appearance-none"
+                    >
+                      <option value={Intl.DateTimeFormat().resolvedOptions().timeZone} className="bg-gray-900">
+                        Auto-detected
+                      </option>
+                      <option value="America/New_York" className="bg-gray-900">Eastern</option>
+                      <option value="America/Chicago" className="bg-gray-900">Central</option>
+                      <option value="America/Denver" className="bg-gray-900">Mountain</option>
+                      <option value="America/Los_Angeles" className="bg-gray-900">Pacific</option>
+                      <option value="Europe/London" className="bg-gray-900">GMT</option>
+                      <option value="Europe/Paris" className="bg-gray-900">CET</option>
+                      <option value="Asia/Tokyo" className="bg-gray-900">JST</option>
+                    </select>
+                  </div>
+
+                  <div className="group">
+                    <label className="flex items-center justify-between text-xs font-semibold text-gray-300 mb-2 tracking-wide">
+                      DAY START TIME
+                      <FieldTooltip content="When your day typically begins - we'll deliver your cosmic insights at the perfect moment" />
+                    </label>
+                    <input
+                      type="time"
+                      value={formData.dayStartTime}
+                      onChange={(e) => updateField('dayStartTime', e.target.value)}
+                      className="w-full bg-gray-800/50 border border-gray-700/50 rounded-md px-3 py-2 text-white text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 focus:outline-none transition-all duration-300 [color-scheme:dark]"
+                    />
+                  </div>
+
+                  <div className="group">
+                    <label className="flex items-center justify-between text-xs font-semibold text-gray-300 mb-2 tracking-wide">
+                      RELATIONSHIP STATUS
+                      <FieldTooltip content="Optional information to personalize relationship and love-focused content" />
+                    </label>
+                    <select
+                      value={formData.relationshipStatus}
+                      onChange={(e) => updateField('relationshipStatus', e.target.value)}
+                      className="w-full bg-gray-800/50 border border-gray-700/50 rounded-md px-3 py-2 text-white text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 focus:outline-none transition-all duration-300 appearance-none"
+                    >
+                      <option value="" className="bg-gray-900">Prefer not to say</option>
+                      <option value="single" className="bg-gray-900">Single</option>
+                      <option value="relationship" className="bg-gray-900">In Relationship</option>
+                      <option value="married" className="bg-gray-900">Married</option>
+                      <option value="complicated" className="bg-gray-900">It's Complicated</option>
+                    </select>
                   </div>
                 </div>
+              </div>
 
-                <div className="group">
-                  <label className="flex items-center justify-between text-xs font-semibold text-gray-300 mb-2 tracking-wide">
-                    BIRTH LOCATION *
-                    <FieldTooltip content="City, state, and country where you were born for location-based astrological calculations" />
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.birthLocation}
-                    onChange={(e) => updateField('birthLocation', e.target.value)}
-                    className="w-full bg-gray-800/50 border border-gray-700/50 rounded-md px-3 py-2 text-white text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 focus:outline-none transition-all duration-300"
-                    placeholder="City, State, Country"
-                    required
-                  />
+              {/* Cosmic Practices Section */}
+              <div className="bg-gradient-to-br from-purple-900/15 to-pink-900/15 backdrop-blur-sm border border-purple-700/30 rounded-xl p-4 shadow-lg">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
+                  <h3 className="text-sm font-bold text-white mb-2 sm:mb-0 tracking-wide">
+                    Cosmic Practices
+                  </h3>
+                  <p className="text-xs text-purple-300 font-medium">
+                    Select up to 3 practices ({formData.practices.length}/3)
+                  </p>
                 </div>
-
-                <div className="group">
-                  <label className="flex items-center justify-between text-xs font-semibold text-gray-300 mb-2 tracking-wide">
-                    TIME ZONE
-                    <FieldTooltip content="Your current time zone for delivering content at the perfect moment" />
-                  </label>
-                  <select
-                    value={formData.timeZone}
-                    onChange={(e) => updateField('timeZone', e.target.value)}
-                    className="w-full bg-gray-800/50 border border-gray-700/50 rounded-md px-3 py-2 text-white text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 focus:outline-none transition-all duration-300 appearance-none"
-                  >
-                    <option value={Intl.DateTimeFormat().resolvedOptions().timeZone} className="bg-gray-900">
-                      Auto-detected
-                    </option>
-                    <option value="America/New_York" className="bg-gray-900">Eastern</option>
-                    <option value="America/Chicago" className="bg-gray-900">Central</option>
-                    <option value="America/Denver" className="bg-gray-900">Mountain</option>
-                    <option value="America/Los_Angeles" className="bg-gray-900">Pacific</option>
-                    <option value="Europe/London" className="bg-gray-900">GMT</option>
-                    <option value="Europe/Paris" className="bg-gray-900">CET</option>
-                    <option value="Asia/Tokyo" className="bg-gray-900">JST</option>
-                  </select>
-                </div>
-
-                <div className="group">
-                  <label className="flex items-center justify-between text-xs font-semibold text-gray-300 mb-2 tracking-wide">
-                    DAY START TIME
-                    <FieldTooltip content="When your day typically begins - we'll deliver your cosmic insights at the perfect moment" />
-                  </label>
-                  <input
-                    type="time"
-                    value={formData.dayStartTime}
-                    onChange={(e) => updateField('dayStartTime', e.target.value)}
-                    className="w-full bg-gray-800/50 border border-gray-700/50 rounded-md px-3 py-2 text-white text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 focus:outline-none transition-all duration-300 [color-scheme:dark]"
-                  />
-                </div>
-
-                <div className="group">
-                  <label className="flex items-center justify-between text-xs font-semibold text-gray-300 mb-2 tracking-wide">
-                    RELATIONSHIP STATUS
-                    <FieldTooltip content="Optional information to personalize relationship and love-focused content" />
-                  </label>
-                  <select
-                    value={formData.relationshipStatus}
-                    onChange={(e) => updateField('relationshipStatus', e.target.value)}
-                    className="w-full bg-gray-800/50 border border-gray-700/50 rounded-md px-3 py-2 text-white text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 focus:outline-none transition-all duration-300 appearance-none"
-                  >
-                    <option value="" className="bg-gray-900">Prefer not to say</option>
-                    <option value="single" className="bg-gray-900">Single</option>
-                    <option value="relationship" className="bg-gray-900">In Relationship</option>
-                    <option value="married" className="bg-gray-900">Married</option>
-                    <option value="complicated" className="bg-gray-900">It's Complicated</option>
-                  </select>
+                <div className="grid grid-cols-1 gap-3">
+                  {[
+                    'Astrology',
+                    'Numerology', 
+                    'Daily Tarot Wisdom',
+                    'Crystal & Gemstone Guidance',
+                    'Chakra & Energy Work',
+                    'Feng Shui & Space Harmony'
+                  ].map(practice => (
+                    <Toggle
+                      key={practice}
+                      checked={formData.practices.includes(practice)}
+                      onChange={() => togglePractice(practice)}
+                      label={practice}
+                      disabled={!formData.practices.includes(practice) && formData.practices.length >= 3}
+                    />
+                  ))}
                 </div>
               </div>
-            </div>
 
-            {/* Cosmic Practices Section */}
-            <div className="bg-gradient-to-br from-purple-900/15 to-pink-900/15 backdrop-blur-sm border border-purple-700/30 rounded-xl p-4 shadow-lg">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
-                <h3 className="text-sm font-bold text-white mb-2 sm:mb-0 tracking-wide">
-                  Cosmic Practices
-                </h3>
-                <p className="text-xs text-purple-300 font-medium">
-                  Select up to 3 practices ({formData.practices.length}/3)
+              {/* Life Focus Section */}
+              <div className="bg-gradient-to-br from-pink-900/15 to-purple-900/15 backdrop-blur-sm border border-pink-700/30 rounded-xl p-4 shadow-lg">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
+                  <h3 className="text-sm font-bold text-white mb-2 sm:mb-0 tracking-wide">
+                    Life Focus Areas
+                  </h3>
+                  <p className="text-xs text-pink-300 font-medium">
+                    Select up to 3 areas ({formData.lifeFocus.length}/3)
+                  </p>
+                </div>
+                <div className="grid grid-cols-1 gap-3">
+                  {[
+                    'Love & Relationships',
+                    'Career & Success',
+                    'Health & Wellness', 
+                    'Wealth & Abundance',
+                    'Personal Growth',
+                    'Family & Home'
+                  ].map(focus => (
+                    <Toggle
+                      key={focus}
+                      checked={formData.lifeFocus.includes(focus)}
+                      onChange={() => toggleLifeFocus(focus)}
+                      label={focus}
+                      disabled={!formData.lifeFocus.includes(focus) && formData.lifeFocus.length >= 3}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              {/* Submit Button */}
+              <div className="pt-4 text-center">
+                <button
+                  type="submit"
+                  disabled={isSubmitting || hasSubmitted}
+                  className="group relative overflow-hidden w-full px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold text-sm rounded-xl transition-all duration-300 transform hover:scale-105 shadow-xl shadow-purple-500/25 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none tracking-wide"
+                >
+                  <span className="relative z-10">
+                    {isSubmitting ? 'CREATING YOUR COSMIC JOURNEY...' : 'BEGIN COSMIC JOURNEY'}
+                  </span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </button>
+                <p className="text-xs text-gray-500 mt-3 font-light">
+                  7-Day Free trial • No credit card required • $4.99/mo after
                 </p>
               </div>
-              <div className="grid grid-cols-1 gap-3">
-                {[
-                  'Astrology',
-                  'Numerology', 
-                  'Daily Tarot Wisdom',
-                  'Crystal & Gemstone Guidance',
-                  'Chakra & Energy Work',
-                  'Feng Shui & Space Harmony'
-                ].map(practice => (
-                  <Toggle
-                    key={practice}
-                    checked={formData.practices.includes(practice)}
-                    onChange={() => togglePractice(practice)}
-                    label={practice}
-                    disabled={!formData.practices.includes(practice) && formData.practices.length >= 3}
-                  />
-                ))}
-              </div>
-            </div>
-
-            {/* Life Focus Section */}
-            <div className="bg-gradient-to-br from-pink-900/15 to-purple-900/15 backdrop-blur-sm border border-pink-700/30 rounded-xl p-4 shadow-lg">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
-                <h3 className="text-sm font-bold text-white mb-2 sm:mb-0 tracking-wide">
-                  Life Focus Areas
-                </h3>
-                <p className="text-xs text-pink-300 font-medium">
-                  Select up to 3 areas ({formData.lifeFocus.length}/3)
-                </p>
-              </div>
-              <div className="grid grid-cols-1 gap-3">
-                {[
-                  'Love & Relationships',
-                  'Career & Success',
-                  'Health & Wellness', 
-                  'Wealth & Abundance',
-                  'Personal Growth',
-                  'Family & Home'
-                ].map(focus => (
-                  <Toggle
-                    key={focus}
-                    checked={formData.lifeFocus.includes(focus)}
-                    onChange={() => toggleLifeFocus(focus)}
-                    label={focus}
-                    disabled={!formData.lifeFocus.includes(focus) && formData.lifeFocus.length >= 3}
-                  />
-                ))}
-              </div>
-            </div>
-
-            {/* Submit Button */}
-            <div className="pt-4 text-center">
-              <button
-                type="submit"
-                disabled={isSubmitting || hasSubmitted}
-                className="group relative overflow-hidden w-full px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold text-sm rounded-xl transition-all duration-300 transform hover:scale-105 shadow-xl shadow-purple-500/25 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none tracking-wide"
-              >
-                <span className="relative z-10">
-                  {isSubmitting ? 'CREATING YOUR COSMIC JOURNEY...' : 'BEGIN COSMIC JOURNEY'}
-                </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </button>
-              <p className="text-xs text-gray-500 mt-3 font-light">
-                7-Day Free trial • No credit card required • $4.99/mo after
-              </p>
-            </div>
-          </form>
+            </form>
+          </div>
         </>
       )}
     </div>

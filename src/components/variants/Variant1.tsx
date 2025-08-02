@@ -27,8 +27,8 @@ export default function Variant1() {
         </div>
         
         {/* RIGHT SECTION - Form Sidebar */}
-        <div className="w-[400px] bg-purple-900/20 backdrop-blur-sm border-l border-purple-800/30 overflow-y-auto h-screen">
-          <div className="p-6 min-h-full">
+        <div className="w-[400px] bg-purple-900/20 backdrop-blur-sm border-l border-purple-800/30 h-screen flex flex-col">
+          <div className="flex-1 overflow-y-auto p-6">
             <Variant1Form />
           </div>
         </div>
@@ -44,8 +44,8 @@ export default function Variant1() {
               </div>
             </div>
           </div>
-          <div className="w-[360px] bg-purple-900/20 backdrop-blur-sm border-l border-purple-800/30 overflow-y-auto h-screen">
-            <div className="p-4 min-h-full">
+          <div className="w-[360px] bg-purple-900/20 backdrop-blur-sm border-l border-purple-800/30 h-screen flex flex-col">
+            <div className="flex-1 overflow-y-auto p-4">
               <Variant1Form />
             </div>
           </div>
