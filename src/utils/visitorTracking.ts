@@ -147,12 +147,13 @@ export async function submitFormWithTracking(
     form_version: '2.0'
   };
   
-  // Get webhook URL from Cloudflare Pages environment
-  const webhookUrl = typeof __ZAPIER_WEBHOOK_URL__ !== 'undefined' ? __ZAPIER_WEBHOOK_URL__ : import.meta.env.VITE_PUBLIC_ZAPIER_WEBHOOK_URL;
+  // Get webhook URL from environment variables
+  // For Cloudflare Pages, use the VITE_PUBLIC_ZAPIER_WEBHOOK_URL environment variable
+  const webhookUrl = import.meta.env.VITE_PUBLIC_ZAPIER_WEBHOOK_URL || '';
   
   if (!webhookUrl) {
-    console.warn('PUBLIC_ZAPIER_WEBHOOK_URL not configured in Cloudflare Pages environment variables');
-    console.warn('Please add PUBLIC_ZAPIER_WEBHOOK_URL to your Cloudflare Pages project settings');
+    console.warn('VITE_PUBLIC_ZAPIER_WEBHOOK_URL not configured in Cloudflare Pages environment variables');
+    console.warn('Please add VITE_PUBLIC_ZAPIER_WEBHOOK_URL to your Cloudflare Pages project settings');
     throw new Error('Webhook URL not configured');
   }
   

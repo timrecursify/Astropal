@@ -18,10 +18,12 @@ This is a React + TypeScript application with A/B testing functionality built wi
 
 ## Environment Configuration
 
-### Required Environment Variables (Cloudflare Pages Secrets)
+### Required Environment Variables (Cloudflare Pages)
 ```bash
-VITE_ZAPIER_WEBHOOK_URL=https://hooks.zapier.com/hooks/catch/your-webhook-url
+VITE_PUBLIC_ZAPIER_WEBHOOK_URL=https://hooks.zapier.com/hooks/catch/your-webhook-url
 ```
+
+**Important**: Environment variables must start with `VITE_` to be exposed to the client in Vite.
 
 ## Build Process
 
@@ -39,7 +41,7 @@ npm run build
 
 ## Form Submission Data Format
 
-All forms send consistent data to webhook:
+All forms send consistent data to webhook with visitor tracking:
 ```javascript
 {
   email: "user@example.com",
@@ -50,8 +52,18 @@ All forms send consistent data to webhook:
   timeZone: "America/New_York",
   deliveryTime: "09:00",
   variant: "authority|transformation|convenience",
-  abTestVariant: "variant0|variant1|variant2",
-  timestamp: "2025-01-01T12:00:00.000Z"
+  ab_test_variant: "variant0|variant1|variant2",
+  submission_timestamp: "2025-01-01T12:00:00.000Z",
+  form_version: "2.0",
+  visitor_data: {
+    utm_source: "facebook",
+    utm_medium: "cpc",
+    utm_campaign: "launch",
+    page_url: "https://astropal.io",
+    referrer: "https://facebook.com",
+    session_id: "sess_1234567890_abc123"
+    // ... and more tracking data
+  }
 }
 ```
 
@@ -70,7 +82,7 @@ All forms send consistent data to webhook:
 - Variant tracking: `clarity('set', 'ab_variant', variant)`
 
 ### Facebook Pixel  
-- Pixel ID: `1547406942906619`
+- Pixel ID: `1086322613060078`
 - Events: `PageView`, `VariantAssigned`, `CompleteRegistration`
 
 ## Deployment to Cloudflare Pages
@@ -82,12 +94,12 @@ https://github.com/timrecursify/Astropal
 
 ### Cloudflare Pages Configuration
 - **Build Command**: `./cloudflare-build.sh`
-- **Build Output Directory**: `dist`
+- **Build Output Directory**: `.vercel/output/static`
 - **Root Directory**: `/` (project root)
 
 ### Environment Variables Setup
 1. Go to Cloudflare Pages → Settings → Environment Variables
-2. Add `VITE_ZAPIER_WEBHOOK_URL` with your Zapier webhook URL
+2. Add `VITE_PUBLIC_ZAPIER_WEBHOOK_URL` with your Zapier webhook URL
 3. Save and redeploy
 
 ### Build Script (`cloudflare-build.sh`)
