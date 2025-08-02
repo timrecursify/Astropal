@@ -5,6 +5,16 @@
 
 echo "🚀 Starting Astropal.io build process..."
 
+# Create .env file from Cloudflare Pages environment variables
+echo "🔧 Setting up environment variables..."
+if [ ! -z "$VITE_PUBLIC_ZAPIER_WEBHOOK_URL" ]; then
+  echo "VITE_PUBLIC_ZAPIER_WEBHOOK_URL=$VITE_PUBLIC_ZAPIER_WEBHOOK_URL" > .env
+  echo "✅ Created .env file with webhook URL"
+else
+  echo "⚠️  Warning: VITE_PUBLIC_ZAPIER_WEBHOOK_URL is not set in Cloudflare Pages!"
+  echo "⚠️  Please ensure it's set as an environment variable (not a secret) in Cloudflare Pages settings"
+fi
+
 echo "📦 Installing dependencies..."
 # Clear npm cache and install dependencies fresh
 npm cache clean --force
@@ -23,4 +33,7 @@ if [ ! -d ".vercel/output/static" ]; then
 fi
 
 echo "📋 Build output contents:"
-ls -la .vercel/output/static/ 
+ls -la .vercel/output/static/
+
+# Clean up the .env file for security
+rm -f .env 
