@@ -188,15 +188,6 @@ export default function Variant1Form() {
     setIsSubmitting(true);
     
     try {
-      const submissionData = {
-        ...formData,
-        variant: 'transformation',
-        abTestVariant: 'variant1',
-        timestamp: new Date().toISOString(),
-      };
-
-      console.log('Variant 1 form submitted:', submissionData);
-      
       // Fire Facebook conversion event
       if (typeof window !== 'undefined' && window.fbq) {
         window.fbq('track', 'CompleteRegistration', {
@@ -207,23 +198,11 @@ export default function Variant1Form() {
         });
       }
       
-      // Send to Zapier webhook - URL stored in Cloudflare Pages environment secrets
-      const webhookUrl = import.meta.env.VITE_ZAPIER_WEBHOOK_URL;
-      if (webhookUrl) {
-        try {
-          await fetch(webhookUrl, {
-            method: 'POST',
-            headers: { 
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-            },
-            body: JSON.stringify(submissionData)
-          });
-        } catch (webhookError: unknown) {
-          console.error('Webhook submission failed:', webhookError);
-          // Continue with local storage even if webhook fails
-        }
-      }
+      // Import and use the visitor tracking utility
+      const { submitFormWithTracking } = await import('../../utils/visitorTracking');
+      
+      // Submit form with full visitor tracking
+      await submitFormWithTracking(formData as unknown as Record<string, unknown>, 'variant1');
 
       // Store submission data in localStorage
       localStorage.setItem('astropal_variant1_submitted_email', formData.email);

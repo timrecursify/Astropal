@@ -79,10 +79,10 @@ export default function Variant1Hero() {
         transition={{ delay: 0.4 }}
         className="space-y-2"
       >
-        <p className="text-lg sm:text-lg md:text-xl text-gray-300 leading-relaxed">
+        <p className="text-xl sm:text-xl md:text-2xl text-gray-300 leading-relaxed">
           Transform your life with personalized spiritual guidance that reveals your hidden strengths and perfect timing
         </p>
-        <p className="text-base sm:text-base md:text-base text-gray-500 italic">
+        <p className="text-lg sm:text-lg md:text-lg text-gray-500 italic">
           Your personal cosmic coach, whispering ancient secrets at dawn
         </p>
       </motion.div>

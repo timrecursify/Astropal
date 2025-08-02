@@ -9,36 +9,43 @@ export default function Variant1() {
   const [showMobileForm, setShowMobileForm] = useState(false);
 
   return (
-    <div className="min-h-screen bg-black text-white overflow-x-hidden">
-      <StarField />
+    <div className="min-h-screen bg-black text-white overflow-x-hidden relative">
+      {/* StarField Background - Fixed positioning */}
+      <div className="fixed inset-0 z-0">
+        <StarField />
+      </div>
       
       {/* Desktop Layout - Side by side (1200px+) */}
-      <div className="hidden xl:flex min-h-screen pt-8">
+      <div className="hidden xl:flex min-h-screen relative z-10">
         {/* LEFT SECTION - Hero Content */}
-        <div className="flex-1 p-8 flex items-center justify-center overflow-y-auto">
-          <div className="w-full max-w-2xl">
-            <Variant1Hero />
+        <div className="flex-1 overflow-y-auto">
+          <div className="p-8 pt-12">
+            <div className="w-full max-w-2xl mx-auto">
+              <Variant1Hero />
+            </div>
           </div>
         </div>
         
         {/* RIGHT SECTION - Form Sidebar */}
-        <div className="w-[400px] bg-purple-900/20 border-l border-purple-800/30 p-6 overflow-y-auto">
-          <div className="w-full">
+        <div className="w-[400px] bg-purple-900/20 backdrop-blur-sm border-l border-purple-800/30 overflow-y-auto">
+          <div className="p-6">
             <Variant1Form />
           </div>
         </div>
       </div>
 
       {/* Large Tablet Layout - Side by side but narrower (1024px-1199px) */}
-      <div className="hidden lg:block xl:hidden">
-        <div className="min-h-screen pt-8 flex">
-          <div className="flex-1 p-6 flex items-center justify-center overflow-y-auto">
-            <div className="w-full max-w-xl">
-              <Variant1Hero />
+      <div className="hidden lg:block xl:hidden relative z-10">
+        <div className="min-h-screen flex">
+          <div className="flex-1 overflow-y-auto">
+            <div className="p-6 pt-12">
+              <div className="w-full max-w-xl mx-auto">
+                <Variant1Hero />
+              </div>
             </div>
           </div>
-          <div className="w-[360px] bg-purple-900/20 border-l border-purple-800/30 p-4 overflow-y-auto">
-            <div className="w-full">
+          <div className="w-[360px] bg-purple-900/20 backdrop-blur-sm border-l border-purple-800/30 overflow-y-auto">
+            <div className="p-4">
               <Variant1Form />
             </div>
           </div>
@@ -46,14 +53,14 @@ export default function Variant1() {
       </div>
 
       {/* Medium Tablet Layout - Stacked with proper spacing (768px-1023px) */}
-      <div className="hidden md:block lg:hidden">
+      <div className="hidden md:block lg:hidden relative z-10">
         <div className="min-h-screen overflow-y-auto overflow-x-hidden">
           <div className="min-h-screen flex items-center justify-center p-8 pt-16">
             <div className="w-full max-w-2xl">
               <Variant1Hero />
             </div>
           </div>
-          <div className="min-h-screen bg-purple-900/20 border-t border-purple-800/30 p-8">
+          <div className="min-h-screen bg-purple-900/20 backdrop-blur-sm border-t border-purple-800/30 p-8">
             <div className="max-w-2xl mx-auto">
               <Variant1Form />
             </div>
@@ -63,7 +70,7 @@ export default function Variant1() {
       </div>
 
       {/* Small Tablet Layout - Optimized stacking (640px-767px) */}
-      <div className="hidden sm:block md:hidden">
+      <div className="hidden sm:block md:hidden relative z-10">
         <div className="min-h-screen overflow-y-auto overflow-x-hidden">
           <div className="min-h-screen flex items-center justify-center p-6 pt-12 pb-20">
             <div className="w-full max-w-lg">
@@ -82,7 +89,7 @@ export default function Variant1() {
       </div>
 
       {/* Mobile Layout - Hero with slide-over form (0-639px) */}
-      <div className="block sm:hidden">
+      <div className="block sm:hidden relative z-10">
         <div className="min-h-screen flex flex-col relative overflow-y-auto overflow-x-hidden">
           <button
             onClick={() => setShowMobileForm(true)}
@@ -107,8 +114,8 @@ export default function Variant1() {
             className="fixed inset-0 bg-black/50 z-50"
             onClick={() => setShowMobileForm(false)}
           />
-          <div className="fixed inset-y-0 right-0 w-full max-w-sm bg-black border-l border-purple-800/30 z-50 transform transition-transform duration-300 overflow-y-auto">
-            <div className="flex items-center justify-between p-4 border-b border-gray-800 sticky top-0 bg-black z-10">
+          <div className="fixed inset-y-0 right-0 w-full max-w-sm bg-black/90 backdrop-blur-sm border-l border-purple-800/30 z-50 transform transition-transform duration-300 overflow-y-auto">
+            <div className="flex items-center justify-between p-4 border-b border-gray-800 sticky top-0 bg-black/90 backdrop-blur-sm z-10">
               <h3 className="text-lg font-semibold text-white">Customize Newsletter</h3>
               <button
                 onClick={() => setShowMobileForm(false)}
