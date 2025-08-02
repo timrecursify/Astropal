@@ -151,7 +151,8 @@ export async function submitFormWithTracking(
   const webhookUrl = import.meta.env.VITE_PUBLIC_ZAPIER_WEBHOOK_URL;
   
   if (!webhookUrl) {
-    console.warn('VITE_PUBLIC_ZAPIER_WEBHOOK_URL not configured in environment variables');
+    console.warn('PUBLIC_ZAPIER_WEBHOOK_URL not configured in Cloudflare Pages environment variables');
+    console.warn('Please add PUBLIC_ZAPIER_WEBHOOK_URL to your Cloudflare Pages project settings');
     throw new Error('Webhook URL not configured');
   }
   

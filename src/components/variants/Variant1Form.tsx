@@ -472,7 +472,7 @@ export default function Variant1Form() {
               <button
                 type="submit"
                 disabled={isSubmitting || hasSubmitted}
-                className="group relative overflow-hidden w-full sm:w-auto px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold text-sm rounded-xl transition-all duration-300 transform hover:scale-105 shadow-xl shadow-purple-500/25 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none tracking-wide"
+                className="group relative overflow-hidden w-full px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold text-sm rounded-xl transition-all duration-300 transform hover:scale-105 shadow-xl shadow-purple-500/25 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none tracking-wide"
               >
                 <span className="relative z-10">
                   {isSubmitting ? 'CREATING YOUR COSMIC JOURNEY...' : 'BEGIN COSMIC JOURNEY'}
