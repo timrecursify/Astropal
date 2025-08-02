@@ -302,6 +302,7 @@ export default function Variant1Form() {
                       type="date"
                       value={formData.birthDate}
                       onChange={(e) => updateField('birthDate', e.target.value)}
+                      max={`${new Date().getFullYear() - 18}-12-31`}
                       className="w-full bg-gray-800/50 border border-gray-700/50 rounded-md px-3 py-2 text-white text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 focus:outline-none transition-all duration-300 [color-scheme:dark]"
                       required
                     />
@@ -312,18 +313,18 @@ export default function Variant1Form() {
                       BIRTH TIME
                       <FieldTooltip content="Your exact time of birth for precise astrological chart calculations. Select 'Unknown' if uncertain" />
                     </label>
-                    <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
+                    <div className="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2">
                       <input
                         type="time"
                         value={formData.birthTime === 'unknown' ? '' : formData.birthTime}
                         onChange={(e) => updateField('birthTime', e.target.value)}
-                        className="flex-1 bg-gray-800/50 border border-gray-700/50 rounded-md px-3 py-2 text-white text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 focus:outline-none transition-all duration-300 [color-scheme:dark]"
+                        className="w-full bg-gray-800/50 border border-gray-700/50 rounded-md px-3 py-2 text-white text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 focus:outline-none transition-all duration-300 [color-scheme:dark]"
                         disabled={formData.birthTime === 'unknown'}
                       />
                       <button
                         type="button"
                         onClick={handleBirthTimeUnknown}
-                        className={`flex-shrink-0 px-3 py-2 text-xs font-semibold rounded-md transition-all duration-300 min-w-0 ${
+                        className={`w-full sm:w-auto sm:flex-shrink-0 px-4 py-2 text-xs font-semibold rounded-md transition-all duration-300 ${
                           formData.birthTime === 'unknown' 
                             ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-md' 
                             : 'bg-gray-700/50 text-gray-300 hover:bg-gray-600/50 hover:text-white'

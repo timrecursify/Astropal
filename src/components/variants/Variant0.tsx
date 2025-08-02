@@ -1,12 +1,16 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { ArrowRight, Sparkles, Moon, Sun, CheckCircle, Mail } from 'lucide-react';
+import { ArrowRight, Sparkles, Moon, Sun, Mail } from 'lucide-react';
 import { FieldTooltip } from '../FieldTooltip';
 
 // Variant0 specific confirmation component
 const Variant0Confirmation: React.FC<{ userEmail: string }> = ({ userEmail }) => (
   <div className="max-w-2xl mx-auto text-center py-16">
     <div className="mb-8">
-      <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-6" />
+      <img 
+        src="/Astropal_Logo.png" 
+        alt="Astropal Logo" 
+        className="w-16 h-16 mx-auto mb-6"
+      />
       <h2 className="text-3xl md:text-4xl font-light mb-4">Welcome to your cosmic journey!</h2>
       <p className="text-gray-400 text-lg mb-6">
         Your personalized daily insights are being prepared
@@ -228,15 +232,6 @@ const Variant0: React.FC = () => {
     setIsSubmitting(true);
     
     try {
-      const submissionData = {
-        ...formData,
-        variant: 'authority',
-        abTestVariant: 'variant0',
-        timestamp: new Date().toISOString(),
-      };
-
-      console.log('Variant0 form submitted:', submissionData);
-      
       // Fire Facebook conversion event
       if (typeof window !== 'undefined' && window.fbq) {
         window.fbq('track', 'CompleteRegistration', {
@@ -247,23 +242,11 @@ const Variant0: React.FC = () => {
         });
       }
       
-      // Send to Zapier webhook - URL stored in Cloudflare Pages environment secrets
-      const webhookUrl = import.meta.env.VITE_ZAPIER_WEBHOOK_URL;
-      if (webhookUrl) {
-        try {
-          await fetch(webhookUrl, {
-            method: 'POST',
-            headers: { 
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-            },
-            body: JSON.stringify(submissionData)
-          });
-        } catch (webhookError: unknown) {
-          console.error('Webhook submission failed:', webhookError);
-          // Continue with local storage even if webhook fails
-        }
-      }
+      // Import and use the visitor tracking utility
+      const { submitFormWithTracking } = await import('../../utils/visitorTracking');
+      
+      // Submit form with full visitor tracking
+      await submitFormWithTracking(formData as unknown as Record<string, unknown>, 'variant0');
 
       // Store submission data in localStorage
       localStorage.setItem('astropal_submitted_email', formData.email);
@@ -423,6 +406,7 @@ const Variant0: React.FC = () => {
                       type="date"
                       value={formData.birthDate}
                       onChange={(e) => updateField('birthDate', e.target.value)}
+                      max={`${new Date().getFullYear() - 18}-12-31`}
                       className="w-full bg-transparent border-b border-gray-800 pb-2 text-white focus:border-white focus:outline-none text-sm [color-scheme:dark]"
                       required
                     />
@@ -591,10 +575,10 @@ const Variant0: React.FC = () => {
                 <div className="pt-6 text-center">
                   <button
                     type="submit"
-                    disabled={hasSubmitted}
+                    disabled={hasSubmitted || isSubmitting}
                     className="w-full sm:w-auto px-6 md:px-8 py-3 bg-white text-black hover:bg-gray-200 transition-colors font-medium mb-3 text-sm md:text-base disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    {hasSubmitted ? 'THANK YOU FOR SIGNING UP!' : 'ACTIVATE INTELLIGENCE SYSTEM'}
+                    {isSubmitting ? 'ACTIVATING...' : hasSubmitted ? 'THANK YOU FOR SIGNING UP!' : 'ACTIVATE INTELLIGENCE SYSTEM'}
                   </button>
                   <p className="text-xs text-gray-500">
                     7-Day Free trial • No credit card required • $4.99/mo after

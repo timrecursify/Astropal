@@ -148,10 +148,10 @@ export async function submitFormWithTracking(
   };
   
   // Get webhook URL from Cloudflare Pages environment
-  const webhookUrl = import.meta.env.PUBLIC_ZAPIER_WEBHOOK_URL;
+  const webhookUrl = import.meta.env.VITE_PUBLIC_ZAPIER_WEBHOOK_URL;
   
   if (!webhookUrl) {
-    console.warn('PUBLIC_ZAPIER_WEBHOOK_URL not configured');
+    console.warn('VITE_PUBLIC_ZAPIER_WEBHOOK_URL not configured in environment variables');
     throw new Error('Webhook URL not configured');
   }
   

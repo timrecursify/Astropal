@@ -18,8 +18,8 @@ export default function Variant1() {
       {/* Desktop Layout - Side by side (1200px+) */}
       <div className="hidden xl:flex min-h-screen relative z-10">
         {/* LEFT SECTION - Hero Content */}
-        <div className="flex-1 overflow-y-auto">
-          <div className="p-8 pt-12">
+        <div className="flex-1 overflow-y-auto h-screen">
+          <div className="p-8 pt-12 min-h-full">
             <div className="w-full max-w-2xl mx-auto">
               <Variant1Hero />
             </div>
@@ -27,8 +27,8 @@ export default function Variant1() {
         </div>
         
         {/* RIGHT SECTION - Form Sidebar */}
-        <div className="w-[400px] bg-purple-900/20 backdrop-blur-sm border-l border-purple-800/30 overflow-y-auto">
-          <div className="p-6">
+        <div className="w-[400px] bg-purple-900/20 backdrop-blur-sm border-l border-purple-800/30 overflow-y-auto h-screen">
+          <div className="p-6 min-h-full">
             <Variant1Form />
           </div>
         </div>
@@ -37,15 +37,15 @@ export default function Variant1() {
       {/* Large Tablet Layout - Side by side but narrower (1024px-1199px) */}
       <div className="hidden lg:block xl:hidden relative z-10">
         <div className="min-h-screen flex">
-          <div className="flex-1 overflow-y-auto">
-            <div className="p-6 pt-12">
+          <div className="flex-1 overflow-y-auto h-screen">
+            <div className="p-6 pt-12 min-h-full">
               <div className="w-full max-w-xl mx-auto">
                 <Variant1Hero />
               </div>
             </div>
           </div>
-          <div className="w-[360px] bg-purple-900/20 backdrop-blur-sm border-l border-purple-800/30 overflow-y-auto">
-            <div className="p-4">
+          <div className="w-[360px] bg-purple-900/20 backdrop-blur-sm border-l border-purple-800/30 overflow-y-auto h-screen">
+            <div className="p-4 min-h-full">
               <Variant1Form />
             </div>
           </div>

@@ -292,7 +292,8 @@ export default function Variant2Form() {
                       type="date"
                       value={formData.birthDate}
                       onChange={(e) => updateField('birthDate', e.target.value)}
-                      className="w-full bg-gray-800/50 border border-gray-700 rounded-md px-3 py-2 text-white text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 focus:outline-none transition-all"
+                      max={`${new Date().getFullYear() - 18}-12-31`}
+                      className="w-full bg-gray-800/50 border border-gray-700 rounded-md px-3 py-2 text-white text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 focus:outline-none transition-all [color-scheme:dark]"
                       required
                     />
                   </div>
