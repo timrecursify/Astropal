@@ -49,6 +49,7 @@ npm run build
 Forms submit to the Cloudflare function which forwards enhanced data to the webhook:
 ```javascript
 {
+  // Form fields
   email: "user@example.com",
   name: "User Name", 
   birthDate: "1990-01-01",
@@ -56,21 +57,54 @@ Forms submit to the Cloudflare function which forwards enhanced data to the webh
   birthLocation: "City, Country",
   timeZone: "America/New_York",
   deliveryTime: "09:00",
+  
+  // Variant identification
   variant: "authority|transformation|convenience",
   ab_test_variant: "variant0|variant1|variant2",
+  
+  // UTM Parameters (always included, null if not present)
+  utm_source: "facebook",      // or null
+  utm_medium: "cpc",           // or null
+  utm_campaign: "launch",      // or null
+  utm_term: "astrology",       // or null
+  utm_content: "ad_variant_1", // or null
+  
+  // Click tracking parameters (always included, null if not present)
+  fbclid: "abc123",   // Facebook Click ID, or null
+  ttclid: "def456",   // TikTok Click ID, or null
+  gclid: "ghi789",    // Google Click ID, or null
+  
+  // Page and session data (always included)
+  page_url: "https://astropal.io/variant1",
+  page_title: "Astropal - Personal Astrology",
+  referrer: "https://facebook.com",
+  user_agent: "Mozilla/5.0...",
+  language: "en-US",
+  screen_resolution: "1920x1080",
+  viewport_size: "1440x900",
+  session_id: "sess_1234567890_abc123",
+  timezone: "America/New_York",
+  
+  // Metadata
   submission_timestamp: "2025-01-01T12:00:00.000Z",
   form_version: "2.0",
+  
+  // Complete visitor data object (for backup/detailed analysis)
   visitor_data: {
+    // Contains all the above tracking data plus any additional fields
     utm_source: "facebook",
     utm_medium: "cpc",
-    utm_campaign: "launch",
-    page_url: "https://astropal.io",
-    referrer: "https://facebook.com",
-    session_id: "sess_1234567890_abc123"
-    // ... and more tracking data
+    // ... etc
   }
 }
 ```
+
+**Key Features:**
+- ✅ **UTM parameters always included** at top level (even if null)
+- ✅ **Consistent format** regardless of whether UTM data is present
+- ✅ **Click tracking** for Facebook, TikTok, and Google
+- ✅ **Session persistence** - UTM data persists across page navigation
+- ✅ **Complete visitor context** included
 
 ## Security Features
 

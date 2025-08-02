@@ -102,8 +102,17 @@ export function captureVisitorData(): VisitorData {
   const allParams = { ...storedParams, ...currentParams };
   
   const visitorData: VisitorData = {
-    // UTM and tracking parameters
-    ...allParams,
+    // UTM and tracking parameters - always include all, even if empty
+    utm_source: allParams.utm_source || undefined,
+    utm_medium: allParams.utm_medium || undefined,
+    utm_campaign: allParams.utm_campaign || undefined,
+    utm_term: allParams.utm_term || undefined,
+    utm_content: allParams.utm_content || undefined,
+    
+    // Click tracking parameters - always include all, even if empty
+    fbclid: allParams.fbclid || undefined,
+    ttclid: allParams.ttclid || undefined,
+    gclid: allParams.gclid || undefined,
     
     // Page data
     page_url: window.location.href,

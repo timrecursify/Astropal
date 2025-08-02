@@ -57,7 +57,30 @@ export const onRequestPost = async (context: { request: Request; env: Env }) => 
       variant: variantName,
       ab_test_variant: variantName,
       
-      // Visitor tracking data
+      // UTM and tracking parameters at top level - always included
+      utm_source: visitorData.utm_source || null,
+      utm_medium: visitorData.utm_medium || null,
+      utm_campaign: visitorData.utm_campaign || null,
+      utm_term: visitorData.utm_term || null,
+      utm_content: visitorData.utm_content || null,
+      
+      // Click tracking parameters at top level
+      fbclid: visitorData.fbclid || null,
+      ttclid: visitorData.ttclid || null,
+      gclid: visitorData.gclid || null,
+      
+      // Page and session data at top level
+      page_url: visitorData.page_url,
+      page_title: visitorData.page_title,
+      referrer: visitorData.referrer,
+      user_agent: visitorData.user_agent,
+      language: visitorData.language,
+      screen_resolution: visitorData.screen_resolution,
+      viewport_size: visitorData.viewport_size,
+      session_id: visitorData.session_id,
+      timezone: visitorData.timezone,
+      
+      // Complete visitor data object (for backup/analysis)
       visitor_data: visitorData,
       
       // Submission metadata
