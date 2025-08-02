@@ -62,6 +62,9 @@ Forms submit to the Cloudflare function which forwards enhanced data to the webh
   variant: "authority|transformation|convenience",
   ab_test_variant: "variant0|variant1|variant2",
   
+  // Generated UID (10-digit: 2-letter country code + 8-digit timestamp)
+  uid: "US12345678",   // Based on birth location country + timestamp
+  
   // UTM Parameters (always included, null if not present)
   utm_source: "facebook",      // or null
   utm_medium: "cpc",           // or null
@@ -100,11 +103,19 @@ Forms submit to the Cloudflare function which forwards enhanced data to the webh
 ```
 
 **Key Features:**
+- ✅ **Unique UID generated** for each submission (country code + timestamp)
 - ✅ **UTM parameters always included** at top level (even if null)
 - ✅ **Consistent format** regardless of whether UTM data is present
 - ✅ **Click tracking** for Facebook, TikTok, and Google
 - ✅ **Session persistence** - UTM data persists across page navigation
 - ✅ **Complete visitor context** included
+
+**UID Format Examples:**
+- `US12345678` - United States birth location
+- `GB12345678` - United Kingdom birth location  
+- `CA12345678` - Canada birth location
+- `AU12345678` - Australia birth location
+- `XX12345678` - Unknown/fallback country code
 
 ## Security Features
 

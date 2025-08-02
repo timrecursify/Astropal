@@ -1,6 +1,8 @@
 // Cloudflare Pages Function for handling form submissions
 // This function has access to environment variables/secrets at runtime
 
+import { generateUID } from '../../src/utils/uidGenerator';
+
 export interface Env {
   VITE_PUBLIC_ZAPIER_WEBHOOK_URL: string;
 }
@@ -48,6 +50,9 @@ export const onRequestPost = async (context: { request: Request; env: Env }) => 
       );
     }
 
+    // Generate UID based on birth location
+    const uid = generateUID(formData.birthLocation as string || '');
+
     // Prepare submission data
     const submissionData = {
       // Form data
@@ -80,6 +85,9 @@ export const onRequestPost = async (context: { request: Request; env: Env }) => 
       session_id: visitorData.session_id,
       timezone: visitorData.timezone,
       
+      // Generated UID
+      uid: uid,
+      
       // Complete visitor data object (for backup/analysis)
       visitor_data: visitorData,
       
@@ -105,11 +113,12 @@ export const onRequestPost = async (context: { request: Request; env: Env }) => 
 
     console.log('Form submitted successfully:', {
       variant: variantName,
+      uid: uid,
       timestamp: new Date().toISOString()
     });
 
     return new Response(
-      JSON.stringify({ success: true, message: 'Form submitted successfully' }),
+      JSON.stringify({ success: true, message: 'Form submitted successfully', uid: uid }),
       { 
         status: 200, 
         headers: { 
