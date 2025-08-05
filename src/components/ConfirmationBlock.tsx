@@ -8,18 +8,7 @@ interface ConfirmationBlockProps {
 
 const ConfirmationBlock: React.FC<ConfirmationBlockProps> = ({ userEmail }) => {
   
-  // Fire Facebook Lead conversion event when confirmation is shown
-  useEffect(() => {
-    if (typeof window !== 'undefined' && window.fbq) {
-      window.fbq('track', 'Lead', {
-        content_name: 'Astropal Newsletter Signup',
-        content_category: 'Email Subscription',
-        value: 4.99,
-        currency: 'USD',
-        status: 'completed'
-      });
-    }
-  }, []);
+  // Lead event is fired in form submission - no duplicate event needed here
 
   return (
     <div className="max-w-2xl mx-auto text-center py-16">

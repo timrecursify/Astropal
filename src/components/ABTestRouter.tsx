@@ -21,13 +21,6 @@ const ABTestRouter: React.FC = () => {
     setVariant(assignedVariant);
     setIsLoading(false);
 
-    // Track variant assignment for analytics
-    if (typeof window !== 'undefined' && window.fbq) {
-      window.fbq('trackCustom', 'VariantAssigned', {
-        variant: assignedVariant
-      });
-    }
-
     // Track with Clarity if available
     if (typeof window !== 'undefined' && window.clarity) {
       window.clarity('set', 'ab_variant', assignedVariant);
