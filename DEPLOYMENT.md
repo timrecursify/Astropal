@@ -136,6 +136,8 @@ Forms submit to the Cloudflare function which forwards enhanced data to the webh
 ### Facebook Pixel  
 - Pixel ID: `1840372693567321`
 - Events: `PageView`, `VariantAssigned`, `CompleteRegistration`
+- **Testing**: Use Facebook Pixel Helper browser extension to verify pixel fires
+- **Security**: CSP headers in `_headers` file allow Facebook domains
 
 ## Deployment to Cloudflare Pages
 
@@ -181,6 +183,23 @@ https://github.com/timrecursify/Astropal
 3. Verify webhook receives data in correct format
 4. Check confirmation modal displays
 5. Confirm Facebook conversion event fires
+
+### Facebook Pixel Testing
+1. **Install Facebook Pixel Helper**: Chrome extension to monitor pixel events
+2. **Test PageView Events**: 
+   - Visit `/` (should auto-assign variant and fire PageView)
+   - Visit `/variant0`, `/variant1`, `/variant2` directly
+   - Verify PageView event fires on each page
+3. **Test VariantAssigned Event**:
+   - Clear cookies and visit `/`
+   - Check that VariantAssigned custom event fires
+4. **Test CompleteRegistration Event**:
+   - Fill out and submit forms on each variant
+   - Verify CompleteRegistration event fires after submission
+5. **Check Facebook Events Manager**:
+   - Log into Facebook Business Manager
+   - Go to Events Manager → Data Sources → Your Pixel
+   - Verify events are received in real-time
 
 ### Function Logs
 - Check Cloudflare Pages dashboard for function logs
