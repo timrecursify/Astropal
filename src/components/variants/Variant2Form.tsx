@@ -187,16 +187,6 @@ export default function Variant2Form() {
     setIsSubmitting(true);
     
     try {
-      // Fire Facebook conversion event
-      if (typeof window !== 'undefined' && window.fbq) {
-        window.fbq('track', 'CompleteRegistration', {
-          content_name: 'Astropal Registration',
-          content_category: 'Lead',
-          value: 4.99,
-          currency: 'USD'
-        });
-      }
-      
       // Import and use the visitor tracking utility
       const { submitFormWithTracking } = await import('../../utils/visitorTracking');
       
@@ -206,6 +196,17 @@ export default function Variant2Form() {
       // Store submission data in localStorage
       localStorage.setItem('astropal_variant2_submitted_email', formData.email);
       localStorage.setItem('astropal_variant2_submission_timestamp', Date.now().toString());
+      
+      // Fire Facebook conversion event ONLY after successful submission
+      if (typeof window !== 'undefined' && window.fbq) {
+        window.fbq('track', 'CompleteRegistration', {
+          content_name: 'Astropal Registration',
+          content_category: 'Lead',
+          value: 4.99,
+          currency: 'USD',
+          variant: 'variant2'
+        });
+      }
       
       setHasSubmitted(true);
       setShowConfirmation(true);

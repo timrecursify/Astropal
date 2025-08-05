@@ -232,21 +232,22 @@ const Variant0: React.FC = () => {
     setIsSubmitting(true);
     
     try {
-      // Fire Facebook conversion event
-      if (typeof window !== 'undefined' && window.fbq) {
-        window.fbq('track', 'CompleteRegistration', {
-          content_name: 'Astropal Registration',
-          content_category: 'Lead',
-          value: 4.99,
-          currency: 'USD'
-        });
-      }
-      
       // Import and use the visitor tracking utility
       const { submitFormWithTracking } = await import('../../utils/visitorTracking');
       
       // Submit form with full visitor tracking
       await submitFormWithTracking(formData as unknown as Record<string, unknown>, 'variant0');
+      
+      // Fire Facebook conversion event ONLY after successful submission
+      if (typeof window !== 'undefined' && window.fbq) {
+        window.fbq('track', 'CompleteRegistration', {
+          content_name: 'Astropal Registration',
+          content_category: 'Lead',
+          value: 4.99,
+          currency: 'USD',
+          variant: 'variant0'
+        });
+      }
 
       // Store submission data in localStorage
       localStorage.setItem('astropal_submitted_email', formData.email);
