@@ -134,7 +134,7 @@ Forms submit to the Cloudflare function which forwards enhanced data to the webh
 - Variant tracking: `clarity('set', 'ab_variant', variant)`
 
 ### Facebook Pixel  
-- Pixel ID: `1086322613060078`
+- Pixel ID: `1840372693567321`
 - Events: `PageView`, `VariantAssigned`, `CompleteRegistration`
 
 ## Deployment to Cloudflare Pages
