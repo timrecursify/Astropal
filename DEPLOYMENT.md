@@ -135,7 +135,15 @@ Forms submit to the Cloudflare function which forwards enhanced data to the webh
 
 ### Facebook Pixel  
 - Pixel ID: `1840372693567321`
-- Events: `PageView`, `VariantAssigned`, `CompleteRegistration`
+- **Events**:
+  - `PageView`: Fires on every page load
+  - `VariantAssigned`: Fires when A/B test assigns a variant (custom event)
+  - `CompleteRegistration`: Fires AFTER successful form submission to webhook
+  - `Lead`: Fires when confirmation screen is displayed to user
+- **Conversion Flow**:
+  1. User submits form → Form validates → Webhook receives data
+  2. `CompleteRegistration` event fires (accurate conversion tracking)
+  3. Confirmation screen shows → `Lead` event fires (lead confirmation)
 - **Testing**: Use Facebook Pixel Helper browser extension to verify pixel fires
 - **Security**: CSP headers in `_headers` file allow Facebook domains
 
@@ -193,10 +201,15 @@ https://github.com/timrecursify/Astropal
 3. **Test VariantAssigned Event**:
    - Clear cookies and visit `/`
    - Check that VariantAssigned custom event fires
-4. **Test CompleteRegistration Event**:
+4. **Test CompleteRegistration Event** (MAIN CONVERSION):
    - Fill out and submit forms on each variant
-   - Verify CompleteRegistration event fires after submission
-5. **Check Facebook Events Manager**:
+   - Wait for "Registration successful" message
+   - Verify CompleteRegistration event fires ONLY after successful submission
+   - Check event includes variant identifier (variant0/variant1/variant2)
+5. **Test Lead Event**:
+   - After form submission, confirmation screen should appear
+   - Verify Lead event fires when confirmation is displayed
+6. **Check Facebook Events Manager**:
    - Log into Facebook Business Manager
    - Go to Events Manager → Data Sources → Your Pixel
    - Verify events are received in real-time
