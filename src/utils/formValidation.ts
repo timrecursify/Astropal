@@ -33,19 +33,16 @@ export function validateEmail(email: string): { isValid: boolean; error?: string
     return { isValid: false, error: 'Please enter a valid email address' };
   }
 
-  // Common typo patterns to catch
+  // Only catch obvious typos, not valid domains
   const commonTypos = [
-    /\.comm?$/, // .comm instead of .com
-    /\.orgg?$/, // .orgg instead of .org
-    /\.nett?$/, // .nett instead of .net
+    /\.comm$/, // .comm instead of .com (but not .com)
+    /\.orgg$/, // .orgg instead of .org (but not .org)
+    /\.nett$/, // .nett instead of .net (but not .net)
     /\.coom$/, // .coom instead of .com
-    /\.gmail\.comm?$/, // .gmail.comm instead of .gmail.com
-    /\.yahoo\.comm?$/, // .yahoo.comm instead of .yahoo.com
-    /\.hotmail\.comm?$/, // .hotmail.comm instead of .hotmail.com
-    /\.outlook\.comm?$/, // .outlook.comm instead of .outlook.com
-    /@gmail\.comm?$/, // @gmail.comm
-    /@yahoo\.comm?$/, // @yahoo.comm
-    /@hotmail\.comm?$/, // @hotmail.comm
+    /\.gmail\.comm$/, // .gmail.comm instead of .gmail.com
+    /@gmial\./, // @gmial instead of @gmail
+    /@yahooo\./, // @yahooo instead of @yahoo
+    /@hotmial\./, // @hotmial instead of @hotmail
   ];
 
   for (const typoPattern of commonTypos) {
