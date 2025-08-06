@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FieldTooltip } from '../FieldTooltip';
-import ConfirmationBlock from '../ConfirmationBlock';
+import { validateForm, displayValidationErrors } from '../../utils/formValidation';
+import EnhancedConfirmation from '../EnhancedConfirmation';
 
 interface FormData {
   fullName: string;
@@ -132,43 +133,7 @@ export default function Variant1Form() {
     }
   };
 
-  const validateForm = () => {
-    const errors: string[] = [];
-    
-    if (!formData.email.trim()) errors.push('Email is required');
-    if (!formData.preferredName.trim()) errors.push('Preferred name is required');
-    if (!formData.birthDate) errors.push('Birth date is required');
-    if (!formData.birthLocation.trim()) errors.push('Birth location is required');
-    
-    // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (formData.email && !emailRegex.test(formData.email)) {
-      errors.push('Please enter a valid email address');
-    }
-    
-    // Age validation (18+)
-    if (formData.birthDate) {
-      const birthDate = new Date(formData.birthDate);
-      const today = new Date();
-      const age = today.getFullYear() - birthDate.getFullYear();
-      const monthDiff = today.getMonth() - birthDate.getMonth();
-      
-      const actualAge = (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) 
-        ? age - 1 
-        : age;
-        
-      if (actualAge < 18) {
-        errors.push('You must be at least 18 years old to sign up');
-      }
-    }
-    
-    // Numerology validation
-    if (formData.practices.includes('Numerology') && !formData.fullName.trim()) {
-      errors.push('Full name is required when Numerology is selected');
-    }
-    
-    return errors;
-  };
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -178,10 +143,10 @@ export default function Variant1Form() {
       return;
     }
     
-    // Validate form
-    const validationErrors = validateForm();
-    if (validationErrors.length > 0) {
-      alert('Please fix the following errors:\n' + validationErrors.join('\n'));
+    // Validate form using enhanced validation
+    const validation = validateForm(formData as any);
+    if (!validation.isValid) {
+      displayValidationErrors(validation.errors);
       return;
     }
 

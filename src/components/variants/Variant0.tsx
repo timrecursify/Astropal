@@ -2,55 +2,10 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { ArrowRight, Sparkles, Moon, Sun, Mail } from 'lucide-react';
 import { FieldTooltip } from '../FieldTooltip';
 import { useTaglineVariant } from '../../hooks/useTaglineVariant';
+import { validateForm, displayValidationErrors } from '../../utils/formValidation';
+import EnhancedConfirmation from '../EnhancedConfirmation';
 
-// Variant0 specific confirmation component
-const Variant0Confirmation: React.FC<{ userEmail: string }> = ({ userEmail }) => (
-  <div className="max-w-2xl mx-auto text-center py-16">
-    <div className="mb-8">
-      <img 
-        src="/Astropal_Logo.png" 
-        alt="Astropal Logo" 
-        className="w-16 h-16 mx-auto mb-6"
-      />
-      <h2 className="text-3xl md:text-4xl font-light mb-4">Welcome to your cosmic journey!</h2>
-      <p className="text-gray-400 text-lg mb-6">
-        Your personalized daily insights are being prepared
-      </p>
-      <div className="bg-gray-900/50 border border-gray-800 rounded-lg p-4 inline-flex items-center space-x-3 mb-8">
-        <Mail className="w-5 h-5 text-gray-400" />
-        <span className="text-gray-300">{userEmail}</span>
-      </div>
-    </div>
-    
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-      <div className="space-y-3">
-        <div className="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center mx-auto">
-          <span className="text-white text-sm font-mono">1</span>
-        </div>
-        <h3 className="text-lg font-medium">Check your email</h3>
-        <p className="text-sm text-gray-400">Your first cosmic insights are on the way</p>
-      </div>
-      <div className="space-y-3">
-        <div className="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center mx-auto">
-          <span className="text-white text-sm font-mono">2</span>
-        </div>
-        <h3 className="text-lg font-medium">Daily delivery</h3>
-        <p className="text-sm text-gray-400">Expect your personalized guidance every morning at 6 AM</p>
-      </div>
-      <div className="space-y-3">
-        <div className="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center mx-auto">
-          <span className="text-white text-sm font-mono">3</span>
-        </div>
-        <h3 className="text-lg font-medium">Free for 7 days</h3>
-        <p className="text-sm text-gray-400">Explore all features with no commitment</p>
-      </div>
-    </div>
-    
-    <p className="text-xs text-gray-500">
-      Questions? Contact <a href="mailto:support@astropal.io" className="text-gray-400 hover:text-white transition-colors">support@astropal.io</a>
-    </p>
-  </div>
-);
+
 
 interface FormData {
   fullName: string;
@@ -179,43 +134,7 @@ const Variant0: React.FC = () => {
     }
   };
 
-  const validateForm = () => {
-    const errors: string[] = [];
-    
-    if (!formData.email.trim()) errors.push('Email is required');
-    if (!formData.preferredName.trim()) errors.push('Preferred name is required');
-    if (!formData.birthDate) errors.push('Birth date is required');
-    if (!formData.birthLocation.trim()) errors.push('Birth location is required');
-    
-    // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (formData.email && !emailRegex.test(formData.email)) {
-      errors.push('Please enter a valid email address');
-    }
-    
-    // Age validation (18+)
-    if (formData.birthDate) {
-      const birthDate = new Date(formData.birthDate);
-      const today = new Date();
-      const age = today.getFullYear() - birthDate.getFullYear();
-      const monthDiff = today.getMonth() - birthDate.getMonth();
-      
-      const actualAge = (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) 
-        ? age - 1 
-        : age;
-        
-      if (actualAge < 18) {
-        errors.push('You must be at least 18 years old to sign up');
-      }
-    }
-    
-    // Numerology validation
-    if (formData.practices.includes('Numerology') && !formData.fullName.trim()) {
-      errors.push('Full name is required when Numerology is selected');
-    }
-    
-    return errors;
-  };
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -225,10 +144,10 @@ const Variant0: React.FC = () => {
       return;
     }
     
-    // Validate form
-    const validationErrors = validateForm();
-    if (validationErrors.length > 0) {
-      alert('Please fix the following errors:\n' + validationErrors.join('\n'));
+    // Validate form using enhanced validation
+    const validation = validateForm(formData as any);
+    if (!validation.isValid) {
+      displayValidationErrors(validation.errors);
       return;
     }
 
@@ -364,7 +283,7 @@ const Variant0: React.FC = () => {
       <section id="form-section" className="py-16">
         <div className="max-w-6xl mx-auto px-6">
           {showConfirmation ? (
-            <Variant0Confirmation userEmail={formData.email} />
+            <EnhancedConfirmation userEmail={formData.email} variant="variant0" />
           ) : (
             <>
               <div className="text-center mb-12">
@@ -507,10 +426,10 @@ const Variant0: React.FC = () => {
                             updateField('birthTime', 'unknown');
                           }
                         }}
-                        className={`text-xs px-2 py-1 rounded transition-colors ${
+                        className={`text-xs px-3 py-2 border rounded transition-colors min-w-[80px] ${
                           formData.birthTime === 'unknown' 
-                            ? 'bg-purple-600 text-white' 
-                            : 'text-gray-500 hover:text-white hover:bg-gray-800'
+                            ? 'bg-white text-black border-white' 
+                            : 'text-gray-400 border-gray-800 hover:text-white hover:border-gray-600 hover:bg-gray-900'
                         }`}
                       >
                         UNKNOWN
