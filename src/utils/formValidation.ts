@@ -1,4 +1,5 @@
-// Enhanced form validation utilities for all variants
+// Professional form validation using industry-standard validator.js library
+import { isEmail } from 'validator';
 
 export interface ValidationResult {
   isValid: boolean;
@@ -20,47 +21,21 @@ export interface FormData {
 }
 
 /**
- * Enhanced email validation that catches common typos
+ * Professional email validation using validator.js - handles all edge cases and international domains
  */
 export function validateEmail(email: string): { isValid: boolean; error?: string } {
   if (!email || !email.trim()) {
     return { isValid: false, error: 'Email is required' };
   }
 
-  // Basic format check
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email)) {
+  // Use validator.js - industry standard with comprehensive validation
+  if (!isEmail(email.trim())) {
     return { isValid: false, error: 'Please enter a valid email address' };
   }
 
-  // Only catch obvious typos, not valid domains
-  const commonTypos = [
-    /\.comm$/, // .comm instead of .com (but not .com)
-    /\.orgg$/, // .orgg instead of .org (but not .org)
-    /\.nett$/, // .nett instead of .net (but not .net)
-    /\.coom$/, // .coom instead of .com
-    /\.gmail\.comm$/, // .gmail.comm instead of .gmail.com
-    /@gmial\./, // @gmial instead of @gmail
-    /@yahooo\./, // @yahooo instead of @yahoo
-    /@hotmial\./, // @hotmial instead of @hotmail
-  ];
-
-  for (const typoPattern of commonTypos) {
-    if (typoPattern.test(email)) {
-      return { isValid: false, error: 'Please check your email address - it appears to have a typo' };
-    }
-  }
-
-  // Check for missing @ or multiple @
-  const atCount = (email.match(/@/g) || []).length;
-  if (atCount !== 1) {
-    return { isValid: false, error: 'Email must contain exactly one @ symbol' };
-  }
-
-  // Check for valid characters
-  const validEmailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  if (!validEmailRegex.test(email)) {
-    return { isValid: false, error: 'Email contains invalid characters' };
+  // Additional length check for practical purposes
+  if (email.length > 254) {
+    return { isValid: false, error: 'Email address is too long' };
   }
 
   return { isValid: true };
