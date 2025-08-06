@@ -96,51 +96,121 @@ export const onRequestPost = async (context: { request: Request; env: Env }) => 
       uid = generateUID(formData.birthLocation as string || '');
     }
 
-    // Prepare submission data
-    const submissionData = {
-      // Form data
-      ...formData,
-      
-      // Variant identification
-      variant: variantName,
-      ab_test_variant: variantName,
-      
-      // A/B Testing data
-      tagline_variant: visitorData.tagline_variant || null,
-      
-      // UTM and tracking parameters at top level - always included
-      utm_source: visitorData.utm_source || null,
-      utm_medium: visitorData.utm_medium || null,
-      utm_campaign: visitorData.utm_campaign || null,
-      utm_term: visitorData.utm_term || null,
-      utm_content: visitorData.utm_content || null,
-      
-      // Click tracking parameters at top level
-      fbclid: visitorData.fbclid || null,
-      ttclid: visitorData.ttclid || null,
-      gclid: visitorData.gclid || null,
-      
-      // Page and session data at top level
-      page_url: visitorData.page_url,
-      page_title: visitorData.page_title,
-      referrer: visitorData.referrer,
-      user_agent: visitorData.user_agent,
-      language: visitorData.language,
-      screen_resolution: visitorData.screen_resolution,
-      viewport_size: visitorData.viewport_size,
-      session_id: visitorData.session_id,
-      timezone: visitorData.timezone,
-      
-      // Generated UID
-      uid: uid,
-      
-      // Complete visitor data object (for backup/analysis)
-      visitor_data: visitorData,
-      
-      // Submission metadata
-      submission_timestamp: new Date().toISOString(),
-      form_version: '2.0'
-    };
+    // Prepare submission data based on action type
+    let submissionData: Record<string, unknown>;
+    
+    if (action === 'feedback') {
+      // Enhanced feedback data structure
+      submissionData = {
+        // Basic form data
+        email: formData.email,
+        uid: uid,
+        action: action,
+        
+        // Feedback-specific data
+        likes_tags: formData.likes_json ? JSON.parse(formData.likes_json as string) : [],
+        dislikes_tags: formData.dislikes_json ? JSON.parse(formData.dislikes_json as string) : [],
+        like_other_comment: formData.likeOtherComment || '',
+        dislike_other_comment: formData.dislikeOtherComment || '',
+        
+        // Metadata
+        likes_count: formData.likes_json ? JSON.parse(formData.likes_json as string).length : 0,
+        dislikes_count: formData.dislikes_json ? JSON.parse(formData.dislikes_json as string).length : 0,
+        
+        // Variant identification
+        variant: variantName,
+        ab_test_variant: variantName,
+        
+        // Submission metadata
+        submission_timestamp: new Date().toISOString(),
+        form_version: '2.1',
+        
+        // Visitor data (minimal for service pages)
+        session_id: visitorData.session_id || null,
+        user_agent: visitorData.user_agent || null,
+        timezone: visitorData.timezone || null
+      };
+    } else if (action === 'unsubscribe') {
+      // Enhanced unsubscribe data structure
+      submissionData = {
+        // Basic form data
+        email: formData.email,
+        uid: uid,
+        action: action,
+        
+        // Unsubscribe-specific data
+        reasons_tags: formData.reasons_json ? JSON.parse(formData.reasons_json as string) : [],
+        other_comment: formData.otherComment || '',
+        
+        // UTM tracking data
+        utm_source: formData.utm_source || visitorData.utm_source || null,
+        utm_medium: formData.utm_medium || visitorData.utm_medium || null,
+        utm_campaign: formData.utm_campaign || visitorData.utm_campaign || null,
+        
+        // Metadata
+        reasons_count: formData.reasons_json ? JSON.parse(formData.reasons_json as string).length : 0,
+        has_comment: !!(formData.otherComment),
+        
+        // Variant identification
+        variant: variantName,
+        ab_test_variant: variantName,
+        
+        // Submission metadata
+        submission_timestamp: new Date().toISOString(),
+        form_version: '2.1',
+        
+        // Visitor data (minimal for service pages)
+        session_id: visitorData.session_id || null,
+        user_agent: visitorData.user_agent || null,
+        timezone: visitorData.timezone || null
+      };
+    } else {
+      // Default registration data structure
+      submissionData = {
+        // Form data
+        ...formData,
+        
+        // Variant identification
+        variant: variantName,
+        ab_test_variant: variantName,
+        
+        // A/B Testing data
+        tagline_variant: visitorData.tagline_variant || null,
+        
+        // UTM and tracking parameters at top level - always included
+        utm_source: visitorData.utm_source || null,
+        utm_medium: visitorData.utm_medium || null,
+        utm_campaign: visitorData.utm_campaign || null,
+        utm_term: visitorData.utm_term || null,
+        utm_content: visitorData.utm_content || null,
+        
+        // Click tracking parameters at top level
+        fbclid: visitorData.fbclid || null,
+        ttclid: visitorData.ttclid || null,
+        gclid: visitorData.gclid || null,
+        
+        // Page and session data at top level
+        page_url: visitorData.page_url,
+        page_title: visitorData.page_title,
+        referrer: visitorData.referrer,
+        user_agent: visitorData.user_agent,
+        language: visitorData.language,
+        screen_resolution: visitorData.screen_resolution,
+        viewport_size: visitorData.viewport_size,
+        session_id: visitorData.session_id,
+        timezone: visitorData.timezone,
+        
+        // Generated UID
+        uid: uid,
+        
+        // Complete visitor data object (for backup/analysis)
+        visitor_data: visitorData,
+        
+        // Submission metadata
+        submission_timestamp: new Date().toISOString(),
+        form_version: '2.0'
+      };
+    }
 
     // Forward the request to Zapier webhook
     const response = await fetch(webhookUrl, {
