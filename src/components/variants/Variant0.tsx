@@ -3,6 +3,7 @@ import { ArrowRight, Sparkles, Moon, Sun, Mail } from 'lucide-react';
 import { FieldTooltip } from '../FieldTooltip';
 import { useTaglineVariant } from '../../hooks/useTaglineVariant';
 import { validateForm, displayValidationErrors } from '../../utils/formValidation';
+import { loadTrackingScripts } from '../../utils/trackingLoader';
 import EnhancedConfirmation from '../EnhancedConfirmation';
 
 
@@ -41,6 +42,11 @@ const Toggle: React.FC<{
 
 const Variant0: React.FC = () => {
   const taglineVariant = useTaglineVariant();
+
+  // Load tracking scripts for main pages
+  useEffect(() => {
+    loadTrackingScripts();
+  }, []);
   
   const [formData, setFormData] = useState<FormData>({
     fullName: '',

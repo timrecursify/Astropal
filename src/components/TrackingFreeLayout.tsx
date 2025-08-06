@@ -1,4 +1,5 @@
 import React from 'react';
+import { blockTrackingScripts } from '../utils/trackingLoader';
 
 interface TrackingFreeLayoutProps {
   children: React.ReactNode;
@@ -10,45 +11,8 @@ const TrackingFreeLayout: React.FC<TrackingFreeLayoutProps> = ({ children, title
     // Override document title for these pages
     document.title = title;
     
-    // Completely disable tracking scripts before they can load
-    if (typeof window !== 'undefined') {
-      // Disable Facebook Pixel completely
-      if (window.fbq) {
-        window.fbq = () => {}; // Stub out the function
-      }
-      
-      // Disable Microsoft Clarity completely
-      if (window.clarity) {
-        window.clarity = () => {}; // Stub out the function
-      }
-      
-      // Remove any existing tracking scripts
-      const fbScripts = document.querySelectorAll('script[src*="facebook.net"], script[src*="fbevents.js"]');
-      fbScripts.forEach(script => script.remove());
-      
-      const clarityScripts = document.querySelectorAll('script[src*="clarity.ms"]');
-      clarityScripts.forEach(script => script.remove());
-      
-      // Block any future script loads for tracking
-      const observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-          mutation.addedNodes.forEach((node) => {
-            if (node.nodeType === 1) { // Element node
-              const element = node as Element;
-              if (element.tagName === 'SCRIPT') {
-                const src = element.getAttribute('src');
-                if (src && (src.includes('facebook.net') || src.includes('clarity.ms'))) {
-                  element.remove();
-                }
-              }
-            }
-          });
-        });
-      });
-      
-      observer.observe(document.head, { childList: true, subtree: true });
-      observer.observe(document.body, { childList: true, subtree: true });
-    }
+    // Block tracking scripts completely
+    blockTrackingScripts();
 
     // Add meta tags to prevent indexing
     const metaRobots = document.createElement('meta');

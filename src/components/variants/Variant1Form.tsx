@@ -189,9 +189,9 @@ export default function Variant1Form() {
     <div className="flex flex-col min-h-0">
       {showConfirmation ? (
         <div className="flex items-center justify-center p-6">
-          <ConfirmationBlock
+          <EnhancedConfirmation
             userEmail={formData.email}
-            variant="wellness"
+            variant="variant1"
           />
         </div>
       ) : (

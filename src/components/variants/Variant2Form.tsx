@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FieldTooltip } from '../FieldTooltip';
-import ConfirmationBlock from '../ConfirmationBlock';
+import { validateForm, displayValidationErrors } from '../../utils/formValidation';
+import EnhancedConfirmation from '../EnhancedConfirmation';
 
 interface FormData {
   fullName: string;
@@ -223,9 +224,9 @@ export default function Variant2Form() {
     <div className="w-full max-w-4xl mx-auto">
       {showConfirmation ? (
         <div className="flex items-center justify-center p-6">
-          <ConfirmationBlock
+          <EnhancedConfirmation
             userEmail={formData.email}
-            variant="wellness"
+            variant="variant2"
           />
         </div>
       ) : (
