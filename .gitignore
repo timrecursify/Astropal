@@ -51,3 +51,6 @@ temp/
 
 # AB_Variants directory (backup/reference)
 AB_Variants/
+
+# Assets directory
+assets/

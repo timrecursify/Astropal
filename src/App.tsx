@@ -3,6 +3,8 @@ import { Routes, Route } from 'react-router-dom';
 import NotFound from './components/NotFound';
 import Privacy from './components/Privacy';
 import Terms from './components/Terms';
+import Unsubscribe from './components/Unsubscribe';
+import Feedback from './components/Feedback';
 import Variant0 from './components/variants/Variant0';
 import Variant1 from './components/variants/Variant1';
 import Variant2 from './components/variants/Variant2';
@@ -23,6 +25,8 @@ const App: React.FC = () => {
         {/* Static pages */}
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/terms" element={<Terms />} />
+        <Route path="/unsubscribe" element={<Unsubscribe />} />
+        <Route path="/feedback" element={<Feedback />} />
         
         {/* 404 */}
         <Route path="*" element={<NotFound />} />

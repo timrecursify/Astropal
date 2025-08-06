@@ -1,5 +1,4 @@
 import React from 'react';
-import { Star } from 'lucide-react';
 
 const Privacy: React.FC = () => {
   return (
@@ -7,8 +6,12 @@ const Privacy: React.FC = () => {
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between p-6">
         <div className="flex items-center space-x-2">
-          <Star className="w-5 h-5" />
-          <span className="font-mono text-sm">ASTROPAL</span>
+          <img 
+            src="/Astropal_Logo.png" 
+            alt="Astropal Logo" 
+            className="w-8 h-8"
+          />
+          <span className="font-mono text-base">ASTROPAL</span>
         </div>
       </nav>
 
