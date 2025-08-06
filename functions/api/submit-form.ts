@@ -68,6 +68,19 @@ export const onRequestPost = async (context: { request: Request; env: Env }) => 
             } 
           }
         );
+      } env.VITE_PUBLIC_ZAPIER_FEEDBACK_URL;
+      if (!webhookUrl) {
+        console.error('VITE_PUBLIC_ZAPIER_FEEDBACK_URL not configured');
+        return new Response(
+          JSON.stringify({ error: 'Feedback webhook URL not configured' }),
+          { 
+            status: 500, 
+            headers: { 
+              'Content-Type': 'application/json',
+              ...corsHeaders 
+            } 
+          }
+        );
       }
     } else {
       // Default registration webhook

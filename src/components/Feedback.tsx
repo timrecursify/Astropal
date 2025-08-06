@@ -196,7 +196,8 @@ const Feedback: React.FC = () => {
                 <div className="text-center mb-12">
                   <h1 className="text-3xl md:text-4xl font-light mb-4">Share Your Cosmic Feedback</h1>
                   <p className="text-gray-400 max-w-lg mx-auto">
-                    Your thoughts help us improve the Astropal experience. Select what you like and don't like.
+                    We're a new project building something special! Your feedback helps us improve your cosmic journey. 
+                    <span className="text-purple-400 font-medium"> As a thank you, we'll extend your free trial!</span>
                   </p>
                   {uid && (
                     <div className="mt-4 text-sm text-gray-500">
