@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MessageSquare, Star, Send, CheckCircle, ArrowLeft } from 'lucide-react';
 
 interface FeedbackData {
@@ -6,6 +6,7 @@ interface FeedbackData {
   rating: number;
   category: string;
   message: string;
+  uid?: string;
 }
 
 const Feedback: React.FC = () => {
@@ -15,6 +16,7 @@ const Feedback: React.FC = () => {
     category: '',
     message: ''
   });
+  const [uid, setUid] = useState<string | null>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -28,38 +30,65 @@ const Feedback: React.FC = () => {
     'Other'
   ];
 
+  // Extract UID from URL parameters on component mount
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const uidParam = urlParams.get('uid');
+    
+    if (uidParam) {
+      setUid(uidParam);
+      setFormData(prev => ({ ...prev, uid: uidParam }));
+    }
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setError('');
 
     // Validation
-    if (!formData.email || !formData.message) {
-      setError('Please fill in all required fields');
+    if (!uid && !formData.email) {
+      setError('Please provide your email address');
       setIsLoading(false);
       return;
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-      setError('Please enter a valid email address');
+    if (!formData.message) {
+      setError('Please enter your feedback message');
       setIsLoading(false);
       return;
+    }
+
+    if (!uid && formData.email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(formData.email)) {
+        setError('Please enter a valid email address');
+        setIsLoading(false);
+        return;
+      }
     }
 
     try {
-      // Submit feedback through the same API
+      // Submit feedback with UID or email
       const response = await fetch('/api/submit-form', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          formData: { ...formData, action: 'feedback' },
+          formData: { 
+            ...formData, 
+            email: uid ? 'feedback-by-uid' : formData.email,
+            uid: uid,
+            action: 'feedback'
+          },
           variantName: 'feedback',
           visitorData: {
             timestamp: new Date().toISOString(),
-            action: 'feedback'
+            action: 'feedback',
+            has_uid: !!uid,
+            rating: formData.rating,
+            category: formData.category
           }
         })
       });
@@ -104,7 +133,7 @@ const Feedback: React.FC = () => {
       <div className="pt-24 pb-16 px-6">
         <div className="max-w-2xl mx-auto">
           {isSubmitted ? (
-            // Success State
+            // Success State - Confirmation Window
             <div className="text-center space-y-6">
               <div className="flex justify-center">
                 <CheckCircle className="w-16 h-16 text-green-400" />
@@ -135,24 +164,31 @@ const Feedback: React.FC = () => {
                 <p className="text-gray-400 max-w-lg mx-auto">
                   Your thoughts help us improve the Astropal experience. We appreciate every insight you share.
                 </p>
+                {uid && (
+                  <div className="mt-4 text-sm text-gray-500">
+                    Account: {uid}
+                  </div>
+                )}
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-8">
-                {/* Email */}
-                <div>
-                  <label className="flex items-center text-xs text-gray-400 mb-2">
-                    EMAIL ADDRESS *
-                  </label>
-                  <input
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) => updateField('email', e.target.value)}
-                    className="w-full bg-transparent border-b border-gray-800 pb-2 text-white focus:border-white focus:outline-none text-lg"
-                    placeholder="your.email@example.com"
-                    required
-                    disabled={isLoading}
-                  />
-                </div>
+                {/* Email - only show if no UID */}
+                {!uid && (
+                  <div>
+                    <label className="flex items-center text-xs text-gray-400 mb-2">
+                      EMAIL ADDRESS *
+                    </label>
+                    <input
+                      type="email"
+                      value={formData.email}
+                      onChange={(e) => updateField('email', e.target.value)}
+                      className="w-full bg-transparent border-b border-gray-800 pb-2 text-white focus:border-white focus:outline-none text-lg"
+                      placeholder="your.email@example.com"
+                      required
+                      disabled={isLoading}
+                    />
+                  </div>
+                )}
 
                 {/* Rating */}
                 <div>

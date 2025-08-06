@@ -2,7 +2,10 @@ name = "astropal-io"
 pages_build_output_dir = ".vercel/output/static"
 
 # Environment variables for production and preview
-# The VITE_PUBLIC_ZAPIER_WEBHOOK_URL secret is managed through Cloudflare Pages dashboard
+# Webhook URLs are managed as secrets through Cloudflare Pages dashboard:
+# - VITE_PUBLIC_ZAPIER_WEBHOOK_URL (main registration webhook)
+# - VITE_PUBLIC_ZAPIER_UNSUBSCRIBE_URL (unsubscribe webhook)
+# - VITE_PUBLIC_ZAPIER_FEEDBACK_URL (feedback webhook)
 [env.production]
 
 [env.preview] 

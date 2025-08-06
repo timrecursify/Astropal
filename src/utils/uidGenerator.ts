@@ -5,6 +5,7 @@ const COUNTRY_CODES: Record<string, string> = {
   // Major English-speaking countries
   'united states': 'US',
   'usa': 'US',
+  'us': 'US',  // Fix: Direct US country code
   'america': 'US',
   'united kingdom': 'GB',
   'uk': 'GB',
@@ -14,6 +15,7 @@ const COUNTRY_CODES: Record<string, string> = {
   'wales': 'GB',
   'ireland': 'IE',
   'canada': 'CA',
+  'ca': 'CA',  // Fix: Direct CA country code
   'australia': 'AU',
   'new zealand': 'NZ',
   

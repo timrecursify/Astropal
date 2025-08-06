@@ -1,38 +1,74 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Mail, CheckCircle, ArrowLeft } from 'lucide-react';
 
 const Unsubscribe: React.FC = () => {
   const [email, setEmail] = useState('');
+  const [uid, setUid] = useState<string | null>(null);
+  const [utmParams, setUtmParams] = useState<Record<string, string>>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+
+  // Extract URL parameters on component mount
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const uidParam = urlParams.get('uid');
+    
+    if (uidParam) {
+      setUid(uidParam);
+    }
+
+    // Capture UTM parameters
+    const utmData: Record<string, string> = {};
+    for (const [key, value] of urlParams.entries()) {
+      if (key.startsWith('utm_') || key === 'uid') {
+        utmData[key] = value;
+      }
+    }
+    setUtmParams(utmData);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setError('');
 
-    // Basic email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setError('Please enter a valid email address');
+    // Validation - only check email if no UID provided
+    if (!uid && !email) {
+      setError('Please enter your email address');
       setIsLoading(false);
       return;
     }
 
+    if (!uid && email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        setError('Please enter a valid email address');
+        setIsLoading(false);
+        return;
+      }
+    }
+
     try {
-      // Submit unsubscribe request through the same API with unsubscribe flag
+      // Submit unsubscribe request with UID or email
       const response = await fetch('/api/submit-form', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          formData: { email, action: 'unsubscribe' },
+          formData: { 
+            email: uid ? 'unsubscribe-by-uid' : email, 
+            uid: uid,
+            action: 'unsubscribe',
+            ...utmParams
+          },
           variantName: 'unsubscribe',
           visitorData: {
             timestamp: new Date().toISOString(),
-            action: 'unsubscribe'
+            action: 'unsubscribe',
+            has_uid: !!uid,
+            ...utmParams
           }
         })
       });
@@ -73,7 +109,7 @@ const Unsubscribe: React.FC = () => {
       <div className="pt-24 pb-16 px-6">
         <div className="max-w-2xl mx-auto">
           {isSubmitted ? (
-            // Success State
+            // Success State - Confirmation Window
             <div className="text-center space-y-6">
               <div className="flex justify-center">
                 <CheckCircle className="w-16 h-16 text-green-400" />
@@ -102,29 +138,42 @@ const Unsubscribe: React.FC = () => {
               <div className="text-center mb-12">
                 <h1 className="text-3xl md:text-4xl font-light mb-4">Unsubscribe from Cosmic Updates</h1>
                 <p className="text-gray-400 max-w-lg mx-auto">
-                  We're sorry to see you go. Enter your email address below to unsubscribe from all future communications.
+                  {uid 
+                    ? "We're sorry to see you go. Click the button below to unsubscribe from all future communications."
+                    : "We're sorry to see you go. Enter your email address below to unsubscribe from all future communications."
+                  }
                 </p>
+                {uid && (
+                  <div className="mt-4 text-sm text-gray-500">
+                    Unsubscribing account: {uid}
+                  </div>
+                )}
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-8">
-                <div>
-                  <label className="flex items-center text-xs text-gray-400 mb-2">
-                    <Mail className="w-4 h-4 mr-2" />
-                    EMAIL ADDRESS
-                  </label>
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full bg-transparent border-b border-gray-800 pb-2 text-white focus:border-white focus:outline-none text-lg"
-                    placeholder="your.email@example.com"
-                    required
-                    disabled={isLoading}
-                  />
-                  {error && (
-                    <p className="text-red-400 text-sm mt-2">{error}</p>
-                  )}
-                </div>
+                {!uid && (
+                  <div>
+                    <label className="flex items-center text-xs text-gray-400 mb-2">
+                      <Mail className="w-4 h-4 mr-2" />
+                      EMAIL ADDRESS
+                    </label>
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="w-full bg-transparent border-b border-gray-800 pb-2 text-white focus:border-white focus:outline-none text-lg"
+                      placeholder="your.email@example.com"
+                      required
+                      disabled={isLoading}
+                    />
+                  </div>
+                )}
+
+                {error && (
+                  <div className="bg-red-900/30 border border-red-800 rounded-lg p-4">
+                    <p className="text-red-400 text-sm">{error}</p>
+                  </div>
+                )}
 
                 <div className="bg-gray-900/50 border border-gray-800 rounded-lg p-6 space-y-3">
                   <h3 className="text-lg font-medium text-white">Before you go...</h3>

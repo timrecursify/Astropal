@@ -5,6 +5,8 @@ import { generateUID } from '../../src/utils/uidGenerator';
 
 export interface Env {
   VITE_PUBLIC_ZAPIER_WEBHOOK_URL: string;
+  VITE_PUBLIC_ZAPIER_UNSUBSCRIBE_URL: string;
+  VITE_PUBLIC_ZAPIER_FEEDBACK_URL: string;
 }
 
 interface FormSubmissionRequest {
@@ -33,25 +35,66 @@ export const onRequestPost = async (context: { request: Request; env: Env }) => 
     const body: FormSubmissionRequest = await request.json();
     const { formData, variantName, visitorData } = body;
 
-    // Get the webhook URL from environment variables
-    const webhookUrl = env.VITE_PUBLIC_ZAPIER_WEBHOOK_URL;
-    
-    if (!webhookUrl) {
-      console.error('VITE_PUBLIC_ZAPIER_WEBHOOK_URL not configured');
-      return new Response(
-        JSON.stringify({ error: 'Webhook URL not configured' }),
-        { 
-          status: 500, 
-          headers: { 
-            'Content-Type': 'application/json',
-            ...corsHeaders 
-          } 
-        }
-      );
+    // Determine webhook URL based on action
+    let webhookUrl: string;
+    const action = formData.action as string;
+
+    if (action === 'unsubscribe') {
+      webhookUrl = env.VITE_PUBLIC_ZAPIER_UNSUBSCRIBE_URL;
+      if (!webhookUrl) {
+        console.error('VITE_PUBLIC_ZAPIER_UNSUBSCRIBE_URL not configured');
+        return new Response(
+          JSON.stringify({ error: 'Unsubscribe webhook URL not configured' }),
+          { 
+            status: 500, 
+            headers: { 
+              'Content-Type': 'application/json',
+              ...corsHeaders 
+            } 
+          }
+        );
+      }
+    } else if (action === 'feedback') {
+      webhookUrl = env.VITE_PUBLIC_ZAPIER_FEEDBACK_URL;
+      if (!webhookUrl) {
+        console.error('VITE_PUBLIC_ZAPIER_FEEDBACK_URL not configured');
+        return new Response(
+          JSON.stringify({ error: 'Feedback webhook URL not configured' }),
+          { 
+            status: 500, 
+            headers: { 
+              'Content-Type': 'application/json',
+              ...corsHeaders 
+            } 
+          }
+        );
+      }
+    } else {
+      // Default registration webhook
+      webhookUrl = env.VITE_PUBLIC_ZAPIER_WEBHOOK_URL;
+      if (!webhookUrl) {
+        console.error('VITE_PUBLIC_ZAPIER_WEBHOOK_URL not configured');
+        return new Response(
+          JSON.stringify({ error: 'Registration webhook URL not configured' }),
+          { 
+            status: 500, 
+            headers: { 
+              'Content-Type': 'application/json',
+              ...corsHeaders 
+            } 
+          }
+        );
+      }
     }
 
-    // Generate UID based on birth location
-    const uid = generateUID(formData.birthLocation as string || '');
+    // Generate UID based on birth location (only for registration)
+    let uid: string;
+    if (action === 'unsubscribe' || action === 'feedback') {
+      // Use provided UID or generate a simple one
+      uid = (formData.uid as string) || `${action.toUpperCase()}${Date.now().toString().slice(-6)}`;
+    } else {
+      uid = generateUID(formData.birthLocation as string || '');
+    }
 
     // Prepare submission data
     const submissionData = {
