@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { ArrowRight, Sparkles, Moon, Sun, Mail } from 'lucide-react';
 import { FieldTooltip } from '../FieldTooltip';
+import { useTaglineVariant } from '../../hooks/useTaglineVariant';
 
 // Variant0 specific confirmation component
 const Variant0Confirmation: React.FC<{ userEmail: string }> = ({ userEmail }) => (
@@ -84,6 +85,8 @@ const Toggle: React.FC<{
 );
 
 const Variant0: React.FC = () => {
+  const taglineVariant = useTaglineVariant();
+  
   const [formData, setFormData] = useState<FormData>({
     fullName: '',
     preferredName: '',
@@ -287,14 +290,32 @@ const Variant0: React.FC = () => {
           <div className="max-w-3xl">
             <div className="text-xs text-gray-500 font-mono mb-8">[ PRECISION COSMIC INTELLIGENCE ]</div>
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-light leading-tight mb-8">
-              The World's First<br />
-              Advanced Cosmic<br />
-              Intelligence System
+              {(() => {
+                const headline = taglineVariant.headline;
+                // Apply subtle highlighting to key cosmic words for minimalist design
+                return headline
+                  .split(' ')
+                  .map((word, index) => {
+                    const cosmicWords = ['Cosmic', 'Stars', 'Universe', 'NASA', 'Astrology', 'Oracle', 'Intelligence', 'Advantage', 'Edge', 'Level', 'Advanced'];
+                    const isCosmicWord = cosmicWords.some(cosmic => word.toLowerCase().includes(cosmic.toLowerCase()));
+                    
+                    return (
+                      <span key={index}>
+                        {isCosmicWord ? (
+                          <span className="text-white">{word}</span>
+                        ) : (
+                          word
+                        )}
+                        {index < headline.split(' ').length - 1 ? ' ' : ''}
+                      </span>
+                    );
+                  });
+              })()}
             </h1>
             <div className="flex items-start space-x-4 mb-12">
               <ArrowRight className="w-4 h-4 mt-1 text-gray-500" />
               <p className="text-gray-400 text-sm leading-relaxed max-w-lg">
-                Precision astrology using NASA data and Swiss Ephemeris calculations, delivered as personalized daily guidance
+                {taglineVariant.subheadline}
               </p>
             </div>
 

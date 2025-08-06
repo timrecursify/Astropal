@@ -62,6 +62,9 @@ export const onRequestPost = async (context: { request: Request; env: Env }) => 
       variant: variantName,
       ab_test_variant: variantName,
       
+      // A/B Testing data
+      tagline_variant: visitorData.tagline_variant || null,
+      
       // UTM and tracking parameters at top level - always included
       utm_source: visitorData.utm_source || null,
       utm_medium: visitorData.utm_medium || null,

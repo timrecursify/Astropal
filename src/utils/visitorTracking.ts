@@ -1,4 +1,5 @@
 // Utility functions for capturing visitor data and UTM parameters
+import { getTaglineVariantId } from './taglineVariants';
 
 interface VisitorData {
   // UTM Parameters
@@ -26,6 +27,9 @@ interface VisitorData {
   timestamp: string;
   timezone: string;
   session_id: string;
+  
+  // A/B Testing data
+  tagline_variant: string;
   
   // Location (will be populated by IP geolocation)
   ip_address?: string;
@@ -126,7 +130,10 @@ export function captureVisitorData(): VisitorData {
     // Timing data
     timestamp: new Date().toISOString(),
     timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-    session_id: getSessionId()
+    session_id: getSessionId(),
+    
+    // A/B Testing data
+    tagline_variant: getTaglineVariantId()
   };
   
   return visitorData;

@@ -26,7 +26,7 @@ const Toggle: React.FC<{
     type="button"
     onClick={() => !disabled && onChange(!checked)}
     disabled={disabled}
-    className={`group relative overflow-hidden w-full p-3 text-sm font-medium transition-all duration-300 transform hover:scale-[1.01] ${
+    className={`group relative overflow-hidden w-full h-10 p-3 text-sm font-medium transition-all duration-300 transform hover:scale-[1.01] flex items-center ${
       disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
     } ${checked 
       ? 'bg-gradient-to-r from-purple-600/30 to-pink-600/30 text-white border border-purple-400 shadow-md shadow-purple-500/20' 
@@ -34,7 +34,7 @@ const Toggle: React.FC<{
     }`}
     style={{ borderRadius: '8px' }}
   >
-    <div className="relative z-10 flex items-center justify-between">
+    <div className="relative z-10 flex items-center justify-between w-full">
       <span className="font-medium tracking-wide text-sm">{label}</span>
       <div className={`w-4 h-4 rounded-full border transition-all duration-300 ${
         checked 
@@ -231,25 +231,18 @@ export default function Variant1Form() {
         </div>
       ) : (
         <>
-          <div className="text-center mb-6">
-            <h2 className="text-xl md:text-2xl font-bold tracking-wide mb-3 text-white bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-              Customize Your Daily Newsletter
-            </h2>
-            <p className="text-xs text-gray-400 font-light tracking-wide">
-              Personalized cosmic wellness delivered daily
-            </p>
-          </div>
+
           
           <div className="flex-1 overflow-y-auto">
             <form onSubmit={handleSubmit} className="space-y-6 pb-6">
               {/* Personal Information Section */}
-              <div className="bg-gradient-to-br from-gray-900/40 to-purple-900/15 backdrop-blur-sm border border-gray-700/50 rounded-xl p-4 shadow-lg">
+              <div className="bg-gradient-to-br from-gray-900/40 to-purple-900/15 backdrop-blur-sm border border-gray-700/50 rounded-xl p-6 shadow-lg">
                 <h3 className="text-sm font-bold text-white mb-4 tracking-wide border-b border-gray-700/50 pb-2">
                   Personal Information
                 </h3>
               
-                <div className="grid grid-cols-1 gap-4">
-                  <div className="group">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                  <div className="group md:col-span-2">
                     <label className="flex items-center justify-between text-xs font-semibold text-gray-300 mb-2 tracking-wide">
                       FULL NAME (OPTIONAL)
                       <FieldTooltip content="Your complete legal name is only required when Numerology is selected for accurate calculations" />
@@ -258,7 +251,7 @@ export default function Variant1Form() {
                       type="text"
                       value={formData.fullName}
                       onChange={(e) => updateField('fullName', e.target.value)}
-                      className="w-full bg-gray-800/50 border border-gray-700/50 rounded-md px-3 py-2 text-white text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 focus:outline-none transition-all duration-300"
+                      className="w-full h-10 bg-gray-800/50 border border-gray-700/50 rounded-md px-3 py-2 text-white text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 focus:outline-none transition-all duration-300"
                       required={formData.practices.includes('Numerology')}
                       placeholder="Enter your full legal name"
                     />
@@ -273,7 +266,7 @@ export default function Variant1Form() {
                       type="text"
                       value={formData.preferredName}
                       onChange={(e) => updateField('preferredName', e.target.value)}
-                      className="w-full bg-gray-800/50 border border-gray-700/50 rounded-md px-3 py-2 text-white text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 focus:outline-none transition-all duration-300"
+                      className="w-full h-10 bg-gray-800/50 border border-gray-700/50 rounded-md px-3 py-2 text-white text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 focus:outline-none transition-all duration-300"
                       required
                       placeholder="How should we address you?"
                     />
@@ -288,57 +281,55 @@ export default function Variant1Form() {
                       type="email"
                       value={formData.email}
                       onChange={(e) => updateField('email', e.target.value)}
-                      className="w-full bg-gray-800/50 border border-gray-700/50 rounded-md px-3 py-2 text-white text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 focus:outline-none transition-all duration-300"
+                      className="w-full h-10 bg-gray-800/50 border border-gray-700/50 rounded-md px-3 py-2 text-white text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 focus:outline-none transition-all duration-300"
                       required
                       placeholder="your@email.com"
                     />
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="group">
-                      <label className="flex items-center justify-between text-xs font-semibold text-gray-300 mb-2 tracking-wide">
-                        BIRTH DATE *
-                        <FieldTooltip content="Your date of birth for accurate astrological and numerological calculations" />
-                      </label>
-                      <input
-                        type="date"
-                        value={formData.birthDate}
-                        onChange={(e) => updateField('birthDate', e.target.value)}
-                        max={`${new Date().getFullYear() - 18}-12-31`}
-                        className="w-full bg-gray-800/50 border border-gray-700/50 rounded-md px-3 py-2 text-white text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 focus:outline-none transition-all duration-300 [color-scheme:dark]"
-                        required
-                      />
-                    </div>
-
-                    <div className="group">
-                      <label className="flex items-center justify-between text-xs font-semibold text-gray-300 mb-2 tracking-wide">
-                        BIRTH TIME
-                        <FieldTooltip content="Your exact time of birth for precise astrological chart calculations. Select 'Unknown' if uncertain" />
-                      </label>
-                      <div className="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2">
-                        <input
-                          type="time"
-                          value={formData.birthTime === 'unknown' ? '' : formData.birthTime}
-                          onChange={(e) => updateField('birthTime', e.target.value)}
-                          className="w-full bg-gray-800/50 border border-gray-700/50 rounded-md px-3 py-2 text-white text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 focus:outline-none transition-all duration-300 [color-scheme:dark]"
-                          disabled={formData.birthTime === 'unknown'}
-                        />
-                        <button
-                          type="button"
-                          onClick={handleBirthTimeUnknown}
-                          className={`w-full sm:w-auto sm:flex-shrink-0 px-4 py-2 text-xs font-semibold rounded-md transition-all duration-300 ${
-                            formData.birthTime === 'unknown' 
-                              ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-md' 
-                              : 'bg-gray-700/50 text-gray-300 hover:bg-gray-600/50 hover:text-white'
-                          }`}
-                        >
-                          UNKNOWN
-                        </button>
-                      </div>
-                    </div>
+                  <div className="group">
+                    <label className="flex items-center justify-between text-xs font-semibold text-gray-300 mb-2 tracking-wide">
+                      BIRTH DATE *
+                      <FieldTooltip content="Your date of birth for accurate astrological and numerological calculations" />
+                    </label>
+                    <input
+                      type="date"
+                      value={formData.birthDate}
+                      onChange={(e) => updateField('birthDate', e.target.value)}
+                      max={`${new Date().getFullYear() - 18}-12-31`}
+                      className="w-full h-10 bg-gray-800/50 border border-gray-700/50 rounded-md px-3 py-2 text-white text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 focus:outline-none transition-all duration-300 [color-scheme:dark]"
+                      required
+                    />
                   </div>
 
                   <div className="group">
+                    <label className="flex items-center justify-between text-xs font-semibold text-gray-300 mb-2 tracking-wide">
+                      BIRTH TIME
+                      <FieldTooltip content="Your exact time of birth for precise astrological chart calculations. Select 'Unknown' if uncertain" />
+                    </label>
+                    <div className="flex space-x-2">
+                      <input
+                        type="time"
+                        value={formData.birthTime === 'unknown' ? '' : formData.birthTime}
+                        onChange={(e) => updateField('birthTime', e.target.value)}
+                        className="flex-1 h-10 bg-gray-800/50 border border-gray-700/50 rounded-md px-3 py-2 text-white text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 focus:outline-none transition-all duration-300 [color-scheme:dark]"
+                        disabled={formData.birthTime === 'unknown'}
+                      />
+                      <button
+                        type="button"
+                        onClick={handleBirthTimeUnknown}
+                        className={`h-10 px-3 py-2 text-xs font-semibold rounded-md transition-all duration-300 ${
+                          formData.birthTime === 'unknown' 
+                            ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-md' 
+                            : 'bg-gray-700/50 text-gray-300 hover:bg-gray-600/50 hover:text-white'
+                        }`}
+                      >
+                        UNK
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="group md:col-span-2">
                     <label className="flex items-center justify-between text-xs font-semibold text-gray-300 mb-2 tracking-wide">
                       BIRTH LOCATION *
                       <FieldTooltip content="City, state, and country where you were born for location-based astrological calculations" />
@@ -347,7 +338,7 @@ export default function Variant1Form() {
                       type="text"
                       value={formData.birthLocation}
                       onChange={(e) => updateField('birthLocation', e.target.value)}
-                      className="w-full bg-gray-800/50 border border-gray-700/50 rounded-md px-3 py-2 text-white text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 focus:outline-none transition-all duration-300"
+                      className="w-full h-10 bg-gray-800/50 border border-gray-700/50 rounded-md px-3 py-2 text-white text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 focus:outline-none transition-all duration-300"
                       placeholder="City, State, Country"
                       required
                     />
@@ -361,7 +352,7 @@ export default function Variant1Form() {
                     <select
                       value={formData.timeZone}
                       onChange={(e) => updateField('timeZone', e.target.value)}
-                      className="w-full bg-gray-800/50 border border-gray-700/50 rounded-md px-3 py-2 text-white text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 focus:outline-none transition-all duration-300 appearance-none"
+                      className="w-full h-10 bg-gray-800/50 border border-gray-700/50 rounded-md px-3 py-2 text-white text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 focus:outline-none transition-all duration-300 appearance-none"
                     >
                       <option value={Intl.DateTimeFormat().resolvedOptions().timeZone} className="bg-gray-900">
                         Auto-detected
@@ -385,7 +376,7 @@ export default function Variant1Form() {
                       type="time"
                       value={formData.dayStartTime}
                       onChange={(e) => updateField('dayStartTime', e.target.value)}
-                      className="w-full bg-gray-800/50 border border-gray-700/50 rounded-md px-3 py-2 text-white text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 focus:outline-none transition-all duration-300 [color-scheme:dark]"
+                      className="w-full h-10 bg-gray-800/50 border border-gray-700/50 rounded-md px-3 py-2 text-white text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 focus:outline-none transition-all duration-300 [color-scheme:dark]"
                     />
                   </div>
 
@@ -397,7 +388,7 @@ export default function Variant1Form() {
                     <select
                       value={formData.relationshipStatus}
                       onChange={(e) => updateField('relationshipStatus', e.target.value)}
-                      className="w-full bg-gray-800/50 border border-gray-700/50 rounded-md px-3 py-2 text-white text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 focus:outline-none transition-all duration-300 appearance-none"
+                      className="w-full h-10 bg-gray-800/50 border border-gray-700/50 rounded-md px-3 py-2 text-white text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 focus:outline-none transition-all duration-300 appearance-none"
                     >
                       <option value="" className="bg-gray-900">Prefer not to say</option>
                       <option value="single" className="bg-gray-900">Single</option>
@@ -410,8 +401,8 @@ export default function Variant1Form() {
               </div>
 
               {/* Cosmic Practices Section */}
-              <div className="bg-gradient-to-br from-purple-900/15 to-pink-900/15 backdrop-blur-sm border border-purple-700/30 rounded-xl p-4 shadow-lg">
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
+              <div className="bg-gradient-to-br from-purple-900/15 to-pink-900/15 backdrop-blur-sm border border-purple-700/30 rounded-xl p-6 shadow-lg">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
                   <h3 className="text-sm font-bold text-white mb-2 sm:mb-0 tracking-wide">
                     Cosmic Practices
                   </h3>
@@ -419,7 +410,7 @@ export default function Variant1Form() {
                     Select up to 3 practices ({formData.practices.length}/3)
                   </p>
                 </div>
-                <div className="grid grid-cols-1 gap-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {[
                     'Astrology',
                     'Numerology', 
@@ -440,8 +431,8 @@ export default function Variant1Form() {
               </div>
 
               {/* Life Focus Section */}
-              <div className="bg-gradient-to-br from-pink-900/15 to-purple-900/15 backdrop-blur-sm border border-pink-700/30 rounded-xl p-4 shadow-lg">
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
+              <div className="bg-gradient-to-br from-pink-900/15 to-purple-900/15 backdrop-blur-sm border border-pink-700/30 rounded-xl p-6 shadow-lg">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
                   <h3 className="text-sm font-bold text-white mb-2 sm:mb-0 tracking-wide">
                     Life Focus Areas
                   </h3>
@@ -449,7 +440,7 @@ export default function Variant1Form() {
                     Select up to 3 areas ({formData.lifeFocus.length}/3)
                   </p>
                 </div>
-                <div className="grid grid-cols-1 gap-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {[
                     'Love & Relationships',
                     'Career & Success',

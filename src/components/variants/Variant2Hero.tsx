@@ -1,8 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Star, Mail, Brain, Clock, Moon, Heart, Sparkles, Shield, Zap, TrendingUp } from 'lucide-react';
+import { useTaglineVariant } from '../../hooks/useTaglineVariant';
 
 export default function Variant2Hero() {
+  const taglineVariant = useTaglineVariant();
+  
   const avatars = [
     'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=50&h=50&fit=crop&crop=face&auto=format',
     'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=50&h=50&fit=crop&crop=face&auto=format',
@@ -76,11 +79,27 @@ export default function Variant2Hero() {
         transition={{ duration: 0.8, delay: 0.2 }}
       >
         <h1 className="text-4xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-          Your Morning
-          <br />
-          <span className="text-purple-400">Cosmic Coffee</span>
-          <br />
-          But for the Soul
+          {(() => {
+            const headline = taglineVariant.headline;
+            // Apply purple styling to key cosmic words
+            return headline
+              .split(' ')
+              .map((word, index) => {
+                const cosmicWords = ['Cosmic', 'Stars', 'Universe', 'NASA', 'Astrology', 'Oracle', 'Intelligence', 'Advantage', 'Edge', 'Level', 'Coffee'];
+                const isCosmicWord = cosmicWords.some(cosmic => word.toLowerCase().includes(cosmic.toLowerCase()));
+                
+                return (
+                  <span key={index}>
+                    {isCosmicWord ? (
+                      <span className="text-purple-400">{word}</span>
+                    ) : (
+                      word
+                    )}
+                    {index < headline.split(' ').length - 1 ? ' ' : ''}
+                  </span>
+                );
+              });
+          })()}
         </h1>
       </motion.div>
       
@@ -92,7 +111,7 @@ export default function Variant2Hero() {
         className="space-y-2"
       >
         <p className="text-lg sm:text-lg md:text-xl text-gray-300 leading-relaxed max-w-2xl mx-auto px-4">
-          5-minute personalized readings that fit perfectly into your daily routine, no apps required
+          {taglineVariant.subheadline}
         </p>
         <p className="text-base sm:text-base md:text-base text-gray-500 italic">
           Ancient wisdom, modern convenience - delivered fresh to your inbox
