@@ -35,21 +35,11 @@ export const onRequestPost = async (context: { request: Request; env: Env }) => 
     const body: FormSubmissionRequest = await request.json();
     const { formData, variantName, visitorData } = body;
     
-    // Debug logging
-    console.log('Received request:', {
-      action: formData.action,
+    // Log successful submissions only
+    console.log('Processing form submission:', {
+      action: formData.action || 'registration',
       variantName,
-      hasFormData: !!formData,
-      hasVisitorData: !!visitorData
-    });
-    
-    // Debug environment variables
-    console.log('Environment debug:', {
-      feedback_url_exists: !!env.VITE_PUBLIC_ZAPIER_FEEDBACK_URL,
-      unsubscribe_url_exists: !!env.VITE_PUBLIC_ZAPIER_UNSUBSCRIBE_URL,
-      webhook_url_exists: !!env.VITE_PUBLIC_ZAPIER_WEBHOOK_URL,
-      env_keys: Object.keys(env),
-      context_keys: Object.keys(context)
+      timestamp: new Date().toISOString()
     });
 
     // Determine webhook URL based on action
@@ -72,7 +62,8 @@ export const onRequestPost = async (context: { request: Request; env: Env }) => 
         );
       }
     } else if (action === 'feedback') {
-      webhookUrl = env.VITE_PUBLIC_ZAPIER_FEEDBACK_URL;
+      // Try both normal key and malformed key with leading space
+      webhookUrl = env.VITE_PUBLIC_ZAPIER_FEEDBACK_URL || (env as any)[' VITE_PUBLIC_ZAPIER_FEEDBACK_URL'];
       if (!webhookUrl) {
         console.error('VITE_PUBLIC_ZAPIER_FEEDBACK_URL not configured');
         return new Response(
