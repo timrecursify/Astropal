@@ -1,5 +1,6 @@
 name = "astropal-io" 
 pages_build_output_dir = ".vercel/output/static"
 
-# Environment variables are managed through Cloudflare Pages dashboard
-# No binding needed in wrangler.toml for Pages Functions 
+# Environment variables are managed through Cloudflare Pages dashboard as **Secrets**.
+# No binding is required here for Pages Functions.
+ 
