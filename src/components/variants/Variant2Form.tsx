@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FieldTooltip } from '../FieldTooltip';
 import { validateForm, displayValidationErrors } from '../../utils/formValidation';
+import { submitFormWithTracking } from '../../utils/visitorTracking';
 import EnhancedConfirmation from '../EnhancedConfirmation';
 
 interface FormData {
@@ -188,9 +189,6 @@ export default function Variant2Form() {
     setIsSubmitting(true);
     
     try {
-      // Import and use the visitor tracking utility
-      const { submitFormWithTracking } = await import('../../utils/visitorTracking');
-      
       // Submit form with full visitor tracking
       await submitFormWithTracking(formData as unknown as Record<string, unknown>, 'variant2');
       

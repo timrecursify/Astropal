@@ -3,7 +3,7 @@ import { ArrowRight, Sparkles, Moon, Sun, Mail } from 'lucide-react';
 import { FieldTooltip } from '../FieldTooltip';
 import { useTaglineVariant } from '../../hooks/useTaglineVariant';
 import { validateForm, displayValidationErrors } from '../../utils/formValidation';
-import { loadTrackingScripts } from '../../utils/trackingLoader';
+import { submitFormWithTracking } from '../../utils/visitorTracking';
 import EnhancedConfirmation from '../EnhancedConfirmation';
 
 
@@ -43,10 +43,7 @@ const Toggle: React.FC<{
 const Variant0: React.FC = () => {
   const taglineVariant = useTaglineVariant();
 
-  // Load tracking scripts for main pages
-  useEffect(() => {
-    loadTrackingScripts();
-  }, []);
+
   
   const [formData, setFormData] = useState<FormData>({
     fullName: '',
@@ -160,9 +157,6 @@ const Variant0: React.FC = () => {
     setIsSubmitting(true);
     
     try {
-      // Import and use the visitor tracking utility
-      const { submitFormWithTracking } = await import('../../utils/visitorTracking');
-      
       // Submit form with full visitor tracking
       await submitFormWithTracking(formData as unknown as Record<string, unknown>, 'variant0');
       
