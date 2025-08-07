@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Mail, CheckCircle, ArrowLeft } from 'lucide-react';
+import { useSearchParams } from 'react-router-dom';
 import TrackingFreeLayout from './TrackingFreeLayout';
 
 interface UnsubscribeData {
@@ -34,25 +35,26 @@ const Unsubscribe: React.FC = () => {
     'Other'
   ];
 
-  // Extract URL parameters on component mount
+  const [searchParams] = useSearchParams();
+  
+  // Extract URL parameters using React Router
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const uidParam = urlParams.get('uid');
+    const uidParam = searchParams.get('uid');
     
     if (uidParam) {
       setUid(uidParam);
       setFormData(prev => ({ ...prev, uid: uidParam }));
     }
 
-    // Capture UTM parameters
+    // Capture UTM parameters using React Router
     const utmData: Record<string, string> = {};
-    for (const [key, value] of urlParams.entries()) {
+    for (const [key, value] of searchParams.entries()) {
       if (key.startsWith('utm_') || key === 'uid') {
         utmData[key] = value;
       }
     }
     setUtmParams(utmData);
-  }, []);
+  }, [searchParams]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

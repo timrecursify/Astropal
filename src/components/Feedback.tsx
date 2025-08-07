@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Send, CheckCircle, ArrowLeft } from 'lucide-react';
+import { useSearchParams } from 'react-router-dom';
 import TrackingFreeLayout from './TrackingFreeLayout';
 
 interface FeedbackData {
@@ -50,16 +51,17 @@ const Feedback: React.FC = () => {
     'Other'
   ];
 
-  // Extract UID from URL parameters on component mount
+  const [searchParams] = useSearchParams();
+  
+  // Extract UID from URL parameters using React Router
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const uidParam = urlParams.get('uid');
+    const uidParam = searchParams.get('uid');
     
     if (uidParam) {
       setUid(uidParam);
       setFormData(prev => ({ ...prev, uid: uidParam }));
     }
-  }, []);
+  }, [searchParams]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
