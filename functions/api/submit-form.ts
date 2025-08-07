@@ -34,6 +34,14 @@ export const onRequestPost = async (context: { request: Request; env: Env }) => 
     // Parse the request body
     const body: FormSubmissionRequest = await request.json();
     const { formData, variantName, visitorData } = body;
+    
+    // Debug logging
+    console.log('Received request:', {
+      action: formData.action,
+      variantName,
+      hasFormData: !!formData,
+      hasVisitorData: !!visitorData
+    });
 
     // Determine webhook URL based on action
     let webhookUrl: string;
