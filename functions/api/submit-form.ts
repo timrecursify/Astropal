@@ -42,6 +42,15 @@ export const onRequestPost = async (context: { request: Request; env: Env }) => 
       hasFormData: !!formData,
       hasVisitorData: !!visitorData
     });
+    
+    // Debug environment variables
+    console.log('Environment debug:', {
+      feedback_url_exists: !!env.VITE_PUBLIC_ZAPIER_FEEDBACK_URL,
+      unsubscribe_url_exists: !!env.VITE_PUBLIC_ZAPIER_UNSUBSCRIBE_URL,
+      webhook_url_exists: !!env.VITE_PUBLIC_ZAPIER_WEBHOOK_URL,
+      env_keys: Object.keys(env),
+      context_keys: Object.keys(context)
+    });
 
     // Determine webhook URL based on action
     let webhookUrl: string;
