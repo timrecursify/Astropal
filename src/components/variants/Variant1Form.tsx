@@ -315,7 +315,7 @@ export default function Variant1Form() {
                     <select
                       value={formData.timeZone}
                       onChange={(e) => updateField('timeZone', e.target.value)}
-                      className="w-full h-10 bg-gray-800/50 border border-gray-700/50 rounded-md px-3 py-2 text-white text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 focus:outline-none transition-all duration-300 appearance-none"
+                      className="w-full h-10 bg-gray-800/50 border border-gray-700/50 rounded-md px-3 py-2 text-white text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 focus:outline-none transition-all duration-300 appearance-none [color-scheme:dark]"
                     >
                       <option value={Intl.DateTimeFormat().resolvedOptions().timeZone} className="bg-gray-900">
                         Auto-detected

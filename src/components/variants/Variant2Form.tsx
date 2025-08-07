@@ -321,7 +321,7 @@ export default function Variant2Form() {
                     <select
                       value={formData.timeZone}
                       onChange={(e) => updateField('timeZone', e.target.value)}
-                      className="w-full bg-gray-800/50 border border-gray-700 rounded-md px-3 py-2 text-white text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 focus:outline-none transition-all"
+                      className="w-full bg-gray-800/50 border border-gray-700 rounded-md px-3 py-2 text-white text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 focus:outline-none transition-all appearance-none [color-scheme:dark]"
                     >
                       <option value={Intl.DateTimeFormat().resolvedOptions().timeZone}>Auto-detected</option>
                       <option value="America/New_York">Eastern</option>

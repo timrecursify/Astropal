@@ -127,7 +127,7 @@ export const NewsletterForm: React.FC = () => {
               <select
                 value={formData.timeZone}
                 onChange={(e) => updateField('timeZone', e.target.value)}
-                className="w-full px-4 py-3 bg-transparent border border-gray-600 rounded-lg text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
+                className="w-full px-4 py-3 bg-transparent border border-gray-600 rounded-lg text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors appearance-none [color-scheme:dark]"
               >
                 <option value={Intl.DateTimeFormat().resolvedOptions().timeZone} className="bg-gray-800">
                   {Intl.DateTimeFormat().resolvedOptions().timeZone} (Auto-detected)
@@ -162,7 +162,7 @@ export const NewsletterForm: React.FC = () => {
             <select
               value={formData.relationshipStatus}
               onChange={(e) => updateField('relationshipStatus', e.target.value)}
-              className="w-full px-4 py-3 bg-transparent border border-gray-600 rounded-lg text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
+              className="w-full px-4 py-3 bg-transparent border border-gray-600 rounded-lg text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors appearance-none [color-scheme:dark]"
             >
               <option value="" className="bg-gray-800">Prefer not to say</option>
               <option value="single" className="bg-gray-800">Single</option>
