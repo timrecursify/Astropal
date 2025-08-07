@@ -1,14 +1,5 @@
 name = "astropal-io" 
 pages_build_output_dir = ".vercel/output/static"
 
-# Environment variables for production and preview
-# These secrets are defined in Cloudflare Pages dashboard and bound here for Functions
-[env.production.vars]
-VITE_PUBLIC_ZAPIER_WEBHOOK_URL = ""
-VITE_PUBLIC_ZAPIER_UNSUBSCRIBE_URL = ""
-VITE_PUBLIC_ZAPIER_FEEDBACK_URL = ""
-
-[env.preview.vars]
-VITE_PUBLIC_ZAPIER_WEBHOOK_URL = ""
-VITE_PUBLIC_ZAPIER_UNSUBSCRIBE_URL = ""
-VITE_PUBLIC_ZAPIER_FEEDBACK_URL = "" 
+# Environment variables are managed through Cloudflare Pages dashboard
+# No binding needed in wrangler.toml for Pages Functions 
