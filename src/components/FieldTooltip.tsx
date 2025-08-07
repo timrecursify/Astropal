@@ -56,7 +56,7 @@ function Tooltip({ content, position = 'top', className = '', children }: Toolti
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 5 }}
             transition={{ duration: 0.2 }}
-            className={`absolute ${getPositionClasses()} z-[100]`}
+            className={`absolute ${getPositionClasses()} z-[9999]`}
             style={{ minWidth: '280px', maxWidth: '380px' }}
           >
             <div className="bg-gray-900/95 backdrop-blur-sm text-white text-xs px-4 py-3 rounded-lg shadow-2xl border border-gray-700/50 whitespace-normal break-words leading-relaxed">
@@ -98,7 +98,7 @@ export function MainPageTooltip({ content, className = '' }: { content: string; 
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 5 }}
             transition={{ duration: 0.2 }}
-            className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 z-[100]"
+            className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 z-[9999]"
             style={{ minWidth: '280px', maxWidth: '380px' }}
           >
             <div className="bg-gray-100 text-gray-900 text-xs px-4 py-3 rounded-lg shadow-2xl border border-gray-300 whitespace-normal break-words leading-relaxed">

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getUserVariant, type VariantType } from '../utils/abTesting';
+import { loadTrackingScripts } from '../utils/trackingLoader';
 import Variant0 from './variants/Variant0';
 import Variant1 from './variants/Variant1';
 import Variant2 from './variants/Variant2';
@@ -21,10 +22,15 @@ const ABTestRouter: React.FC = () => {
     setVariant(assignedVariant);
     setIsLoading(false);
 
-    // Track with Clarity if available
-    if (typeof window !== 'undefined' && window.clarity) {
-      window.clarity('set', 'ab_variant', assignedVariant);
-    }
+    // Load tracking scripts for main pages
+    loadTrackingScripts();
+
+    // Track with Clarity if available (after loading)
+    setTimeout(() => {
+      if (typeof window !== 'undefined' && window.clarity) {
+        window.clarity('set', 'ab_variant', assignedVariant);
+      }
+    }, 1000);
   }, []);
 
   // Loading state
