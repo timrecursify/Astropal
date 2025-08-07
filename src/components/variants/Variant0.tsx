@@ -4,6 +4,7 @@ import { FieldTooltip } from '../FieldTooltip';
 import { useTaglineVariant } from '../../hooks/useTaglineVariant';
 import { validateForm, displayValidationErrors } from '../../utils/formValidation';
 import { submitFormWithTracking } from '../../utils/visitorTracking';
+import { getStableTimezone, safeLocalStorageGet, safeLocalStorageSet, safeLocalStorageRemove } from '../../utils/browserUtils';
 import EnhancedConfirmation from '../EnhancedConfirmation';
 
 
@@ -51,7 +52,7 @@ const Variant0: React.FC = () => {
     email: '',
     birthDate: '',
     birthLocation: '',
-    timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    timeZone: getStableTimezone(),
     dayStartTime: '07:00',
     birthTime: '',
     relationshipStatus: '',
@@ -79,8 +80,8 @@ const Variant0: React.FC = () => {
       if (!mounted) return;
       
       try {
-        const submittedEmail = localStorage.getItem('astropal_submitted_email');
-        const submissionTimestamp = localStorage.getItem('astropal_submission_timestamp');
+        const submittedEmail = safeLocalStorageGet('astropal_submitted_email');
+        const submissionTimestamp = safeLocalStorageGet('astropal_submission_timestamp');
         
         if (submittedEmail && submissionTimestamp) {
           const oneWeekAgo = Date.now() - (7 * 24 * 60 * 60 * 1000);
@@ -92,8 +93,8 @@ const Variant0: React.FC = () => {
             setShowConfirmation(true);
           } else {
             // Clear old submission data
-            localStorage.removeItem('astropal_submitted_email');
-            localStorage.removeItem('astropal_submission_timestamp');
+            safeLocalStorageRemove('astropal_submitted_email');
+            safeLocalStorageRemove('astropal_submission_timestamp');
           }
         }
       } catch (error) {
@@ -172,8 +173,8 @@ const Variant0: React.FC = () => {
       }
 
       // Store submission data in localStorage
-      localStorage.setItem('astropal_submitted_email', formData.email);
-      localStorage.setItem('astropal_submission_timestamp', Date.now().toString());
+      safeLocalStorageSet('astropal_submitted_email', formData.email);
+      safeLocalStorageSet('astropal_submission_timestamp', Date.now().toString());
       
       setHasSubmitted(true);
       setShowConfirmation(true);
