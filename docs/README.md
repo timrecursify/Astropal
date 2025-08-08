@@ -1,10 +1,6 @@
-# Astropal.io - A/B Testing Cosmic Intelligence Platform
+# Astropal.io
 
-**Advanced cosmic intelligence system with comprehensive A/B testing capabilities**
-
-## 🚀 Quick Start
-
-A modern React + TypeScript application built with Vite, featuring sophisticated A/B testing implementation and cosmic-themed UI.
+Personalized daily cosmic highlights delivered by email. Built with React + TypeScript, deployed on Cloudflare Pages + Functions, with a robust A/B testing system for page variants, taglines, and CTAs.
 
 ## 🏗️ Project Structure
 
@@ -64,19 +60,17 @@ Astropal_io/
 - **Analytics**: Microsoft Clarity + Facebook Pixel
 - **Build Tool**: Vite with React plugin
 
-## 📊 A/B Testing System
+## 📊 A/B Testing System (Scope)
 
-### **33% Traffic Distribution**
-- **Variant 0** (33%): Authority + Scientific Credibility approach
-- **Variant 1** (33%): Personal Transformation + Empowerment messaging  
-- **Variant 2** (33%): Convenience + Lifestyle Integration focus
-
-### **Features**
-- **Cookie Persistence**: Users see consistent variant for 30 days
-- **Dynamic Routing**: `ABTestRouter.tsx` handles variant assignment
-- **Analytics Integration**: Each variant tracked with custom events
-- **Conditional Tracking**: Scripts blocked on service pages (`/feedback`, `/unsubscribe`)
-- **Mobile Optimized**: All variants fully responsive
+- Page variants (33/33/33):
+  - Variant 0: Authority + scientific credibility
+  - Variant 1: Personal transformation + empowerment
+  - Variant 2: Convenience + lifestyle integration
+- Tagline variants: Intent‑based buckets (Timing/Outcome, Relationships, Wellbeing, Career/Results, Simplicity, Credibility)
+- CTA variants: Multiple labels testing outcome, simplicity, personalization
+- Persistence & tracking:
+  - Variant via cookie (30 days), tagline via localStorage TTL (7 days), CTA via cookie (14 days)
+  - All variants forwarded to webhook on form submit with UTM/click IDs
 
 ## 🛠️ Development
 
@@ -125,18 +119,17 @@ VITE_ZAPIER_WEBHOOK_URL=your_zapier_webhook_url
 - Automatic deployment on git push to main branch
 
 ### **Production Features**
-- **CSP Headers**: Content Security Policy for Facebook Pixel & Clarity
-- **Security Headers**: X-Frame-Options, X-Content-Type-Options, etc.
-- **CORS Support**: Configured for API endpoints
-- **Error Handling**: Production-ready error boundaries
+- CSP & security headers in `public/_headers`
+- Error boundaries and centralized logging (`src/utils/logger.ts`)
+- Cloudflare Pages Function for form submission (`functions/api/submit-form.ts`)
 
 ## 🔍 Key Components
 
 ### **A/B Testing Flow**
-1. `ABTestRouter.tsx` assigns variant based on cookie or new assignment
-2. Variant components render different messaging/UI approaches
-3. `trackingLoader.ts` conditionally loads analytics scripts
-4. Form submissions tracked with variant data via `visitorTracking.ts`
+1. `ABTestRouter.tsx` assigns page variant client‑side and loads tracking scripts (blocked on service pages)
+2. Tagline chosen with TTL (7 days) from `src/utils/taglineVariants.ts`
+3. CTA variant chosen via cookie from `src/utils/ctaVariants.ts`
+4. On submit, `visitorTracking.ts` posts form + `variant`, `tagline_variant`, `cta_variant`, and UTM data to `/api/submit-form`
 
 ### **Form System**
 - Multi-step form with validation (`formValidation.ts`)
@@ -145,11 +138,10 @@ VITE_ZAPIER_WEBHOOK_URL=your_zapier_webhook_url
 - Confirmation flow with compact design
 
 ### **Tracking & Analytics**
-- **Microsoft Clarity**: Heat maps, session recordings, A/B variant tracking
-- **Facebook Pixel**: Conversion tracking, lead events
-- **Conditional Loading**: Scripts only load on main pages, blocked on service pages
-- **Visitor Data**: UTM parameters, session data, form completion tracking
+- Microsoft Clarity + Facebook Pixel (conditionally loaded)
+- Visitor data: UTM/click IDs, page/session, device/viewport, timezone
+- A/B metadata: page `variant`, `tagline_variant`, `cta_variant`
 
 ---
 
-**Built with React, TypeScript, Tailwind CSS, and enterprise-grade A/B testing capabilities.**
+See `docs/architecture.md` for a full technical deep‑dive.

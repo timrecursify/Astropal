@@ -1,10 +1,21 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Brain, Star, Mail, Clock, Moon, Heart, Sparkles, Shield, Zap, TrendingUp } from 'lucide-react';
+import { Star } from 'lucide-react';
 import { useTaglineVariant } from '../../hooks/useTaglineVariant';
+import EmailSampleModal from '../cosmic/EmailSampleModal';
+import { getCtaVariant } from '../../utils/ctaVariants';
+import { useLogger } from '../../hooks/useLogger';
 
 export default function Variant1Hero() {
   const taglineVariant = useTaglineVariant();
+  const { logUserAction } = useLogger('Variant1Hero');
+  const cta = getCtaVariant();
+  const [open, setOpen] = React.useState(false);
+  const scrollToForm = React.useCallback(() => {
+    const el = document.getElementById('form-section');
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    logUserAction('scroll_to_form');
+  }, [logUserAction]);
   
   const avatars = [
     'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=50&h=50&fit=crop&crop=face&auto=format',
@@ -73,7 +84,7 @@ export default function Variant1Hero() {
             return headline
               .split(' ')
               .map((word, index) => {
-                const cosmicWords = ['Cosmic', 'Stars', 'Universe', 'NASA', 'Astrology', 'Oracle', 'Intelligence', 'Advantage', 'Edge', 'Level'];
+                const cosmicWords = ['Cosmic', 'Astrology', 'Daily', 'Brief', 'Timing', 'Power', 'Love', 'Career', 'Wellbeing', 'Guidance', 'Advantage'];
                 const isCosmicWord = cosmicWords.some(cosmic => word.toLowerCase().includes(cosmic.toLowerCase()));
                 
                 return (
@@ -101,19 +112,19 @@ export default function Variant1Hero() {
         <p className="text-xl sm:text-xl md:text-2xl text-gray-300 leading-relaxed">
           {taglineVariant.subheadline}
         </p>
-        <p className="text-lg sm:text-lg md:text-lg text-gray-500 italic">
-          Your personal cosmic coach, whispering ancient secrets at dawn
+        <p className="text-lg sm:text-lg md:text-lg text-gray-500">
+          Clear, practical guidance you can act on today
         </p>
       </motion.div>
       
 
       
-      {/* CTA Section - Left Aligned */}
+      {/* CTA + Sample */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.8 }}
-        className="pt-8"
+        className="pt-4"
       >
         {/* API Logos */}
         <div className="flex flex-wrap items-center justify-center gap-6 mb-8">
@@ -123,9 +134,26 @@ export default function Variant1Hero() {
           <div className="text-xs font-mono text-gray-500">EKELEN'S TAROT</div>
           <div className="text-xs font-mono text-gray-500">FENGSHUI API</div>
         </div>
-        
+        <div className="flex items-center justify-center">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-3 w-full sm:w-auto max-w-xl">
+            <button
+              onClick={scrollToForm}
+              className="w-full sm:w-auto px-6 md:px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl text-sm md:text-base"
+            >
+              {cta.label}
+            </button>
+            <button
+              type="button"
+              onClick={() => { setOpen(true); logUserAction('open_email_sample'); }}
+              className="w-full sm:w-auto mt-3 sm:mt-0 px-6 md:px-8 py-3 border border-purple-700 text-white rounded-xl text-sm md:text-base hover:bg-purple-900/30"
+            >
+              View Sample Email
+            </button>
+          </div>
+        </div>
 
       </motion.div>
+      <EmailSampleModal open={open} onClose={() => { setOpen(false); logUserAction('close_email_sample'); }} variant="variant1" />
     </div>
   );
 } 

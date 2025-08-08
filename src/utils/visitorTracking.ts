@@ -1,5 +1,6 @@
 // Utility functions for capturing visitor data and UTM parameters
 import { getTaglineVariantId } from './taglineVariants';
+import { logger } from './logger';
 
 interface VisitorData {
   // UTM Parameters
@@ -30,6 +31,7 @@ interface VisitorData {
   
   // A/B Testing data
   tagline_variant: string;
+  cta_variant?: string;
   
   // Location (will be populated by IP geolocation)
   ip_address?: string;
@@ -46,6 +48,17 @@ function getSessionId(): string {
     sessionStorage.setItem('astropal_session_id', sessionId);
   }
   return sessionId;
+}
+
+// Read CTA cookie
+function getCookie(name: string): string | undefined {
+  const nameEQ = name + '=';
+  const ca = document.cookie.split(';');
+  for (let c of ca) {
+    c = c.trim();
+    if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length);
+  }
+  return undefined;
 }
 
 // Parse URL parameters
@@ -104,6 +117,7 @@ export function captureVisitorData(): VisitorData {
   
   // Merge current and stored parameters (current takes precedence)
   const allParams = { ...storedParams, ...currentParams };
+  const ctaVariant = getCookie('astropal_cta_variant');
   
   const visitorData: VisitorData = {
     // UTM and tracking parameters - always include all, even if empty
@@ -133,9 +147,11 @@ export function captureVisitorData(): VisitorData {
     session_id: getSessionId(),
     
     // A/B Testing data
-    tagline_variant: getTaglineVariantId()
+    tagline_variant: getTaglineVariantId(),
+    cta_variant: ctaVariant
   };
   
+  logger.debug('visitor_data_captured', { component: 'visitorTracking', session_id: visitorData.session_id, utm_source: visitorData.utm_source, tagline_variant: visitorData.tagline_variant, cta_variant: visitorData.cta_variant });
   return visitorData;
 }
 
@@ -169,19 +185,15 @@ export async function submitFormWithTracking(
     
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
+      logger.warn('form_submit_non_ok', { status: response.status, variant: variantName });
       throw new Error(`Function responded with status: ${response.status}. ${errorData.message || ''}`);
     }
     
-    console.log('Form submitted successfully with tracking data:', {
-      variant: variantName,
-      utm_source: visitor.utm_source,
-      utm_medium: visitor.utm_medium,
-      utm_campaign: visitor.utm_campaign,
-      session_id: visitor.session_id
-    });
+    logger.info('form_submit_success', { variant: variantName, utm_source: visitor.utm_source, utm_medium: visitor.utm_medium, utm_campaign: visitor.utm_campaign, session_id: visitor.session_id, tagline_variant: visitor.tagline_variant, cta_variant: visitor.cta_variant });
     
   } catch (error) {
-    console.error('Form submission failed:', error);
+    const message = error instanceof Error ? error.message : String(error);
+    logger.error('form_submit_failed', { variant: variantName, error: message });
     throw error;
   }
 } 

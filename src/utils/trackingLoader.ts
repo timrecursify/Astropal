@@ -2,6 +2,7 @@
 
 let clarityLoaded = false;
 let facebookPixelLoaded = false;
+import { logger } from './logger';
 
 /**
  * Load tracking scripts only on main pages (not service pages)
@@ -16,7 +17,7 @@ export function loadTrackingScripts(): void {
     return;
   }
 
-  console.log('Loading tracking scripts for:', path);
+  logger.info('loading_tracking_scripts', { path });
 
   // Load Microsoft Clarity
   if (!clarityLoaded && typeof window !== 'undefined') {
@@ -29,6 +30,7 @@ export function loadTrackingScripts(): void {
       y.parentNode?.insertBefore(t, y);
     })(window, document, "clarity", "script", "so6j2uvy4i");
     clarityLoaded = true;
+    logger.debug('clarity_loaded');
   }
 
   // Load Facebook Pixel
@@ -53,6 +55,7 @@ export function loadTrackingScripts(): void {
     (window as any).fbq('init', '1840372693567321');
     (window as any).fbq('track', 'PageView');
     facebookPixelLoaded = true;
+    logger.debug('facebook_pixel_loaded');
 
     // Add noscript fallback
     const noscript = document.createElement('noscript');
@@ -74,6 +77,6 @@ export function blockTrackingScripts(): void {
     const scripts = document.querySelectorAll('script[src*="clarity.ms"], script[src*="facebook.net"], script[src*="fbevents.js"]');
     scripts.forEach(script => script.remove());
     
-    console.log('Tracking scripts blocked on service page');
+    logger.info('tracking_scripts_blocked');
   }
 }

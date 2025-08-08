@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Mail, Copy, Check, ChevronDown, ChevronUp } from 'lucide-react';
+import { useLogger } from '../hooks/useLogger';
 
 interface EnhancedConfirmationProps {
   userEmail: string;
@@ -9,11 +10,54 @@ interface EnhancedConfirmationProps {
 const EnhancedConfirmation: React.FC<EnhancedConfirmationProps> = ({ userEmail, variant = 'default' }) => {
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [showInstructions, setShowInstructions] = useState(false);
+  const { logUserAction } = useLogger('EnhancedConfirmation');
+
+  const styles = (() => {
+    switch (variant) {
+      case 'variant0':
+        return {
+          heading: 'text-3xl md:text-4xl font-light mb-6 text-white',
+          stepCircle: 'w-16 h-16 bg-gray-800 rounded-full flex items-center justify-center mx-auto',
+          stepNum: 'text-white text-2xl font-mono',
+          box: 'bg-gray-900/40 backdrop-blur-sm border border-gray-800/80 rounded-xl p-6 mb-8 shadow-md',
+          boxTitle: 'text-lg font-medium text-white',
+          actionBtn: 'flex items-center space-x-2 px-4 py-2 bg-white text-black hover:bg-gray-200 rounded transition-colors shadow',
+        };
+      case 'variant1':
+        return {
+          heading: 'text-3xl md:text-4xl font-light mb-6 text-white',
+          stepCircle: 'w-16 h-16 bg-purple-900/40 border border-purple-700/40 rounded-full flex items-center justify-center mx-auto',
+          stepNum: 'text-purple-300 text-2xl font-mono',
+          box: 'bg-purple-900/20 backdrop-blur-sm border border-purple-800/30 rounded-xl p-6 mb-8 shadow-lg',
+          boxTitle: 'text-lg font-medium text-white',
+          actionBtn: 'flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white rounded transition-colors shadow',
+        };
+      case 'variant2':
+        return {
+          heading: 'text-3xl md:text-4xl font-light mb-6 text-white',
+          stepCircle: 'w-16 h-16 bg-pink-900/30 border border-pink-700/40 rounded-full flex items-center justify-center mx-auto',
+          stepNum: 'text-pink-300 text-2xl font-mono',
+          box: 'bg-pink-900/20 backdrop-blur-sm border border-pink-800/30 rounded-xl p-6 mb-8 shadow-lg',
+          boxTitle: 'text-lg font-medium text-white',
+          actionBtn: 'flex items-center space-x-2 px-4 py-2 bg-pink-600 hover:bg-pink-700 text-white rounded transition-colors shadow',
+        };
+      default:
+        return {
+          heading: 'text-3xl md:text-4xl font-light mb-6 text-white',
+          stepCircle: 'w-16 h-16 bg-gray-800 rounded-full flex items-center justify-center mx-auto',
+          stepNum: 'text-white text-2xl font-mono',
+          box: 'bg-gray-900/40 backdrop-blur-sm border border-gray-800/80 rounded-xl p-6 mb-8 shadow-md',
+          boxTitle: 'text-lg font-medium text-white',
+          actionBtn: 'flex items-center space-x-2 px-4 py-2 bg-white text-black hover:bg-gray-200 rounded transition-colors shadow',
+        };
+    }
+  })();
 
   const copyEmailToClipboard = async () => {
     try {
       await navigator.clipboard.writeText('newsletter@astropal.io');
       setCopiedEmail(true);
+      logUserAction('copy_whitelist_email');
       setTimeout(() => setCopiedEmail(false), 2000);
     } catch (error) {
       // Fallback for older browsers
@@ -24,6 +68,7 @@ const EnhancedConfirmation: React.FC<EnhancedConfirmationProps> = ({ userEmail, 
       document.execCommand('copy');
       document.body.removeChild(textArea);
       setCopiedEmail(true);
+      logUserAction('copy_whitelist_email_fallback');
       setTimeout(() => setCopiedEmail(false), 2000);
     }
   };
@@ -66,14 +111,14 @@ const EnhancedConfirmation: React.FC<EnhancedConfirmationProps> = ({ userEmail, 
   ];
 
   return (
-    <div className="max-w-3xl mx-auto text-center py-16">
+    <div className="max-w-3xl mx-auto text-center py-12 animate-[fadeIn_0.4s_ease-out]">
       <div className="mb-12">
         <img 
           src="/Astropal_Logo.png" 
           alt="Astropal Logo" 
           className="w-24 h-24 mx-auto mb-8"
         />
-        <h2 className="text-4xl md:text-5xl font-light mb-6">Welcome to your cosmic journey!</h2>
+        <h2 className={styles.heading}>Welcome to your cosmic journey!</h2>
         <p className="text-gray-400 text-xl mb-8">
           Your personalized daily insights are being prepared
         </p>
@@ -85,22 +130,22 @@ const EnhancedConfirmation: React.FC<EnhancedConfirmationProps> = ({ userEmail, 
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
         <div className="space-y-4">
-          <div className="w-16 h-16 bg-gray-800 rounded-full flex items-center justify-center mx-auto">
-            <span className="text-white text-2xl font-mono">1</span>
+          <div className={styles.stepCircle}>
+            <span className={styles.stepNum}>1</span>
           </div>
           <h3 className="text-xl font-medium">Check your email</h3>
           <p className="text-gray-400">Your first cosmic insights are on the way</p>
         </div>
         <div className="space-y-4">
-          <div className="w-16 h-16 bg-gray-800 rounded-full flex items-center justify-center mx-auto">
-            <span className="text-white text-2xl font-mono">2</span>
+          <div className={styles.stepCircle}>
+            <span className={styles.stepNum}>2</span>
           </div>
           <h3 className="text-xl font-medium">Daily delivery</h3>
           <p className="text-gray-400">Expect your personalized guidance every morning at 6 AM</p>
         </div>
         <div className="space-y-4">
-          <div className="w-16 h-16 bg-gray-800 rounded-full flex items-center justify-center mx-auto">
-            <span className="text-white text-2xl font-mono">3</span>
+          <div className={styles.stepCircle}>
+            <span className={styles.stepNum}>3</span>
           </div>
           <h3 className="text-xl font-medium">Free for 7 days</h3>
           <p className="text-gray-400">Explore all features with no commitment</p>
@@ -108,10 +153,10 @@ const EnhancedConfirmation: React.FC<EnhancedConfirmationProps> = ({ userEmail, 
       </div>
 
       {/* Whitelist Advice Box */}
-      <div className="bg-purple-900/20 backdrop-blur-sm border border-purple-800/30 rounded-xl p-6 mb-8">
+      <div className={styles.box}>
         <div className="flex items-center justify-center space-x-3 mb-4">
           <Mail className="w-5 h-5 text-purple-400" />
-          <h3 className="text-lg font-medium text-white">Ensure Delivery</h3>
+          <h3 className={styles.boxTitle}>Ensure Delivery</h3>
         </div>
         <p className="text-gray-300 mb-4">
           Add our newsletter email to your safe senders list to ensure you never miss your cosmic insights:
@@ -122,7 +167,7 @@ const EnhancedConfirmation: React.FC<EnhancedConfirmationProps> = ({ userEmail, 
           </code>
           <button
             onClick={copyEmailToClipboard}
-            className="flex items-center space-x-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded transition-colors"
+            className={styles.actionBtn}
           >
             {copiedEmail ? <Check size={16} /> : <Copy size={16} />}
             <span>{copiedEmail ? 'Copied!' : 'Copy'}</span>

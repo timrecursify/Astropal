@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { ArrowRight, Sparkles, Moon, Sun, Mail } from 'lucide-react';
+import { ArrowRight, Sparkles, Moon, Sun } from 'lucide-react';
 import { FieldTooltip } from '../FieldTooltip';
 import { useTaglineVariant } from '../../hooks/useTaglineVariant';
 import { validateForm, displayValidationErrors } from '../../utils/formValidation';
 import { submitFormWithTracking } from '../../utils/visitorTracking';
 import { getStableTimezone, safeLocalStorageGet, safeLocalStorageSet, safeLocalStorageRemove } from '../../utils/browserUtils';
 import EnhancedConfirmation from '../EnhancedConfirmation';
+import EmailSampleModal from '../cosmic/EmailSampleModal';
+import { getCtaVariant } from '../../utils/ctaVariants';
+import { useLogger } from '../../hooks/useLogger';
 
 
 
@@ -43,6 +46,8 @@ const Toggle: React.FC<{
 
 const Variant0: React.FC = () => {
   const taglineVariant = useTaglineVariant();
+  const { logUserAction, logError, logInfo } = useLogger('Variant0');
+  const cta = getCtaVariant();
 
 
   
@@ -63,6 +68,7 @@ const Variant0: React.FC = () => {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [hasSubmitted, setHasSubmitted] = useState(false);
+  const [isSampleOpen, setIsSampleOpen] = useState(false);
 
   // Memoized scroll function to prevent reloading
   const scrollToForm = useCallback(() => {
@@ -70,7 +76,8 @@ const Variant0: React.FC = () => {
     if (formSection) {
       formSection.scrollIntoView({ behavior: 'smooth' });
     }
-  }, []);
+    logUserAction('scroll_to_form');
+  }, [logUserAction]);
 
   // Check for existing submission on component mount ONLY
   useEffect(() => {
@@ -98,7 +105,7 @@ const Variant0: React.FC = () => {
           }
         }
       } catch (error) {
-        console.error('Error checking submission status:', error);
+        logError(error, { phase: 'checkSubmissionStatus' });
       }
     };
 
@@ -107,7 +114,7 @@ const Variant0: React.FC = () => {
     return () => {
       mounted = false;
     };
-  }, []); // Empty dependency array - only run once on mount
+  }, [logError]); // run once; dependency for lint satisfaction
 
   const updateField = (field: keyof FormData, value: string | string[]) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -145,13 +152,15 @@ const Variant0: React.FC = () => {
     
     // Check if already submitted
     if (hasSubmitted) {
+      logInfo('submit_blocked_already_submitted');
       return;
     }
     
     // Validate form using enhanced validation
-    const validation = validateForm(formData as any);
+    const validation = validateForm(formData as unknown as { [key: string]: unknown });
     if (!validation.isValid) {
       displayValidationErrors(validation.errors);
+      logInfo('validation_failed', { errors: validation.errors });
       return;
     }
 
@@ -160,6 +169,7 @@ const Variant0: React.FC = () => {
     try {
       // Submit form with full visitor tracking
       await submitFormWithTracking(formData as unknown as Record<string, unknown>, 'variant0');
+      logInfo('form_submitted', { variant: 'variant0' });
       
       // Fire Facebook Lead conversion event ONLY after successful submission
       if (typeof window !== 'undefined' && window.fbq) {
@@ -180,7 +190,7 @@ const Variant0: React.FC = () => {
       setShowConfirmation(true);
       
     } catch (error) {
-      console.error('Form submission error:', error);
+      logError(error, { phase: 'handleSubmit' });
       alert('Registration failed. Please try again.');
     } finally {
       setIsSubmitting(false);
@@ -216,7 +226,7 @@ const Variant0: React.FC = () => {
                 return headline
                   .split(' ')
                   .map((word, index) => {
-                    const cosmicWords = ['Cosmic', 'Stars', 'Universe', 'NASA', 'Astrology', 'Oracle', 'Intelligence', 'Advantage', 'Edge', 'Level', 'Advanced'];
+                    const cosmicWords = ['Cosmic', 'Astrology', 'Daily', 'Brief', 'Timing', 'Power', 'Love', 'Career', 'Wellbeing', 'Guidance', 'Advantage'];
                     const isCosmicWord = cosmicWords.some(cosmic => word.toLowerCase().includes(cosmic.toLowerCase()));
                     
                     return (
@@ -232,11 +242,28 @@ const Variant0: React.FC = () => {
                   });
               })()}
             </h1>
-            <div className="flex items-start space-x-4 mb-12">
+            <div className="flex items-start space-x-4 mb-6">
               <ArrowRight className="w-4 h-4 mt-1 text-gray-500" />
               <p className="text-gray-400 text-sm leading-relaxed max-w-lg">
                 {taglineVariant.subheadline}
               </p>
+            </div>
+
+            {/* CTA + Sample */}
+            <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-3 mb-10 space-y-3 sm:space-y-0">
+              <button
+                onClick={scrollToForm}
+                className="w-full sm:w-auto px-6 md:px-8 py-3 bg-white text-black hover:bg-gray-200 transition-colors font-medium text-sm md:text-base"
+              >
+                {cta.label}
+              </button>
+              <button
+                type="button"
+                onClick={() => { setIsSampleOpen(true); logUserAction('open_email_sample'); }}
+                className="w-full sm:w-auto px-6 md:px-8 py-3 border border-gray-700 text-white hover:bg-gray-900 transition-colors font-medium text-sm md:text-base"
+              >
+                View Sample Email
+              </button>
             </div>
 
             {/* Benefits */}
@@ -267,15 +294,9 @@ const Variant0: React.FC = () => {
               <div className="text-xs font-mono text-gray-400">FENGSHUI API</div>
             </div>
 
-            <button
-              onClick={scrollToForm}
-              className="w-full sm:w-auto px-6 md:px-8 py-3 bg-white text-black hover:bg-gray-200 transition-colors font-medium text-sm md:text-base"
-            >
-              CONFIGURE INTELLIGENCE SYSTEM
-            </button>
-            <p className="text-xs text-gray-500 mt-3">
-              7-Day Free trial • No credit card required • $4.99/mo after
-            </p>
+            {cta.subtext && (
+              <p className="text-xs text-gray-500">{cta.subtext}</p>
+            )}
           </div>
         </div>
       </section>
@@ -288,10 +309,8 @@ const Variant0: React.FC = () => {
           ) : (
             <>
               <div className="text-center mb-12">
-                <h2 className="text-3xl md:text-4xl font-light mb-4">Configure Your Intelligence System</h2>
-                <p className="text-gray-400 max-w-2xl mx-auto">
-                  Provide your cosmic coordinates for precision calculations and data-driven insights
-                </p>
+                <h2 className="text-3xl md:text-4xl font-light mb-4">Configure Your Morning Brief</h2>
+                <p className="text-gray-400 max-w-2xl mx-auto">Provide your details for precise timing windows and personalized guidance</p>
               </div>
               
               <form onSubmit={handleSubmit} className="space-y-8 md:space-y-12">
@@ -427,7 +446,7 @@ const Variant0: React.FC = () => {
                             updateField('birthTime', 'unknown');
                           }
                         }}
-                        className={`text-xs px-3 py-2 border rounded transition-colors min-w-[80px] ${
+                        className={`text-xs sm:text-sm px-4 py-2 border rounded transition-colors min-w-[140px] ${
                           formData.birthTime === 'unknown' 
                             ? 'bg-white text-black border-white' 
                             : 'text-gray-400 border-gray-800 hover:text-white hover:border-gray-600 hover:bg-gray-900'
@@ -465,7 +484,7 @@ const Variant0: React.FC = () => {
                       Select up to 3 practices ({formData.practices.length}/3)
                     </p>
                   </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
                     {[
                       'Astrology',
                       'Numerology', 
@@ -531,6 +550,12 @@ const Variant0: React.FC = () => {
           )}
         </div>
       </section>
+      {/* Email Sample Modal */}
+      <EmailSampleModal
+        open={isSampleOpen}
+        onClose={() => { setIsSampleOpen(false); logUserAction('close_email_sample'); }}
+        variant="variant0"
+      />
     </div>
   );
 };

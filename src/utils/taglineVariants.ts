@@ -10,164 +10,53 @@ export interface TaglineVariant {
 }
 
 export const TAGLINE_VARIANTS: TaglineVariant[] = [
-  // CURIOSITY-DRIVEN VARIANTS
+  // Timing / Outcome (intent: daily planning, confidence)
   {
-    id: 'CUR-001',
-    category: 'Curiosity-Driven',
-    headline: 'What Did the Stars Plan for You Today?',
-    subheadline: 'Your personalized cosmic forecast, delivered fresh every morning',
-    testingNotes: 'Question-based hook, daily anticipation, personal relevance'
+    id: 'OUT-001',
+    category: 'Timing/Outcome',
+    headline: 'Know When to Act Today.',
+    subheadline: 'Daily power hours and cautions so choices feel easy',
+    testingNotes: 'Tests “timing solves indecision” intent'
   },
+  // Relationships (intent: love/connection guidance)
   {
-    id: 'CUR-002',
-    category: 'Curiosity-Driven',
-    headline: 'The Universe Has a Message for You',
-    subheadline: "Don't miss what the cosmos revealed about your day",
-    testingNotes: 'Urgency, FOMO, direct personal address'
+    id: 'REL-101',
+    category: 'Relationships',
+    headline: 'Better Days for Love and Connection.',
+    subheadline: 'Gentle, practical guidance for conversations and closeness',
+    testingNotes: 'Tests relationship‑seeker intent'
   },
-
-  // CONVENIENCE/ROUTINE VARIANTS
+  // Emotional balance / wellbeing (intent: calm, ease)
   {
-    id: 'CON-001',
-    category: 'Convenience/Routine',
-    headline: 'Your Daily Dose of Cosmic Clarity',
-    subheadline: '5 minutes. One email. Infinite possibilities.',
-    testingNotes: 'Medical/supplement metaphor, time efficiency, brevity'
+    id: 'EMO-201',
+    category: 'Wellbeing',
+    headline: 'Start Calm. Stay Centered.',
+    subheadline: 'Morning highlights to avoid friction and keep your flow',
+    testingNotes: 'Tests mood/peace intent'
   },
+  // Career & results (intent: progress at work/money)
   {
-    id: 'CON-002',
-    category: 'Convenience/Routine',
-    headline: 'Skip the Tarot Cards. Get Your Answers Here.',
-    subheadline: 'Modern cosmic guidance without the guesswork',
-    testingNotes: 'Competitor comparison, convenience over traditional methods'
+    id: 'CAR-301',
+    category: 'Career/Results',
+    headline: 'Make Progress You Can Measure.',
+    subheadline: 'Best windows to focus, ask, send, and ship today',
+    testingNotes: 'Tests productivity/achievement intent'
   },
-
-  // SCIENTIFIC/CREDIBILITY VARIANTS
+  // Simplicity / clarity (intent: no fluff, just tell me)
   {
-    id: 'SCI-001',
-    category: 'Scientific/Credibility',
-    headline: 'NASA-Powered Astrology That Actually Works',
-    subheadline: 'Real space data meets ancient wisdom in your inbox',
-    testingNotes: 'Authority, credibility, "real" vs "fake" astrology'
+    id: 'SIM-401',
+    category: 'Simplicity',
+    headline: 'Your Day. In Three Lines.',
+    subheadline: 'One win to aim for, one time to avoid, one mindful nudge',
+    testingNotes: 'Tests “quick clarity” intent'
   },
+  // Credibility / trust (intent: “is this legit?”)
   {
-    id: 'SCI-002',
-    category: 'Scientific/Credibility',
-    headline: 'Finally, Astrology with Actual Astronomy',
-    subheadline: 'Swiss precision meets cosmic insight, delivered daily',
-    testingNotes: 'Quality differentiation, European luxury association'
-  },
-
-  // TRANSFORMATION/OUTCOME VARIANTS
-  {
-    id: 'TRA-001',
-    category: 'Transformation/Outcome',
-    headline: 'Stop Wondering. Start Knowing.',
-    subheadline: 'Daily cosmic intel that puts you ahead of the game',
-    testingNotes: 'Confidence building, competitive advantage, certainty'
-  },
-  {
-    id: 'TRA-002',
-    category: 'Transformation/Outcome',
-    headline: 'Your Unfair Cosmic Advantage',
-    subheadline: "While others guess, you'll know exactly when to act",
-    testingNotes: 'Exclusivity, timing benefits, superiority'
-  },
-
-  // MASS APPEAL/BROADER AUDIENCE VARIANTS
-  {
-    id: 'MAS-001',
-    category: 'Mass Appeal/Broader Audience',
-    headline: "Everyone's Talking About Their Daily Cosmic Brief",
-    subheadline: 'Join thousands getting their edge from the stars',
-    testingNotes: 'Social proof, mainstream acceptance, FOMO'
-  },
-  {
-    id: 'MAS-002',
-    category: 'Mass Appeal/Broader Audience',
-    headline: 'The Newsletter Smart People Read Before Coffee',
-    subheadline: 'Strategic cosmic insights for the modern professional',
-    testingNotes: 'Intelligence positioning, professional appeal, male targeting'
-  },
-
-  // URGENCY/SCARCITY VARIANTS
-  {
-    id: 'URG-001',
-    category: 'Urgency/Scarcity',
-    headline: "Don't Navigate Today Blind",
-    subheadline: 'Your cosmic compass arrives at dawn',
-    testingNotes: 'Problem awareness, daily necessity, guidance metaphor'
-  },
-  {
-    id: 'URG-002',
-    category: 'Urgency/Scarcity',
-    headline: "Today's Cosmic Weather Report",
-    subheadline: 'Essential intel for navigating your day ahead',
-    testingNotes: 'Weather metaphor, essential service positioning'
-  },
-
-  // MYSTICAL/MAGICAL VARIANTS
-  {
-    id: 'MYS-001',
-    category: 'Mystical/Magical',
-    headline: 'Your Personal Oracle, Delivered Daily',
-    subheadline: 'Ancient secrets, decoded for modern life',
-    testingNotes: 'Oracle positioning, ancient wisdom appeal'
-  },
-  {
-    id: 'MYS-002',
-    category: 'Mystical/Magical',
-    headline: 'The Stars Whisper. We Translate.',
-    subheadline: 'Your daily dose of cosmic intelligence',
-    testingNotes: 'Mystical communication, translation service'
-  },
-
-  // LIFESTYLE/ASPIRATIONAL VARIANTS
-  {
-    id: 'LIF-001',
-    category: 'Lifestyle/Aspirational',
-    headline: 'Level Up Your Life with Cosmic Timing',
-    subheadline: 'Daily guidance for ambitious souls',
-    testingNotes: 'Gaming terminology, ambition targeting, timing benefits'
-  },
-  {
-    id: 'LIF-002',
-    category: 'Lifestyle/Aspirational',
-    headline: 'The Cosmic Edge Every High Achiever Needs',
-    subheadline: 'Strategic astrology for people who get things done',
-    testingNotes: 'Achievement-oriented, professional targeting, results focus'
-  },
-
-  // SIMPLICITY/ACCESSIBILITY VARIANTS
-  {
-    id: 'SIM-001',
-    category: 'Simplicity/Accessibility',
-    headline: 'Astrology Made Simple. Results Made Real.',
-    subheadline: 'No crystal balls required – just real guidance',
-    testingNotes: 'Simplification, accessibility, practical results'
-  },
-  {
-    id: 'SIM-002',
-    category: 'Simplicity/Accessibility',
-    headline: 'Cosmic Guidance for Normal People',
-    subheadline: 'Finally, astrology that makes sense and fits your life',
-    testingNotes: 'Relatability, normalizing astrology, life integration'
-  },
-
-  // COMPARISON/ALTERNATIVE VARIANTS
-  {
-    id: 'COM-001',
-    category: 'Comparison/Alternative',
-    headline: 'Better Than Your Horoscope',
-    subheadline: 'Personalized cosmic intelligence vs generic predictions',
-    testingNotes: 'Direct competitor comparison, personalization benefits'
-  },
-  {
-    id: 'COM-002',
-    category: 'Comparison/Alternative',
-    headline: "This Isn't Your Newspaper Horoscope",
-    subheadline: 'Precision cosmic guidance powered by real space data',
-    testingNotes: 'Quality differentiation, data credibility'
+    id: 'CRD-501',
+    category: 'Credibility',
+    headline: 'Clear Guidance, Real Signals.',
+    subheadline: 'Daily cosmic highlights distilled from reliable data',
+    testingNotes: 'Tests trust/cred intent without tech jargon'
   }
 ];
 
@@ -186,24 +75,24 @@ export const DEFAULT_TAGLINE: TaglineVariant = {
  */
 export function getTaglineVariant(): TaglineVariant {
   try {
-    // Check if we already have a stored tagline variant for this session
-    const storedVariantId = sessionStorage.getItem('astropal_tagline_variant');
-    
-    if (storedVariantId) {
-      const storedVariant = TAGLINE_VARIANTS.find(v => v.id === storedVariantId);
-      if (storedVariant) {
-        return storedVariant;
+    // TTL-based persistence across sessions (7 days)
+    const raw = localStorage.getItem('astropal_tagline_variant_v2');
+    if (raw) {
+      const parsed = JSON.parse(raw) as { id: string; expiry: number };
+      if (Date.now() < parsed.expiry) {
+        const found = TAGLINE_VARIANTS.find(v => v.id === parsed.id);
+        if (found) return found;
       }
     }
 
-    // Generate new variant selection
+    // Generate new selection
     const sessionId = getSessionId();
     const variantIndex = hashString(sessionId) % TAGLINE_VARIANTS.length;
     const selectedVariant = TAGLINE_VARIANTS[variantIndex];
 
-    // Store the selection for consistency
-    sessionStorage.setItem('astropal_tagline_variant', selectedVariant.id);
-    
+    // Persist with TTL
+    const sevenDaysMs = 7 * 24 * 60 * 60 * 1000;
+    localStorage.setItem('astropal_tagline_variant_v2', JSON.stringify({ id: selectedVariant.id, expiry: Date.now() + sevenDaysMs }));
     return selectedVariant;
   } catch (error) {
     console.warn('Error getting tagline variant:', error);
@@ -218,8 +107,7 @@ export function getTaglineVariantId(): string {
   try {
     const variant = getTaglineVariant();
     return variant.id;
-  } catch (error) {
-    console.warn('Error getting tagline variant ID:', error);
+  } catch {
     return DEFAULT_TAGLINE.id;
   }
 }
@@ -243,16 +131,12 @@ function hashString(str: string): number {
 function getSessionId(): string {
   try {
     let sessionId = sessionStorage.getItem('astropal_session_id');
-    
     if (!sessionId) {
-      // Generate a new session ID based on timestamp and random
       sessionId = `sess_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
       sessionStorage.setItem('astropal_session_id', sessionId);
     }
-    
     return sessionId;
-  } catch (error) {
-    // Fallback if sessionStorage is not available
+  } catch {
     return `fallback_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
   }
 }
@@ -262,9 +146,9 @@ function getSessionId(): string {
  */
 export function resetTaglineVariant(): void {
   try {
-    sessionStorage.removeItem('astropal_tagline_variant');
-  } catch (error) {
-    console.warn('Error resetting tagline variant:', error);
+    localStorage.removeItem('astropal_tagline_variant_v2');
+  } catch {
+    // no-op
   }
 }
 

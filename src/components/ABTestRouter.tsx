@@ -4,6 +4,7 @@ import { loadTrackingScripts } from '../utils/trackingLoader';
 import Variant0 from './variants/Variant0';
 import Variant1 from './variants/Variant1';
 import Variant2 from './variants/Variant2';
+import { useLogger } from '../hooks/useLogger';
 
 // Type declaration for Clarity
 declare global {
@@ -15,12 +16,14 @@ declare global {
 const ABTestRouter: React.FC = () => {
   const [variant, setVariant] = useState<VariantType | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const { logInfo } = useLogger('ABTestRouter');
 
   useEffect(() => {
     // Client-side only variant assignment to avoid hydration issues
     const assignedVariant = getUserVariant();
     setVariant(assignedVariant);
     setIsLoading(false);
+    logInfo('variant_assigned', { variant: assignedVariant });
 
     // Load tracking scripts for main pages
     loadTrackingScripts();

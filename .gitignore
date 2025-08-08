@@ -54,3 +54,10 @@ AB_Variants/
 
 # Assets directory
 assets/
+
+# Local docs and editor artifacts
+.cursor/
+# Do not commit scripts with secrets
+email_generation_code.gs
+# Samples for local QA only
+generated_email_sample.md

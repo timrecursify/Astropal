@@ -3,6 +3,7 @@ import { FieldTooltip } from '../FieldTooltip';
 import { validateForm, displayValidationErrors } from '../../utils/formValidation';
 import { submitFormWithTracking } from '../../utils/visitorTracking';
 import EnhancedConfirmation from '../EnhancedConfirmation';
+import { useLogger } from '../../hooks/useLogger';
 
 interface FormData {
   fullName: string;
@@ -54,6 +55,7 @@ const Toggle: React.FC<{
 );
 
 export default function Variant1Form() {
+  const { logInfo, logError } = useLogger('Variant1Form');
   const [formData, setFormData] = useState<FormData>({
     fullName: '',
     preferredName: '',
@@ -86,6 +88,7 @@ export default function Variant1Form() {
           setFormData(prev => ({ ...prev, email: submittedEmail }));
           setHasSubmitted(true);
           setShowConfirmation(true);
+          logInfo('existing_submission_detected');
         } else {
           // Clear old submission data
           localStorage.removeItem('astropal_variant1_submitted_email');
@@ -141,6 +144,7 @@ export default function Variant1Form() {
     
     // Check if already submitted
     if (hasSubmitted) {
+      logInfo('submit_blocked_already_submitted');
       return;
     }
     
@@ -148,6 +152,7 @@ export default function Variant1Form() {
     const validation = validateForm(formData as any);
     if (!validation.isValid) {
       displayValidationErrors(validation.errors);
+      logInfo('validation_failed', { errors: validation.errors });
       return;
     }
 
@@ -156,6 +161,7 @@ export default function Variant1Form() {
     try {
       // Submit form with full visitor tracking
       await submitFormWithTracking(formData as unknown as Record<string, unknown>, 'variant1');
+      logInfo('form_submitted');
 
       // Store submission data in localStorage
       localStorage.setItem('astropal_variant1_submitted_email', formData.email);
@@ -176,7 +182,7 @@ export default function Variant1Form() {
       setShowConfirmation(true);
       
     } catch (error) {
-      console.error('Form submission error:', error);
+      logError(error, { phase: 'handleSubmit' });
       alert('Registration failed. Please try again.');
     } finally {
       setIsSubmitting(false);
@@ -281,13 +287,13 @@ export default function Variant1Form() {
                       <button
                         type="button"
                         onClick={handleBirthTimeUnknown}
-                        className={`h-10 px-3 py-2 text-xs font-semibold rounded-md transition-all duration-300 ${
-                          formData.birthTime === 'unknown' 
-                            ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-md' 
+                        className={`h-10 px-4 py-2 text-xs sm:text-sm font-semibold rounded-md transition-all duration-300 ${
+                          formData.birthTime === 'unknown'
+                            ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-md'
                             : 'bg-gray-700/50 text-gray-300 hover:bg-gray-600/50 hover:text-white'
-                        }`}
+                        } min-w-[120px]`}
                       >
-                        UNK
+                        UNKNOWN
                       </button>
                     </div>
                   </div>

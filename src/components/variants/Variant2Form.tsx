@@ -3,6 +3,7 @@ import { FieldTooltip } from '../FieldTooltip';
 import { validateForm, displayValidationErrors } from '../../utils/formValidation';
 import { submitFormWithTracking } from '../../utils/visitorTracking';
 import EnhancedConfirmation from '../EnhancedConfirmation';
+import { useLogger } from '../../hooks/useLogger';
 
 interface FormData {
   fullName: string;
@@ -53,6 +54,7 @@ const Toggle: React.FC<{
 );
 
 export default function Variant2Form() {
+  const { logInfo, logError } = useLogger('Variant2Form');
   const [formData, setFormData] = useState<FormData>({
     fullName: '',
     preferredName: '',
@@ -85,6 +87,7 @@ export default function Variant2Form() {
           setFormData(prev => ({ ...prev, email: submittedEmail }));
           setHasSubmitted(true);
           setShowConfirmation(true);
+          logInfo('existing_submission_detected');
         } else {
           // Clear old submission data
           localStorage.removeItem('astropal_variant2_submitted_email');
@@ -133,56 +136,22 @@ export default function Variant2Form() {
     }
   };
 
-  const validateForm = () => {
-    const errors: string[] = [];
-    
-    if (!formData.email.trim()) errors.push('Email is required');
-    if (!formData.preferredName.trim()) errors.push('Preferred name is required');
-    if (!formData.birthDate) errors.push('Birth date is required');
-    if (!formData.birthLocation.trim()) errors.push('Birth location is required');
-    
-    // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (formData.email && !emailRegex.test(formData.email)) {
-      errors.push('Please enter a valid email address');
-    }
-    
-    // Age validation (18+)
-    if (formData.birthDate) {
-      const birthDate = new Date(formData.birthDate);
-      const today = new Date();
-      const age = today.getFullYear() - birthDate.getFullYear();
-      const monthDiff = today.getMonth() - birthDate.getMonth();
-      
-      const actualAge = (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) 
-        ? age - 1 
-        : age;
-        
-      if (actualAge < 18) {
-        errors.push('You must be at least 18 years old to sign up');
-      }
-    }
-    
-    // Numerology validation
-    if (formData.practices.includes('Numerology') && !formData.fullName.trim()) {
-      errors.push('Full name is required when Numerology is selected');
-    }
-    
-    return errors;
-  };
+  // Removed legacy local validation in favor of shared utility
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     // Check if already submitted
     if (hasSubmitted) {
+      logInfo('submit_blocked_already_submitted');
       return;
     }
     
-    // Validate form
-    const validationErrors = validateForm();
-    if (validationErrors.length > 0) {
-      alert('Please fix the following errors:\n' + validationErrors.join('\n'));
+    // Validate form using shared utility for consistency
+    const validation = validateForm(formData as any);
+    if (!validation.isValid) {
+      displayValidationErrors(validation.errors);
+      logInfo('validation_failed', { errors: validation.errors });
       return;
     }
 
@@ -191,6 +160,7 @@ export default function Variant2Form() {
     try {
       // Submit form with full visitor tracking
       await submitFormWithTracking(formData as unknown as Record<string, unknown>, 'variant2');
+      logInfo('form_submitted');
       
       // Store submission data in localStorage
       localStorage.setItem('astropal_variant2_submitted_email', formData.email);
@@ -211,7 +181,7 @@ export default function Variant2Form() {
       setShowConfirmation(true);
       
     } catch (error) {
-      console.error('Form submission error:', error);
+      logError(error, { phase: 'handleSubmit' });
       alert('Registration failed. Please try again.');
     } finally {
       setIsSubmitting(false);
@@ -363,11 +333,11 @@ export default function Variant2Form() {
                       <button
                         type="button"
                         onClick={handleBirthTimeUnknown}
-                        className={`px-3 py-2 rounded-md text-xs font-medium transition-all ${
-                          formData.birthTime === 'unknown' 
-                            ? 'bg-purple-600 text-white' 
+                        className={`px-4 py-2 rounded-md text-xs sm:text-sm font-semibold transition-all ${
+                          formData.birthTime === 'unknown'
+                            ? 'bg-purple-600 text-white'
                             : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                        }`}
+                        } min-w-[140px]`}
                       >
                         UNKNOWN
                       </button>
