@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Mail } from 'lucide-react';
 
 interface ConfirmationBlockProps {
@@ -7,9 +7,6 @@ interface ConfirmationBlockProps {
 }
 
 const ConfirmationBlock: React.FC<ConfirmationBlockProps> = ({ userEmail }) => {
-  
-  // Lead event is fired in form submission - no duplicate event needed here
-
   return (
     <div className="max-w-md mx-auto text-center py-6">
       <div className="bg-gray-900/50 border border-gray-800 rounded-lg p-6 space-y-4">
@@ -30,8 +27,8 @@ const ConfirmationBlock: React.FC<ConfirmationBlockProps> = ({ userEmail }) => {
         </div>
         
         <div className="space-y-2 text-sm">
-          <p className="text-gray-300">Your cosmic insights will arrive daily at 6 AM</p>
-          <p className="text-gray-400">Check your email for your first personalized reading</p>
+          <p className="text-gray-300">Your first daily email will arrive tomorrow morning at 6 AM.</p>
+          <p className="text-gray-400">We’ll start preparing your personalised guidance right away.</p>
         </div>
         
         <div className="text-xs text-gray-500 pt-2 border-t border-gray-800">

@@ -2,7 +2,6 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Star, Mail, Brain, Clock, Moon, Heart, Sparkles, Shield, Zap, TrendingUp } from 'lucide-react';
 import { useTaglineVariant } from '../../hooks/useTaglineVariant';
-import EmailSampleModal from '../cosmic/EmailSampleModal';
 import { getCtaVariant } from '../../utils/ctaVariants';
 import { useLogger } from '../../hooks/useLogger';
 
@@ -10,7 +9,6 @@ export default function Variant2Hero() {
   const taglineVariant = useTaglineVariant();
   const { logUserAction } = useLogger('Variant2Hero');
   const cta = getCtaVariant();
-  const [open, setOpen] = React.useState(false);
   const scrollToForm = React.useCallback(() => {
     const el = document.getElementById('form-section');
     if (el) el.scrollIntoView({ behavior: 'smooth' });
@@ -166,47 +164,24 @@ export default function Variant2Hero() {
         </div>
       </motion.div>
 
-      {/* CTA + API Logos */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.4 }}
-        className="flex flex-wrap items-center justify-center gap-6 md:gap-8"
-      >
-        <div className="text-xs font-mono text-gray-500">NASA</div>
-        <div className="text-xs font-mono text-gray-500">JPL HORIZONS</div>
-        <div className="text-xs font-mono text-gray-500">SWISS EPHEMERIS</div>
-        <div className="text-xs font-mono text-gray-500">EKELEN'S TAROT</div>
-        <div className="text-xs font-mono text-gray-500">FENGSHUI API</div>
-      </motion.div>
-
-      {/* CTA + Sample */}
+      {/* CTA Only */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.2 }}
-        className="max-w-3xl mx-auto space-y-6"
+        className="max-w-3xl mx-auto"
       >
         <div className="flex items-center justify-center">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-3 w-full sm:w-auto max-w-xl">
+          <div className="w-full sm:w-auto max-w-xl">
             <button
               onClick={scrollToForm}
               className="w-full sm:w-auto px-6 md:px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl text-sm md:text-base"
             >
               {cta.label}
             </button>
-            <button
-              type="button"
-              onClick={() => { setOpen(true); logUserAction('open_email_sample'); }}
-              className="w-full sm:w-auto mt-3 sm:mt-0 px-6 md:px-8 py-3 border border-purple-700 text-white rounded-xl text-sm md:text-base hover:bg-purple-900/30"
-            >
-              View Sample Email
-            </button>
           </div>
         </div>
       </motion.div>
-
-      <EmailSampleModal open={open} onClose={() => { setOpen(false); logUserAction('close_email_sample'); }} variant="variant2" />
     </div>
   );
 } 
