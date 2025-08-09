@@ -287,13 +287,13 @@ export default function Variant1Form() {
                       <button
                         type="button"
                         onClick={handleBirthTimeUnknown}
-                        className={`h-10 px-4 py-2 text-xs sm:text-sm font-semibold rounded-md transition-all duration-300 ${
+                        className={`h-10 px-3 text-xs font-semibold rounded-md transition-all duration-300 ${
                           formData.birthTime === 'unknown'
-                            ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-md'
-                            : 'bg-gray-700/50 text-gray-300 hover:bg-gray-600/50 hover:text-white'
-                        } min-w-[120px]`}
+                            ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow'
+                            : 'bg-gray-800/50 text-gray-300 border border-gray-700/50 hover:bg-gray-700/50'
+                        }`}
                       >
-                        UNKNOWN
+                        Unknown
                       </button>
                     </div>
                   </div>
