@@ -34,22 +34,6 @@ export const TAGLINE_VARIANTS: TaglineVariant[] = [
     subheadline: 'Morning highlights to avoid friction and keep your flow',
     testingNotes: 'Tests mood/peace intent'
   },
-  // Career & results (intent: progress at work/money)
-  {
-    id: 'CAR-301',
-    category: 'Career/Results',
-    headline: 'Make Progress You Can Measure.',
-    subheadline: 'Best windows to focus, ask, send, and ship today',
-    testingNotes: 'Tests productivity/achievement intent'
-  },
-  // Simplicity / clarity (intent: no fluff, just tell me)
-  {
-    id: 'SIM-401',
-    category: 'Simplicity',
-    headline: 'Your Day. In Three Lines.',
-    subheadline: 'One win to aim for, one time to avoid, one mindful nudge',
-    testingNotes: 'Tests “quick clarity” intent'
-  },
   // Credibility / trust (intent: “is this legit?”)
   {
     id: 'CRD-501',
