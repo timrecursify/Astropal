@@ -22,20 +22,15 @@ This folder contains the AB testing variants for the Astropal.io landing page.
   - Compatibility insights and communication guides
   - Relationship-focused pricing plans
 
-## Zapier Webhook Integration
+## Lead Receiver Integration
 
-Both variants are designed to submit form data to your Zapier webhook. To integrate:
+Both variants submit form data server-side to the Black Bow lead receiver. To integrate:
 
-1. **Set up your Zapier webhook URL**
-2. **Update the webhook URL in the form handlers**:
+1. **Set `LEAD_RECEIVER_URL` and `LEAD_RECEIVER_TOKEN` as server-side secrets**
+2. **Use the shared form endpoint**:
 
 ```typescript
-// In Variant1Hero.tsx and Variant2Hero.tsx, replace the commented webhook call:
-await fetch('YOUR_ZAPIER_WEBHOOK_URL', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify(formData)
-});
+// Forms post to /api/submit-form; the Pages Function calls the lead receiver.
 ```
 
 ### Form Data Structure
@@ -66,4 +61,4 @@ Each variant sends the following data structure:
 - All variants use the same StarField background animation
 - Forms are optimized for mobile with touch-friendly inputs
 - Confirmation screens provide clear next steps
-- No backend required - works with static hosting on Cloudflare Pages 
+- No backend required - works with static hosting on Cloudflare Pages

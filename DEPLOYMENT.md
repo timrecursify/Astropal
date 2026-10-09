@@ -19,15 +19,15 @@ This is a React + TypeScript application with A/B testing functionality built wi
 ## Environment Configuration
 
 ### Required Environment Variables (Cloudflare Pages Secrets)
-The webhook URL is configured as a **secret** in Cloudflare Pages:
-- Name: `VITE_PUBLIC_ZAPIER_WEBHOOK_URL`
-- Value: Your Zapier webhook URL
+The lead receiver URL and token are configured as **secrets** in Cloudflare Pages:
+- Names: `LEAD_RECEIVER_URL`, `LEAD_RECEIVER_TOKEN`
+- Values: The Black Bow lead receiver URL and bearer token
 - Type: **Secret** (encrypted)
 
 ### How It Works
 1. **Client-side forms** submit to `/api/submit-form` (Cloudflare Pages function)
-2. **Cloudflare function** has access to the secret webhook URL at runtime
-3. **Function securely forwards** form data to Zapier webhook
+2. **Cloudflare function** has access to the lead receiver secrets at runtime
+3. **Function securely forwards** form data to the Black Bow lead receiver
 4. **No sensitive URLs** are exposed in the client-side JavaScript
 
 ## Build Process
@@ -163,8 +163,8 @@ https://github.com/timrecursify/Astropal
 ### Environment Variables Setup
 1. Go to Cloudflare Pages → Settings → Environment Variables
 2. Add a **Secret** (not a regular variable):
-   - Name: `VITE_PUBLIC_ZAPIER_WEBHOOK_URL`
-   - Value: Your Zapier webhook URL
+   - Names: `LEAD_RECEIVER_URL`, `LEAD_RECEIVER_TOKEN`
+   - Values: The Black Bow lead receiver URL and bearer token
    - Type: **Secret** (encrypted)
 3. Save and redeploy
 
@@ -226,4 +226,4 @@ https://github.com/timrecursify/Astropal
 - ✅ Responsive design with Tailwind CSS
 - ✅ Touch-friendly form inputs
 - ✅ Optimized text sizes for mobile reading
-- ✅ Fixed footer on mobile devices 
+- ✅ Fixed footer on mobile devices
