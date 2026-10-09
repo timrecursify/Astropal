@@ -41,7 +41,7 @@ This document outlines the current technical architecture of Astropal.io.
   - Posts payload to `/api/submit-form`
 
 - `functions/api/submit-form.ts`:
-  - Receives submission data and forwards to Zapier/endpoint (secrets managed on Cloudflare)
+  - Receives submission data and forwards to the Black Bow lead receiver (secrets managed on Cloudflare)
   - CORS, error handling
 
 ## Analytics Loading

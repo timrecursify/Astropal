@@ -4,15 +4,79 @@
 import { generateUID } from '../../src/utils/uidGenerator';
 
 export interface Env {
-  VITE_PUBLIC_ZAPIER_WEBHOOK_URL: string;
-  VITE_PUBLIC_ZAPIER_UNSUBSCRIBE_URL: string;
-  VITE_PUBLIC_ZAPIER_FEEDBACK_URL: string;
+  LEAD_RECEIVER_URL: string;
+  LEAD_RECEIVER_TOKEN: string;
 }
 
 interface FormSubmissionRequest {
   formData: Record<string, unknown>;
   variantName: string;
   visitorData: Record<string, unknown>;
+  page_url?: unknown;
+  submission_id?: unknown;
+}
+
+function normalizeFields(data: Record<string, unknown>): Record<string, string | number | boolean | null> {
+  const fields: Record<string, string | number | boolean | null> = {};
+
+  for (const [key, value] of Object.entries(data)) {
+    if (key === 'page_url' || key === 'submission_id') continue;
+    if (value === undefined) continue;
+    if (Object.keys(fields).length >= 50) break;
+    if (value !== null && typeof value === 'object') {
+      fields[key] = JSON.stringify(value).slice(0, 2000);
+    } else if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean' || value === null) {
+      fields[key] = value;
+    }
+  }
+
+  return fields;
+}
+
+async function postToLeadReceiver(
+  env: Env,
+  request: Request,
+  form: string,
+  data: Record<string, unknown>
+): Promise<boolean> {
+  if (!env.LEAD_RECEIVER_URL || !env.LEAD_RECEIVER_TOKEN) {
+    console.warn('lead receiver not configured');
+    return false;
+  }
+
+  const pageUrl = typeof data.page_url === 'string' && data.page_url.startsWith('https://')
+    ? data.page_url
+    : `https://${new URL(request.url).host}/`;
+  const submissionId = typeof data.submission_id === 'string' && /^[0-9a-f-]{36}$/i.test(data.submission_id)
+    ? data.submission_id
+    : crypto.randomUUID();
+  try {
+    const response = await fetch(env.LEAD_RECEIVER_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${env.LEAD_RECEIVER_TOKEN}`,
+        'Idempotency-Key': submissionId
+      },
+      body: JSON.stringify({
+        brand: 'astropal',
+        form,
+        fields: normalizeFields(data),
+        page_url: pageUrl,
+        submitted_at: new Date().toISOString(),
+        submission_id: submissionId
+      }),
+      signal: AbortSignal.timeout(5000)
+    });
+
+    if (!response.ok) {
+      console.error('lead receiver error', response.status);
+    }
+    return response.ok;
+  } catch {
+    console.error('lead receiver error', 'unknown');
+    return false;
+  }
 }
 
 export const onRequestPost = async (context: { request: Request; env: Env }) => {
@@ -42,57 +106,16 @@ export const onRequestPost = async (context: { request: Request; env: Env }) => 
       timestamp: new Date().toISOString()
     });
 
-    // Determine webhook URL based on action
-    let webhookUrl: string;
+    // Determine form name based on action
+    let form: string;
     const action = formData.action as string;
 
     if (action === 'unsubscribe') {
-      webhookUrl = env.VITE_PUBLIC_ZAPIER_UNSUBSCRIBE_URL;
-      if (!webhookUrl) {
-        console.error('VITE_PUBLIC_ZAPIER_UNSUBSCRIBE_URL not configured');
-        return new Response(
-          JSON.stringify({ error: 'Unsubscribe webhook URL not configured' }),
-          { 
-            status: 500, 
-            headers: { 
-              'Content-Type': 'application/json',
-              ...corsHeaders 
-            } 
-          }
-        );
-      }
+      form = 'unsubscribe';
     } else if (action === 'feedback') {
-      // Try both normal key and malformed key with leading space
-      webhookUrl = env.VITE_PUBLIC_ZAPIER_FEEDBACK_URL || (env as any)[' VITE_PUBLIC_ZAPIER_FEEDBACK_URL'];
-      if (!webhookUrl) {
-        console.error('VITE_PUBLIC_ZAPIER_FEEDBACK_URL not configured');
-        return new Response(
-          JSON.stringify({ error: 'Feedback webhook URL not configured' }),
-          { 
-            status: 500, 
-            headers: { 
-              'Content-Type': 'application/json',
-              ...corsHeaders 
-            } 
-          }
-        );
-      }
+      form = 'feedback';
     } else {
-      // Default registration webhook
-      webhookUrl = env.VITE_PUBLIC_ZAPIER_WEBHOOK_URL;
-      if (!webhookUrl) {
-        console.error('VITE_PUBLIC_ZAPIER_WEBHOOK_URL not configured');
-        return new Response(
-          JSON.stringify({ error: 'Registration webhook URL not configured' }),
-          { 
-            status: 500, 
-            headers: { 
-              'Content-Type': 'application/json',
-              ...corsHeaders 
-            } 
-          }
-        );
-      }
+      form = 'signup';
     }
 
     // Generate UID based on birth location (only for registration)
@@ -220,19 +243,27 @@ export const onRequestPost = async (context: { request: Request; env: Env }) => 
       };
     }
 
-    // Forward the request to Zapier webhook
-    const response = await fetch(webhookUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'User-Agent': request.headers.get('User-Agent') || 'Astropal-Cloudflare-Function'
-      },
-      body: JSON.stringify(submissionData)
+    const receiverAccepted = await postToLeadReceiver(env, request, form, {
+      ...submissionData,
+      page_url: body.page_url || visitorData.page_url,
+      submission_id: body.submission_id
     });
 
-    if (!response.ok) {
-      throw new Error(`Webhook responded with status: ${response.status}`);
+    if (env.LEAD_RECEIVER_URL && env.LEAD_RECEIVER_TOKEN && !receiverAccepted) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: 'Form submission failed',
+          message: 'Unable to submit form'
+        }),
+        {
+          status: 500,
+          headers: {
+            'Content-Type': 'application/json',
+            ...corsHeaders
+          }
+        }
+      );
     }
 
     console.log('Form submitted successfully:', {
@@ -269,4 +300,4 @@ export const onRequestPost = async (context: { request: Request; env: Env }) => 
       }
     );
   }
-}; 
+};

@@ -101,7 +101,8 @@ npm run lint
 ### **Environment Variables**
 ```bash
 # Required for form submissions
-VITE_ZAPIER_WEBHOOK_URL=your_zapier_webhook_url
+LEAD_RECEIVER_URL=https://lead-receiver.example
+LEAD_RECEIVER_TOKEN=your_server_side_token
 ```
 
 ## 🚀 Deployment

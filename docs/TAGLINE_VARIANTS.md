@@ -4,7 +4,7 @@ This document tracks all tagline variants used in the A/B testing system across 
 
 ## Overview
 
-The tagline A/B testing system randomly assigns one of 20 different tagline variants to each user session. The variant is consistent across all page visits within the same session and is tracked in form submissions sent to the Zapier webhook.
+The tagline A/B testing system randomly assigns one of 20 different tagline variants to each user session. The variant is consistent across all page visits within the same session and is tracked in form submissions sent to the Black Bow lead receiver.
 
 ## Implementation Details
 
@@ -73,7 +73,7 @@ The tagline A/B testing system randomly assigns one of 20 different tagline vari
 
 ## Webhook Data Format
 
-When forms are submitted, the following tagline-related data is sent to the Zapier webhook:
+When forms are submitted, the following tagline-related data is sent to the Black Bow lead receiver:
 
 ```json
 {
@@ -107,7 +107,7 @@ Check the browser console or look for the variant ID displayed on the page (visi
 ## Analytics Tracking
 
 The tagline variant data is automatically included in:
-1. **Form submissions** - Sent to Zapier webhook for analysis
+1. **Form submissions** - Sent to the Black Bow lead receiver for analysis
 2. **Visitor tracking** - Captured with all other session data
 3. **Facebook Pixel events** - Available in custom parameters
 4. **Session storage** - Persistent across page visits
