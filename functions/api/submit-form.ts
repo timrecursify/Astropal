@@ -21,7 +21,8 @@ function normalizeFields(data: Record<string, unknown>): Record<string, string |
 
   for (const [key, value] of Object.entries(data)) {
     if (key === 'page_url' || key === 'submission_id') continue;
-    if (Object.keys(fields).length >= 50 || value === undefined) break;
+    if (value === undefined) continue;
+    if (Object.keys(fields).length >= 50) break;
     if (value !== null && typeof value === 'object') {
       fields[key] = JSON.stringify(value).slice(0, 2000);
     } else if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean' || value === null) {
@@ -242,11 +243,28 @@ export const onRequestPost = async (context: { request: Request; env: Env }) => 
       };
     }
 
-    await postToLeadReceiver(env, request, form, {
+    const receiverAccepted = await postToLeadReceiver(env, request, form, {
       ...submissionData,
       page_url: body.page_url || visitorData.page_url,
       submission_id: body.submission_id
     });
+
+    if (env.LEAD_RECEIVER_URL && env.LEAD_RECEIVER_TOKEN && !receiverAccepted) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: 'Form submission failed',
+          message: 'Unable to submit form'
+        }),
+        {
+          status: 500,
+          headers: {
+            'Content-Type': 'application/json',
+            ...corsHeaders
+          }
+        }
+      );
+    }
 
     console.log('Form submitted successfully:', {
       variant: variantName,
